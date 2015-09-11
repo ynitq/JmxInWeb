@@ -9,26 +9,18 @@ package com.kunmingCoder.jcweb;
  */
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.Executors;
 
-import javax.management.MBeanRegistration;
 import javax.management.MBeanServer;
-import javax.management.ObjectName;
 
 import org.apache.commons.lang3.StringUtils;
 
 import com.sun.net.httpserver.BasicAuthenticator;
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpContext;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 /**
@@ -36,8 +28,7 @@ import com.sun.net.httpserver.HttpServer;
  * 
  * @version $Revision: 1.14 $
  */
-@SuppressWarnings("restriction")
-public class HttpAdaptor implements MBeanRegistration, HttpHandler {
+public class HttpAdaptor implements HttpAdaptorMBean {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(HttpAdaptor.class);
 	private static final String VERSION = "3.0.2";
@@ -52,17 +43,11 @@ public class HttpAdaptor implements MBeanRegistration, HttpHandler {
 	 */
 	private String host = "localhost";
 
-	/**
-	 * Target server
-	 */
-	private MBeanServer curMBeanServer;
 
 	/**
 	 * Indicates whether the server is running
 	 */
 	private boolean alive;
-
-	private String authenticationMethod = "none";
 
 	private final Map<String, String> authorizations = new HashMap<String, String>();
 
@@ -72,7 +57,7 @@ public class HttpAdaptor implements MBeanRegistration, HttpHandler {
 
 	private final int acceptLimit = 10;
 
-	private final String httpContextName = "/mbean";
+	private final String httpContextName = "/";
 
 	private final int executerLimit = 10;
 
@@ -80,102 +65,42 @@ public class HttpAdaptor implements MBeanRegistration, HttpHandler {
 
 	private final String authRealm = "MBeanConsole";
 
+	private final HttpHandlerImpl requestHandler = new HttpHandlerImpl();
+
 	public void start() throws IOException {
 		if (this.isActive()) {
 			log.warn("server is running");
 		}
 		httpserver = HttpServer.create(new InetSocketAddress(this.port), this.acceptLimit);
 		httpserver.setExecutor(Executors.newFixedThreadPool(executerLimit));
-		HttpContext hc = httpserver.createContext(this.httpContextName, this);
+		HttpContext hc = httpserver.createContext(this.httpContextName, requestHandler);
 		hc.getFilters().add(new ParameterFilter());
 
-		hc.setAuthenticator(new BasicAuthenticator(authRealm) {
-			@Override
-			public boolean checkCredentials(String user, String pwd) {
-				if (StringUtils.isNotBlank(user) && StringUtils.isNotBlank(pwd)) {
-					return pwd.equals(authorizations.get(user));
+		if (!this.authorizations.isEmpty()) {
+			hc.setAuthenticator(new BasicAuthenticator(authRealm) {
+				@Override
+				public boolean checkCredentials(String user, String pwd) {
+					if (StringUtils.isNotBlank(user) && StringUtils.isNotBlank(pwd)) {
+						return pwd.equals(authorizations.get(user));
+					}
+					return false;
 				}
-				return false;
-			}
-		});
+			});
+		}
 
 		httpserver.start();
 		this.startDate = new Date();
 		this.alive = true;
 
-		log.info(String.format("MBean HttpAdaptor start: http://%s:%d%s", this.host, this.port, this.httpContextName));
+		log.fatal(String.format("MBean HttpAdaptor start: http://%s:%d%s", this.host, this.port, this.httpContextName));
 	}
 
 	/**
 	 * Default Constructor added so that we can have some additional
 	 * constructors as well.
 	 */
-	public HttpAdaptor() {
-	}
-
-	/**
-	 * Overloaded constructor to allow the port to be set. The reason this was
-	 * added was to allow the loading of this adaptor by the dynamic loading
-	 * service of the MBean server and have the port set from a param in the
-	 * mlet file. Example: (replaced lt & gt symbol with []) <br>
-	 * [mlet code="mx4j.tools.adaptor.http.HttpAdaptor" <br>
-	 * archive="mx4j.jar" <br>
-	 * name="Server:name=HttpAdaptor"] <br>
-	 * [arg type="int" value="12345"] <br>
-	 * [/mlet]
-	 * <p/>
-	 * <p>
-	 * This constructor uses the default host or the host must be set later.
-	 * 
-	 * @param port
-	 *            The port on which the HttpAdaptor should listen
-	 */
-	public HttpAdaptor(int port) {
-		this.port = port;
-	}
-
-	/**
-	 * Overloaded constructor to allow the host to be set. The reason this was
-	 * added was to allow the loading of this adaptor by the dynamic loading
-	 * service of the MBean server and have the host set from a param in the
-	 * mlet file. Example: (replaced lt & gt symbol with []) <br>
-	 * [mlet code="mx4j.tools.adaptor.http.HttpAdaptor" <br>
-	 * archive="mx4j.jar" <br>
-	 * name="Server:name=HttpAdaptor"] <br>
-	 * [arg type="java.lang.String" value="someserver.somehost.com"] <br>
-	 * [/mlet]
-	 * <p/>
-	 * <p>
-	 * This constructor uses the default port or the port must be set later.
-	 * 
-	 * @param host
-	 *            The host on which the HttpAdaptor should listen
-	 */
-	public HttpAdaptor(String host) {
-		this.host = host;
-	}
-
-	/**
-	 * Overloaded constructor to allow the port to be set. The reason this was
-	 * added was to allow the loading of this adaptor by the dynamic loading
-	 * service of the MBean server and have the port set from a param in the
-	 * mlet file. Example: (replaced lt & gt symbol with []) NOTE that the port
-	 * must come before the host in the arg list of the mlet <br>
-	 * [mlet code="mx4j.tools.adaptor.http.HttpAdaptor" <br>
-	 * archive="mx4j.jar" <br>
-	 * name="Server:name=HttpAdaptor"] <br>
-	 * [arg type="int" value="12345"] <br>
-	 * [arg type="java.lang.String" value="someserver.somehost.com"] <br>
-	 * [/mlet]
-	 * 
-	 * @param port
-	 *            The port on which the HttpAdaptor should listen
-	 * @param host
-	 *            The host on which the HttpAdaptor should listen
-	 */
-	public HttpAdaptor(int port, String host) {
-		this.port = port;
-		this.host = host;
+	public HttpAdaptor(MBeanServer mBeanServer) {
+		MBeanService.getInstance().setServer(mBeanServer);
 	}
 
 	/**
@@ -191,11 +116,12 @@ public class HttpAdaptor implements MBeanRegistration, HttpHandler {
 		this.port = port;
 	}
 
-	/**
-	 * Returns the port where the server is running on. Default is 8080
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return HTTPServer's port
+	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getPort()
 	 */
+	@Override
 	public int getPort() {
 		return port;
 	}
@@ -213,73 +139,52 @@ public class HttpAdaptor implements MBeanRegistration, HttpHandler {
 		this.host = host;
 	}
 
-	/**
-	 * Return the host name the server will be listening to. If null the server
-	 * listen at the localhost
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return the current hostname
+	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getHost()
 	 */
+	@Override
 	public String getHost() {
 		return host;
 	}
 
-	/**
-	 * Sets the Authentication Method.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param method
-	 *            none/basic/digest
+	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#isActive()
 	 */
-	public void setAuthenticationMethod(String method) {
-		if (alive) {
-			throw new IllegalArgumentException("Not possible to change authentication method with the server running");
-		}
-		if (method == null || !(method.equals("none") || method.equals("basic") || method.equals("digest"))) {
-			throw new IllegalArgumentException("Only accept methods none/basic/digest");
-		}
-		this.authenticationMethod = method;
-	}
-
-	/**
-	 * Authentication Method
-	 * 
-	 * @return authentication method
-	 */
-	public String getAuthenticationMethod() {
-		return authenticationMethod;
-	}
-
-	/**
-	 * Indicates whether the server's running
-	 * 
-	 * @return The active value
-	 */
+	@Override
 	public boolean isActive() {
 		return alive;
 	}
 
-	/**
-	 * Starting date
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return The date when the server was started
+	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getStartDate()
 	 */
+	@Override
 	public Date getStartDate() {
 		return startDate;
 	}
 
-	/**
-	 * Requests count
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return The total of requests served so far
+	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getRequestsCount()
 	 */
+	@Override
 	public long getRequestsCount() {
 		return requestsCount;
 	}
 
-	/**
-	 * Gets the HttpAdaptor version
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @return HttpAdaptor's version
+	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getVersion()
 	 */
+	@Override
 	public String getVersion() {
 		return VERSION;
 	}
@@ -288,7 +193,7 @@ public class HttpAdaptor implements MBeanRegistration, HttpHandler {
 	 * Stops the HTTP daemon
 	 */
 	public void stop() {
-		// TODO STOP
+		this.httpserver.stop(10);
 	}
 
 	/**
@@ -301,71 +206,9 @@ public class HttpAdaptor implements MBeanRegistration, HttpHandler {
 		authorizations.put(username, password);
 	}
 
-	/**
-	 * Gathers some basic data
-	 */
-	@Override
-	public ObjectName preRegister(MBeanServer server, ObjectName name) throws java.lang.Exception {
-		this.curMBeanServer = server;
-		return name;
-	}
-
-	@Override
-	public void postRegister(Boolean registrationDone) {
-	}
-
-	@Override
-	public void preDeregister() throws java.lang.Exception {
-		// stop the server
-		stop();
-	}
-
-	@Override
-	public void postDeregister() {
-	}
-
 	public void setAuthMap(Map<String, String> map) {
-		this.authorizations.putAll(map);
-	}
-
-	@Override
-	public void handle(HttpExchange httpExchange) throws IOException {
-
-		Headers headers = httpExchange.getRequestHeaders();
-		Set<Map.Entry<String, List<String>>> entries = headers.entrySet();
-
-		StringBuffer response = new StringBuffer();
-		for (Map.Entry<String, List<String>> entry : entries) {
-			response.append(entry.toString() + "\n");
+		if (map != null) {
+			this.authorizations.putAll(map);
 		}
-
-		response.append("\n");
-
-		if (log.isDebugEnabled()) {
-			StringBuffer buff = new StringBuffer(200);
-			buff.append("path=").append(httpExchange.getRequestURI().getPath()).append("\n");
-
-			List<String> list = ParameterFilter.getParameterNames(httpExchange);
-			for (String name : list) {
-				String value = ParameterFilter.getParameter(httpExchange, name);
-				buff.append(name);
-				buff.append("=");
-				buff.append(value);
-				buff.append("\n");
-			}
-
-			log.debug(buff.toString());
-		}
-
-		byte[] bytes = response.toString().getBytes();
-		httpExchange.sendResponseHeaders(200, bytes.length);
-		OutputStream os = httpExchange.getResponseBody();
-		os.write(bytes);
-		os.flush();
-		os.close();
-
-		httpExchange.close();
-
 	}
-
 }

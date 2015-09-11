@@ -26,7 +26,6 @@ import com.sun.net.httpserver.HttpExchange;
  * @author 梁韦江
  * 2015年9月10日
  */
-@SuppressWarnings("restriction")
 public class ParameterFilter extends Filter {
 
 	public static String ATTRIBUTE_NAME = "parameters";

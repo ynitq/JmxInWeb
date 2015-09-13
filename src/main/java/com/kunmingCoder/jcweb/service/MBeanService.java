@@ -1,4 +1,4 @@
-package com.kunmingCoder.jcweb;
+package com.kunmingCoder.jcweb.service;
 
 import java.util.Collections;
 import java.util.HashMap;

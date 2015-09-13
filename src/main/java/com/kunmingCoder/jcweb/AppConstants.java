@@ -11,4 +11,7 @@ package com.kunmingCoder.jcweb;
 public interface AppConstants {
 
 	public static String STATIC_RESOURCE_PREFIX = "com/kunmingCoder/jcweb/files/statics/";
+
+	public static String TEMPLATE_PATH = "com/kunmingCoder/jcweb/files/";
+
 }

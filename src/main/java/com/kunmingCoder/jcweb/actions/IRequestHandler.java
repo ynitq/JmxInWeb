@@ -1,6 +1,10 @@
 package com.kunmingCoder.jcweb.actions;
 
+import java.io.IOException;
+
 import com.sun.net.httpserver.HttpExchange;
+
+import freemarker.template.TemplateException;
 
 /**
  * <pre>
@@ -10,6 +14,6 @@ import com.sun.net.httpserver.HttpExchange;
  * @author 梁韦江 2015年9月11日
  */
 public interface IRequestHandler {
-	abstract String process(HttpExchange exchange);
+	abstract String process(HttpExchange exchange) throws TemplateException, IOException;
 
 }

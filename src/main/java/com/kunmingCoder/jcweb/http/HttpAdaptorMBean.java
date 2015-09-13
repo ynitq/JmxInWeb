@@ -1,4 +1,4 @@
-package com.kunmingCoder.jcweb;
+package com.kunmingCoder.jcweb.http;
 
 import java.util.Date;
 

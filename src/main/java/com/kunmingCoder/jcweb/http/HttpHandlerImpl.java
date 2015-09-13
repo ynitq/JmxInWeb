@@ -1,18 +1,20 @@
-package com.kunmingCoder.jcweb;
+package com.kunmingCoder.jcweb.http;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.kunmingCoder.jcweb.AppConstants;
 import com.kunmingCoder.jcweb.actions.BaseAction;
-import com.kunmingCoder.jcweb.actions.IRequestHandler;
 import com.kunmingCoder.jcweb.actions.WelcomeAction;
+import com.kunmingCoder.jcweb.utils.LogUtil;
+import com.kunmingCoder.jcweb.utils.StringUtils;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
+import freemarker.template.TemplateException;
 
 /**
  * <pre>
@@ -30,8 +32,6 @@ public class HttpHandlerImpl implements HttpHandler {
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(HttpHandlerImpl.class);
 
 	private static String STATICS_PREFIX = "/statics/";
-
-	private final IRequestHandler welcomeAction = new WelcomeAction();
 
 	private final Map<String, BaseAction> handlerMap = new HashMap<String, BaseAction>();
 
@@ -54,7 +54,7 @@ public class HttpHandlerImpl implements HttpHandler {
 		if (path.startsWith(STATICS_PREFIX)) {
 			// 先处理静态内容
 			String fileName = path.substring(STATICS_PREFIX.length());
-			byte[] sendBytes = this.loadStaticFile(fileName);
+			byte[] sendBytes = StringUtils.loadFileFromClassPath(AppConstants.STATIC_RESOURCE_PREFIX + fileName);
 			if (sendBytes == null) {
 				// 404
 				httpExchange.sendResponseHeaders(404, 0);
@@ -66,8 +66,12 @@ public class HttpHandlerImpl implements HttpHandler {
 			// 如果不是静态内容，就看该url是否有对应的处理器
 			BaseAction action = this.handlerMap.get(path);
 			if (action != null) {
-				String body = action.process(httpExchange);
-				this.sendResponse(httpExchange, body);
+				try {
+					String body = action.process(httpExchange);
+					this.sendResponse(httpExchange, body);
+				} catch (TemplateException e) {
+					LogUtil.traceError(log, e);
+				}
 			} else {
 				// 404
 				httpExchange.sendResponseHeaders(404, 0);
@@ -100,31 +104,6 @@ public class HttpHandlerImpl implements HttpHandler {
 	 */
 	private void sendResponse(HttpExchange httpExchange, String body) throws IOException {
 		this.sendResponse(httpExchange, body.getBytes());
-	}
-
-	/**
-	 * 从文件中获取内容
-	 * 
-	 * @param fileName
-	 *            文件名
-	 * @return
-	 * @throws IOException
-	 */
-	private byte[] loadStaticFile(String fileName) throws IOException {
-		InputStream is = ClassLoader.getSystemResourceAsStream(AppConstants.STATIC_RESOURCE_PREFIX + fileName);
-		if (is != null) {
-			ByteArrayOutputStream out = new ByteArrayOutputStream(1024);
-			byte[] buf = new byte[4096];
-			int len;
-			while ((len = is.read(buf)) > 0) {
-				out.write(buf, 0, len);
-			}
-			out.close();
-			byte[] bytes = out.toByteArray();
-			return bytes;
-		} else {
-			return null;
-		}
 	}
 
 	private void debugHttpRequest(HttpExchange httpExchange) {

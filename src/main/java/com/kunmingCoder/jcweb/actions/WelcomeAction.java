@@ -1,7 +1,14 @@
 package com.kunmingCoder.jcweb.actions;
 
-import com.kunmingCoder.jcweb.MBeanService;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
+import com.kunmingCoder.jcweb.models.DomainVo;
+import com.kunmingCoder.jcweb.service.MBeanService;
 import com.sun.net.httpserver.HttpExchange;
+
+import freemarker.template.TemplateException;
 
 /**
  * <pre>
@@ -13,11 +20,12 @@ import com.sun.net.httpserver.HttpExchange;
 public class WelcomeAction extends BaseAction {
 
 	@Override
-	public String process(HttpExchange exchange) {
-		// TODO 欢迎页面
-
-		MBeanService.getInstance().getAllMBaen();
-		return "ok";
+	public String process(HttpExchange exchange) throws TemplateException, IOException {
+		List<DomainVo> list = MBeanService.getInstance().getAllMBaen();
+		Map<String, Object> dataModel = this.newModel();
+		dataModel.put("list", list);
+		
+		return this.genViewPage("index.html", dataModel);
 	}
 
 	@Override

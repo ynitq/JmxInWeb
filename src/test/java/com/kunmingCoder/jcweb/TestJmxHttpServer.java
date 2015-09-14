@@ -12,8 +12,8 @@ import org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource;
 import org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 
-import com.kunmingCoder.jcweb.http.HttpAdaptor;
-import com.kunmingCoder.jcweb.utils.LogUtil;
+import com.kunmingCoder.jmxInWeb.http.HttpAdaptor;
+import com.kunmingCoder.jmxInWeb.utils.LogUtil;
 
 /**
  * 

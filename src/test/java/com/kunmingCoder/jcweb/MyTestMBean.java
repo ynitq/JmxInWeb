@@ -3,7 +3,6 @@ package com.kunmingCoder.jcweb;
 import java.lang.management.ManagementFactory;
 import java.util.Set;
 
-import javax.management.MBeanRegistration;
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
@@ -51,32 +50,6 @@ public class MyTestMBean {
 		return System.currentTimeMillis();
 	}
 
-	/**
-	 * <pre>
-	 * TODO TO 廖望舒， 如何获得mbean的说明和例子 by 梁韦江
-	 *  
-	 * 可以通过 ManagementFactory获得虚拟机本身的各类MBeanServer, 例如内存使用情况、硬件配置、线程情况等等
-	 * 每一类的MBean都注册在不同的MBeanServer中
-	 * 
-	 * 但ManagementFactory无法获得当前应用程序的MBeanServer，至少我不知道怎么弄
-	 * 
-	 * 如果需要获得当前应用的MBeanServer，可参照HttpAdaptor，原理就是我们自己写个MBean，
-	 * 我们将这个MBean注册到当前应用程序的MBeanServer，然后在这个MBean的注册过程中获得当前的MBeanServer
-	 * 然后我们就可以通过 MBeanServer搜索到所有的注册的MBean，自然就可以对这些MBean进行各类操作
-	 * 
-	 * 这个自己写的MBean必须遵循原始的MBean的写法，必须实现MBeanRegistration这个接口，而不能通过Spring偷工减料实现MBean
-	 * 
-	 * </pre>
-	 * 
-	 * @see HttpAdaptor#preRegister(MBeanServer, ObjectName)
-	 *      HttpAdaptor里面这个例子就通过在注册mbean时调用的方法中获得MBeanServer
-	 * 
-	 * @see MBeanRegistration
-	 *      这个MBeanRegistration的接口中有preRegister这个方法，可获得MBeanServer
-	 * 
-	 * @see MBeanServer#queryMBeans(ObjectName, javax.management.QueryExp)
-	 *      queryMBeans这个方法当参数都为NULL时，就可以在该MBeanServer获得所有注册的MBean，下面的代码有例子
-	 */
 	@ManagedOperation(description = "测试的获得MBeanServer")
 	public String myMBeanServer() {
 		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();

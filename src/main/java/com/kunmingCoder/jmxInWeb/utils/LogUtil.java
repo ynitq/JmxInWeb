@@ -1,11 +1,10 @@
-package com.kunmingCoder.jcweb.utils;
+package com.kunmingCoder.jmxInWeb.utils;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 
 /**

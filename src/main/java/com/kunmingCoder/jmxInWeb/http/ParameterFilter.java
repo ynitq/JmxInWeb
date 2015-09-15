@@ -1,4 +1,4 @@
-package com.kunmingCoder.jcweb;
+package com.kunmingCoder.jmxInWeb.http;
 
 import java.io.BufferedReader;
 import java.io.IOException;

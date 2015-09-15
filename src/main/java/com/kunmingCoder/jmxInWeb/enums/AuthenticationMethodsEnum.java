@@ -1,4 +1,4 @@
-package com.kunmingCoder.jcweb.enums;
+package com.kunmingCoder.jmxInWeb.enums;
 
 /**
  * <pre>

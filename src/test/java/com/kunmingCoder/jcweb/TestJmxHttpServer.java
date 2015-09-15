@@ -12,19 +12,15 @@ import org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource;
 import org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 
-import com.kunmingCoder.jcweb.utils.LogUtil;
+import com.kunmingCoder.jmxInWeb.http.HttpAdaptor;
+import com.kunmingCoder.jmxInWeb.utils.LogUtil;
 
 /**
- * Mx4j用于在Spring中配置的服务类
  * 
  * <pre>
- * 	HttpAdaptor自己就是一个MBean，通过注册自己，使自己可以获得当前的MBeanServer
- * 以后就可以通过当前的MBeanServer获得所有的mbean
  * </pre>
  * 
- * @see HttpAdaptor#preRegister(javax.management.MBeanServer, ObjectName)
- *      就是这个方法获得了当前的server
- * @author liangwj
+ * @author liangwj72
  * 
  */
 public class TestJmxHttpServer {

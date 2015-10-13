@@ -20,12 +20,13 @@ import freemarker.template.TemplateException;
 public class WelcomeAction extends BaseAction {
 
 	@Override
-	public String process(HttpExchange exchange) throws TemplateException, IOException {
+	public void process(HttpExchange exchange) throws TemplateException, IOException {
 		List<DomainVo> list = MBeanService.getInstance().getAllMBaen();
 		Map<String, Object> dataModel = this.newModel();
 		dataModel.put("list", list);
 		
-		return this.genViewPage("index.html", dataModel);
+		String body = this.genViewPage("index.html", dataModel);
+		this.sendResponse(exchange, body);
 	}
 
 	@Override

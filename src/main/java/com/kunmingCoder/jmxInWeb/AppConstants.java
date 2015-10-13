@@ -10,6 +10,8 @@ package com.kunmingCoder.jmxInWeb;
  */
 public interface AppConstants {
 
+	public static String STATICS_PREFIX = "/statics/";
+
 	public static String STATIC_RESOURCE_PREFIX = "com/kunmingCoder/jmxInWeb/files/statics/";
 
 	public static String TEMPLATE_PATH = "com/kunmingCoder/jmxInWeb/files/";

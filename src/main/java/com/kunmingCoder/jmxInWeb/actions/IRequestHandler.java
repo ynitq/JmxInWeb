@@ -14,6 +14,6 @@ import freemarker.template.TemplateException;
  * @author 梁韦江 2015年9月11日
  */
 public interface IRequestHandler {
-	abstract String process(HttpExchange exchange) throws TemplateException, IOException;
+	abstract void process(HttpExchange exchange) throws TemplateException, IOException;
 
 }

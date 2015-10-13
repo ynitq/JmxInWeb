@@ -1,16 +1,15 @@
 package com.kunmingCoder.jmxInWeb.http;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.kunmingCoder.jmxInWeb.AppConstants;
 import com.kunmingCoder.jmxInWeb.actions.BaseAction;
+import com.kunmingCoder.jmxInWeb.actions.StaticFileAction;
 import com.kunmingCoder.jmxInWeb.actions.WelcomeAction;
 import com.kunmingCoder.jmxInWeb.utils.LogUtil;
-import com.kunmingCoder.jmxInWeb.utils.StringUtils;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -31,9 +30,10 @@ public class HttpHandlerImpl implements HttpHandler {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(HttpHandlerImpl.class);
 
-	private static String STATICS_PREFIX = "/statics/";
 
 	private final Map<String, BaseAction> handlerMap = new HashMap<String, BaseAction>();
+
+	private final BaseAction staticFileAction = new StaticFileAction();
 
 	public HttpHandlerImpl() {
 		this.addHandler(new WelcomeAction());
@@ -51,59 +51,25 @@ public class HttpHandlerImpl implements HttpHandler {
 
 		String path = httpExchange.getRequestURI().getPath();
 
-		if (path.startsWith(STATICS_PREFIX)) {
-			// 先处理静态内容
-			String fileName = path.substring(STATICS_PREFIX.length());
-			byte[] sendBytes = StringUtils.loadFileFromClassPath(AppConstants.STATIC_RESOURCE_PREFIX + fileName);
-			if (sendBytes == null) {
-				// 404
-				httpExchange.sendResponseHeaders(404, 0);
+		try {
+			if (path.startsWith(AppConstants.STATICS_PREFIX)) {
+				// 先处理静态内容
+				this.staticFileAction.process(httpExchange);
 			} else {
-				this.sendResponse(httpExchange, sendBytes);
-			}
-
-		} else {
-			// 如果不是静态内容，就看该url是否有对应的处理器
-			BaseAction action = this.handlerMap.get(path);
-			if (action != null) {
-				try {
-					String body = action.process(httpExchange);
-					this.sendResponse(httpExchange, body);
-				} catch (TemplateException e) {
-					LogUtil.traceError(log, e);
+				// 如果不是静态内容，就看该url是否有对应的处理器
+				BaseAction action = this.handlerMap.get(path);
+				if (action != null) {
+					action.process(httpExchange);
+				} else {
+					// 404
+					httpExchange.sendResponseHeaders(404, 0);
 				}
-			} else {
-				// 404
-				httpExchange.sendResponseHeaders(404, 0);
 			}
+		} catch (TemplateException e) {
+			LogUtil.traceError(log, e);
 		}
 
 		httpExchange.close();
-	}
-
-	/**
-	 * 响应的是字节流
-	 * 
-	 * @param httpExchange
-	 * @param sendBytes
-	 * @throws IOException
-	 */
-	private void sendResponse(HttpExchange httpExchange, byte[] sendBytes) throws IOException {
-		httpExchange.sendResponseHeaders(200, sendBytes.length);
-		OutputStream os = httpExchange.getResponseBody();
-		os.write(sendBytes);
-		os.close();
-	}
-
-	/**
-	 * 响应的是字符
-	 * 
-	 * @param httpExchange
-	 * @param body
-	 * @throws IOException
-	 */
-	private void sendResponse(HttpExchange httpExchange, String body) throws IOException {
-		this.sendResponse(httpExchange, body.getBytes());
 	}
 
 	private void debugHttpRequest(HttpExchange httpExchange) {

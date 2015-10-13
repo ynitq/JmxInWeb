@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JConsole In Web</title>
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-3.3.5/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="statics/css/components-rounded.css">
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-toastr/toastr.min.css">
+<link rel="stylesheet" type="text/css" href="statics/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="statics/css/default.css">
+<link rel="stylesheet" type="text/css" href="statics/css/layout.css">
+<link rel="stylesheet" type="text/css" href="statics/css/jcweb.css">
+</head>
+<body>
+<!-- NAV BAR BEGIN-->
+<div class="page-header"> 
+  <!-- BEGIN HEADER MENU -->
+  <div class="page-header-menu " style="display: block;">
+    <div class="container-fluid">
+      <div class="hor-menu">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">MBean</a></li>
+          <li><a href="#">内存</a></li>
+          <li><a href="#">线程</a></li>
+          <li><a href="#">VM概要</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END HEADER MENU --> 
+</div>
+<!-- NAV BAR END-->
+<div class="page-container">
+  <div class="page-head">
+    <div class="container-fluid"> 
+      <!-- BEGIN PAGE TITLE -->
+      <div class="page-title">
+        <h1><!-- TemplateBeginEditable name="pageTitle" --> Page Title <!-- TemplateEndEditable --></h1>
+      </div>
+      <!-- END PAGE TITLE --> 
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="container-fluid">
+    	<div class="row">
+        	<div class="col-md-12">
+      <!-- TemplateBeginEditable name="body" --> 
+		
+      <!-- TemplateEndEditable -->
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

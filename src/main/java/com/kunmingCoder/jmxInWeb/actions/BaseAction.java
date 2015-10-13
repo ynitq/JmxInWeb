@@ -1,9 +1,10 @@
 package com.kunmingCoder.jmxInWeb.actions;
 
 import java.io.IOException;
-import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.zip.GZIPOutputStream;
 
 import com.kunmingCoder.jmxInWeb.service.TemplateService;
 import com.sun.net.httpserver.HttpExchange;
@@ -46,9 +47,12 @@ public abstract class BaseAction implements IRequestHandler {
 	 * @throws IOException
 	 */
 	protected void sendResponse(HttpExchange httpExchange, byte[] sendBytes) throws IOException {
-		httpExchange.sendResponseHeaders(200, sendBytes.length);
-		OutputStream os = httpExchange.getResponseBody();
+
+		httpExchange.getResponseHeaders().set("Content-Encoding", "gzip");
+		httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+		final GZIPOutputStream os = new GZIPOutputStream(httpExchange.getResponseBody());
 		os.write(sendBytes);
+		os.finish();
 		os.close();
 	}
 

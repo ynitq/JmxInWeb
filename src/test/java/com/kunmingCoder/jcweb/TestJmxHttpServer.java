@@ -18,6 +18,7 @@ import com.kunmingCoder.jmxInWeb.utils.LogUtil;
 /**
  * 
  * <pre>
+ * 测试启动一个jmx服务
  * </pre>
  * 
  * @author liangwj72

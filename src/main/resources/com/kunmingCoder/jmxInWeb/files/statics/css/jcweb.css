@@ -1,4 +1,8 @@
+* {
+    font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53"
+}
+
 body {
-    font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53",Arial,sans-serif;
+,Arial,sans-serif;
     font-size: 14px;
 }

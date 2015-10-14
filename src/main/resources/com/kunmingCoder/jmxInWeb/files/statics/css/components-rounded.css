@@ -7,7 +7,6 @@ General reset
 /* Set default body */
 body {
   color: #333333;
-  font-family: "Open Sans", sans-serif;
   padding: 0px !important;
   margin: 0px !important;
   font-size: 13px;
@@ -81,7 +80,6 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Open Sans", sans-serif;
   font-weight: 300;
 }
 
@@ -237,7 +235,6 @@ a:hover {
 }
 
 .primary-font {
-  font-family: "Open Sans", sans-serif !important;
 }
 
 .bold {
@@ -1538,7 +1535,6 @@ Charts and statistics
   overflow: hidden;
   height: 300px;
   width: 100%;
-  font-family: "Open Sans", sans-serif !important;
   font-size: 14px;
 }
 
@@ -1750,7 +1746,6 @@ Dropdown Menu
   background-color: #fffff;
   box-shadow: 5px 5px rgba(102, 102, 102, 0.1);
   border: 1px solid #eee;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   -ms-border-radius: 4px;
@@ -2757,7 +2752,6 @@ Customized Bootstrap Labels
   font-weight: 300;
   padding: 3px 6px 3px 6px;
   color: #fff;
-  font-family: "Open Sans", sans-serif;
 }
 .label.label-sm {
   font-size: 12px;
@@ -4910,7 +4904,6 @@ Light Table
   font-weight: 600;
   font-size: 13px;
   color: #a7b3b9;
-  font-family: "Open Sans", sans-serif;
   border: 0;
   border-bottom: 1px solid #F2F5F8;
 }

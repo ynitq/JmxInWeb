@@ -10,6 +10,9 @@
 <link rel="stylesheet" type="text/css" href="statics/css/default.css">
 <link rel="stylesheet" type="text/css" href="statics/css/layout.css">
 <link rel="stylesheet" type="text/css" href="statics/css/jcweb.css">
+<!-- TemplateBeginEditable name="ex-sytle" -->
+额外的样式表
+<!-- TemplateEndEditable -->
 </head>
 <body>
 <!-- NAV BAR BEGIN-->
@@ -35,22 +38,43 @@
     <div class="container-fluid"> 
       <!-- BEGIN PAGE TITLE -->
       <div class="page-title">
-        <h1><!-- TemplateBeginEditable name="pageTitle" --> Page Title <!-- TemplateEndEditable --></h1>
+		<!-- TemplateBeginEditable name="pageTitle" -->
+        <h1>
+        Page Title <small>说明</small>
+        </h1>
+		<!-- TemplateEndEditable -->
       </div>
       <!-- END PAGE TITLE --> 
     </div>
   </div>
   <div class="page-content">
     <div class="container-fluid">
-    	<div class="row">
-        	<div class="col-md-12">
-      <!-- TemplateBeginEditable name="body" --> 
-		
-      <!-- TemplateEndEditable -->
-      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <!-- TemplateBeginEditable name="body" -->
+          中间主区域的代码
+		  <!-- TemplateEndEditable -->
+        </div>
       </div>
     </div>
   </div>
 </div>
+ 
+<!-- TemplateBeginEditable name="body-end" -->
+额外的代码，例如模式窗
+<!-- TemplateEndEditable -->
+
+<!-- COMMON JAVASCRIPT BEGIN -->
+<script src="statics/jquery.min.js"></script>
+<script src="statics/bootstrap-3.3.5/js/bootstrap.js"></script>
+<script src="statics/jquery.flot/jquery.flot.js"></script>
+<script src="statics/bootstrap-toastr/toastr.min.js"></script>
+<script src="statics/jcweb.js"></script>
+<!-- COMMON JAVASCRIPT END -->
+
+<!-- TemplateBeginEditable name="ex-script" -->
+额外的js
+<!-- TemplateEndEditable -->
+
 </body>
 </html>

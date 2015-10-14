@@ -1,0 +1,9 @@
+<config>
+	<context-values>
+		<resource path="">
+			<value key="domainVo" object-class="com.kunmingCoder.jmxInWeb.models.DomainVo"/>
+		</resource>
+	</context-values>
+	<macro-library>
+	</macro-library>
+</config>

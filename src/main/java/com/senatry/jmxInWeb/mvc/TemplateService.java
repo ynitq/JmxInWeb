@@ -8,7 +8,7 @@ import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.senatry.jmxInWeb.AppConstants;
+import com.senatry.jmxInWeb.config.AppConstants;
 import com.senatry.jmxInWeb.utils.LogUtil;
 import com.senatry.jmxInWeb.utils.StringUtils;
 

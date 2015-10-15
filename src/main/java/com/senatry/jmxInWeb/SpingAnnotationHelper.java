@@ -1,8 +1,4 @@
-package com.fireNut.jmxInWeb;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+package com.senatry.jmxInWeb;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -12,60 +8,40 @@ import org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource;
 import org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 
-import com.senatry.jmxInWeb.http.HttpAdaptor;
 import com.senatry.jmxInWeb.utils.LogUtil;
 
 /**
  * 
  * <pre>
- * 测试启动一个jmx服务
+ * 通过Spring的实现类
  * </pre>
  * 
  * @author liangwj72
  * 
  */
-public class TestJmxHttpServer {
+public class SpingAnnotationHelper {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
-			.getLog(TestJmxHttpServer.class);
+			.getLog(SpingAnnotationHelper.class);
 
-	private MBeanExporter mBeanExporter;
+	private final MBeanExporter mBeanExporter;
 
-	private HttpAdaptor httpAdaptor;
-
-	private boolean inited;
-
-	/**
-	 * 开始监听
-	 * 
-	 * @throws IOException
-	 */
-	public void start() throws IOException {
-
-		MBeanServer server = this.getMBeanServer();
+	public SpingAnnotationHelper() {
+		MBeanServerFactoryBean mBeanServerFactory = new MBeanServerFactoryBean();
+		mBeanServerFactory.afterPropertiesSet();
+		MBeanServer server = mBeanServerFactory.getObject();
 
 		// 用注解方式定义mbean以及里面的属性
 		MetadataMBeanInfoAssembler assembler = new MetadataMBeanInfoAssembler();
 		assembler.setAttributeSource(new AnnotationJmxAttributeSource());
 
-		Map<String, Object> beans = new HashMap<String, Object>();
-		beans.put("system:name=HttpAdaptor", this.httpAdaptor);
-
 		this.mBeanExporter = new MBeanExporter();
-		this.mBeanExporter.setBeans(beans);
 		this.mBeanExporter.setAssembler(assembler);
 		this.mBeanExporter.setServer(server);
-
-		this.httpAdaptor = new HttpAdaptor(server);
-		this.httpAdaptor.start();
-
-		this.inited = true;
 	}
 
-	private MBeanServer getMBeanServer() {
-		MBeanServerFactoryBean mBeanServerFactory = new MBeanServerFactoryBean();
-		mBeanServerFactory.afterPropertiesSet();
-		return mBeanServerFactory.getObject();
+	public MBeanServer getMBeanServer() {
+		return this.mBeanExporter.getServer();
 	}
 
 	/**
@@ -77,10 +53,6 @@ public class TestJmxHttpServer {
 	 *            mbean名
 	 */
 	public void unRegister(String domain, String name) {
-		if (!this.inited) {
-			return;
-		}
-
 		try {
 			ObjectName oname = ObjectName.getInstance(domain + ":name=" + name);
 			if (mBeanExporter.getServer().isRegistered(oname)) {
@@ -109,10 +81,6 @@ public class TestJmxHttpServer {
 	 *            mbean名
 	 */
 	public void register(Object obj, String domain, String name) {
-		if (!this.inited) {
-			return;
-		}
-
 		try {
 			ObjectName oname = ObjectName.getInstance(domain + ":name=" + name);
 			if (!mBeanExporter.getServer().isRegistered(oname)) {
@@ -146,18 +114,4 @@ public class TestJmxHttpServer {
 			this.register(obj, domain, clazz.getSimpleName());
 		}
 	}
-
-	/**
-	 * 停止HttpAdaptor
-	 */
-	protected void stopHttpAdaptor() {
-		this.httpAdaptor.stop();
-	}
-
-	public static void main(String[] args) throws IOException {
-		TestJmxHttpServer s = new TestJmxHttpServer();
-		s.start();
-		s.register(new MyTestMBean());
-	}
-
 }

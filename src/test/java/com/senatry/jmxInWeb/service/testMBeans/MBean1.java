@@ -1,4 +1,4 @@
-package com.fireNut.jmxInWeb;
+package com.senatry.jmxInWeb.service.testMBeans;
 
 import java.lang.management.ManagementFactory;
 import java.util.Set;
@@ -16,26 +16,35 @@ import org.springframework.stereotype.Service;
 
 @ManagedResource(description = "测试")
 @Service
-public class MyTestMBean {
+public class MBean1 {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(MyTestMBean.class);
+	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(MBean1.class);
 
 	private String prop1 = "prop1 value";
 
-	@ManagedAttribute(description = "属性1")
-	public String getProp1() {
+	@ManagedAttribute
+	public String getAttrRW() {
+		log.debug(String.format("getAttrRW() = %s", prop1));
 		return prop1;
 	}
 
-	@ManagedAttribute
-	public void setProp1(String prop1) {
-		this.prop1 = prop1;
+	@ManagedAttribute(description = "读写属性")
+	public void setAttrRW(String arg) {
+		log.debug(String.format("setAttrRW(%s)", arg));
+		this.prop1 = arg;
 	}
 
-	@ManagedOperation(description = "测试的op")
-	public Long getCurTime111() {
+	@ManagedAttribute(description = "只读属性")
+	public Long getAttrReadOnly() {
+		long res = System.currentTimeMillis();
+		log.debug(String.format("getAttrReadOnly() = %d", res));
 
-		return System.currentTimeMillis();
+		return res;
+	}
+
+	@ManagedAttribute(description = "只写属性")
+	public void setAttrWriteOnly(String arg) {
+		log.debug(String.format("setAttrWriteOnly(%s)", arg));
 	}
 
 	@ManagedOperation(description = "对参数进行说明的例子")

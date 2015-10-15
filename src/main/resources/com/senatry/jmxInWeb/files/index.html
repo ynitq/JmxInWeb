@@ -49,14 +49,7 @@
         <div class="col-md-12">
           <!-- InstanceBeginEditable name="body" -->
 
-<#list list as domainVo>
           <div class="portlet light">
-            <div class="portlet-title">
-              <div class="caption"> 
-              	<i class="fa fa-cogs font-green-sharp"></i> 
-              	<span class="caption-subject font-green-sharp bold ">${domainVo.name}</span> 
-              </div>
-            </div>
             <div class="portlet-body">
               <div class="table">
                 <table class="table table-light table-hover">
@@ -68,19 +61,28 @@
                     </tr>
                   </thead>
                   <tbody>
+<#list list as domainVo>
+                    <tr>
+                      <td colspan="3">
+			              <div class="caption"> 
+			              	<i class="fa fa-cogs font-green-sharp"></i> 
+			              	<span class="caption-subject font-green-sharp bold ">${domainVo.name}</span> 
+			              </div>
+                      </td>
+                    </tr>
 <#list domainVo.beans as mbeanVo>
                     <tr>
-			          <td><a href="mbeanInfo?name=${mbeanVo.name?url}">${mbeanVo.name}</a></td>
+			          <td><a href="mbeanInfo?objectName=${mbeanVo.objectName?url}">${mbeanVo.simpleName}</a></td>
 			          <td>${mbeanVo.className}</td>
 			          <td>${mbeanVo.desc}</td>
                     </tr>
+</#list>
 </#list>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
-</#list>
 
           <!-- InstanceEndEditable -->
         </div>

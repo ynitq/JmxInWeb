@@ -5,9 +5,11 @@ import java.util.Map;
 
 import javax.management.JMException;
 
+import com.senatry.jmxInWeb.exception.MissingParamException;
+import com.senatry.jmxInWeb.http.MyHttpRequest;
+import com.senatry.jmxInWeb.models.MBeanVo;
 import com.senatry.jmxInWeb.mvc.BasePageAction;
-
-import freemarker.template.TemplateException;
+import com.senatry.jmxInWeb.service.MBeanService;
 
 /**
  * <pre>
@@ -20,13 +22,27 @@ public class MBeanInfoAction extends BasePageAction {
 
 	@Override
 	public String getRequestUrl() {
-		return "mbean";
+		return "/mbeanInfo";
 	}
 
 	@Override
-	protected String getModelAndView(Map<String, Object> dataModel) throws TemplateException, IOException, JMException {
-		// TODO Auto-generated method stub
-		return "mbeanInfo.html";
+	protected String getModelAndView(MyHttpRequest request, Map<String, Object> dataModel)
+			throws IOException, JMException, MissingParamException {
+
+		MBeanForm form = request.bindForm(MBeanForm.class);
+
+		form.verifyOBjectName();
+
+		MBeanVo mbean = MBeanService.getInstance().getMBeanByName(form.getObjectName());
+		if (mbean != null) {
+			dataModel.put("mbean", mbean);
+			return "mbeanInfo.html";
+		} else {
+			// 如果找不到mbean的就返回首页
+			request.redirect("/");
+			return null;
+		}
+
 	}
 
 }

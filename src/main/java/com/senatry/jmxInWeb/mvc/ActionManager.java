@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.senatry.jmxInWeb.actions.StaticFileAction;
+import com.senatry.jmxInWeb.actions.mbean.MBeanInfoAction;
 import com.senatry.jmxInWeb.actions.mbean.WelcomeAction;
+import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
 import com.senatry.jmxInWeb.utils.LogUtil;
 import com.sun.net.httpserver.HttpExchange;
@@ -26,7 +28,6 @@ public class ActionManager implements HttpHandler {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(ActionManager.class);
 
-
 	private final Map<String, BaseAction> actionsMap = new HashMap<String, BaseAction>();
 
 	private final BaseAction staticFileAction = new StaticFileAction();
@@ -34,6 +35,7 @@ public class ActionManager implements HttpHandler {
 	public ActionManager() {
 		// add all action to map
 		this.addAction(new WelcomeAction());
+		this.addAction(new MBeanInfoAction());
 
 		if (log.isDebugEnabled()) {
 			log.debug(LogUtil.format("ActionManager inited, Total action:%d", this.actionsMap.size()));
@@ -50,16 +52,21 @@ public class ActionManager implements HttpHandler {
 
 		MyHttpRequest request = new MyHttpRequest(httpExchange);
 
-		if (request.isStaticFileRequest()) {
-			this.staticFileAction.process(request);
-		} else {
-			BaseAction action = this.actionsMap.get(request.getPath());
-			if (action != null) {
-				action.process(request);
+		try {
+			if (request.isStaticFileRequest()) {
+				this.staticFileAction.process(request);
 			} else {
-				// 404
-				request.error404();
+				BaseAction action = this.actionsMap.get(request.getPath());
+				if (action != null) {
+					action.process(request);
+				} else {
+					// 404
+					request.error404();
+				}
 			}
+		} catch (BaseLogicException ex) {
+			// TODO ACTION发生的异常要处理
+			LogUtil.traceError(log, ex);
 		}
 		request.close();
 	}

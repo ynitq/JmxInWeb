@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
 
 /**
@@ -23,6 +24,6 @@ public abstract class BaseAction {
 		return map;
 	}
 
-	public abstract void process(MyHttpRequest request) throws IOException;
+	public abstract void process(MyHttpRequest request) throws IOException, BaseLogicException;
 
 }

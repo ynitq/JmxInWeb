@@ -40,7 +40,7 @@
       <!-- BEGIN PAGE TITLE -->
       <div class="page-title">
 		<!-- InstanceBeginEditable name="pageTitle" -->
-        <h1> <b>MBean:</b>JMImplementation:type=MBeanServerDelegat <small>说明</small> </h1>
+        <h1> <b>MBean:</b>${mbean.objectName} <small>${mbean.desc}</small> </h1>
         <!-- InstanceEndEditable -->
       </div>
       <!-- END PAGE TITLE --> 
@@ -67,25 +67,29 @@
                     </tr>
                   </thead>
                   <tbody>
+<#list mbean.attrs as attrVo>
                     <tr>
-                      <td>Name</td>
-                      <td>说明</td>
-                      <td>long</td>
-                      <td >value <a class="btn default btn-xs purple" data-target="#newValueModal" data-toggle="modal"> <i class="fa fa-edit"></i> Edit </a></td>
+                      <td>${attrVo.info.name}</td>
+                      <td>${attrVo.desc}</td>
+                      <td>${attrVo.info.type}</td>
+                      <td>
+                        <#if attrVo.info.writable>
+                    	<#if !attrVo.info.readable><span class="label label-warning">只写</span></#if>
+                      	<a class="js_editable" 
+                      		data-name="firstname" 
+                      		data-type="textarea" 
+                      		data-placement="top"
+                      		data-rows="4"
+                      		data-readable="<#if attrVo.info.readable>true<#else>false</#if>"
+                      		data-placeholder="请输入${attrVo.info.name}新值" 
+                      		data-original-title="请输入${attrVo.info.name}新值"
+                      		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a>
+                      	<#else>
+							<span class="label label-success">只读</span> ${attrVo.value} 
+						</#if>
+                      </td>
                     </tr>
-                    <tr>
-                      <td>Name</td>
-                      <td>说明</td>
-                      <td>long</td>
-                      <td>value <span class="label label-danger">只读</span></td>
-                    </tr>
-                    <tr>
-                      <td>Name</td>
-                      <td>说明</td>
-                      <td>long</td>
-                      <td><a class="js_editable text-danger" href="javascript:;" data-name="firstname" data-type="textarea" data-pk="1s" data-placement="top" data-placeholder="请输入新值" data-original-title="请输入新值">
-只写</a></td>
-                    </tr>
+</#list>
                   </tbody>
                 </table>
               </div>
@@ -107,23 +111,25 @@
                     </tr>
                   </thead>
                   <tbody>
+<#list mbean.opts as optVo>
+<#if optVo.noParam>
                     <tr>
-                      <td><span class="bold theme-font">getCurTime111</span></td>
-                      <td>java.lang.Long</td>
-                      <td>对参数进行说明的例子</td>
+                      <td><span class="bold theme-font">${optVo.info.name}</span></td>
+                      <td>${optVo.info.returnType}</td>
+                      <td>${optVo.info.description}</td>
                       <td><a class="btn default btn-xs green-stripe">Invoke</a></td>
                     </tr>
+<#else>
                     <tr>
-                      <td rowspan="2" ><span class="bold theme-font">getCurTime111</span></td>
-                      <td>com.kunmingCoder.jcweb.MyTestMBean</td>
-                      <td>测试</td>
+                      <td rowspan="2" ><span class="bold theme-font">${optVo.info.name}</span></td>
+                      <td>${optVo.info.returnType}</td>
+                      <td>${optVo.info.description}</td>
                       <td></td>
                     </tr>
                     <tr>
                       <td colspan="2"><table class="table table-bordered">
                           <thead>
                             <tr role="row" class="heading">
-                              <th>id</th>
                               <th>名字</th>
                               <th>说明</th>
                               <th>类型</th>
@@ -131,17 +137,20 @@
                             </tr>
                           </thead>
                           <tbody>
+<#list optVo.params as paramVo>
                             <tr role="row" class="filter">
-                              <td>0</td>
-                              <td>p1</td>
-                              <td>p1的说明</td>
-                              <td><span class="label label-sm label-success label-mini"> Long </span></td>
-                              <td><input type="text" class="form-control form-filter input-sm" name="order_id"></td>
+                              <td>${paramVo.info.name}</td>
+                              <td>${paramVo.info.description}</td>
+                              <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type}</span></td>
+                              <td><input type="text" class="form-control form-filter input-sm" name="param"></td>
                             </tr>
+</#list>
                           </tbody>
                         </table></td>
                       <td><a class="btn default btn-xs green-stripe">Invoke</a></td>
-                    </tr>
+                    </tr></#if>                    
+</#list>
+
                   </tbody>
                 </table>
               </div>

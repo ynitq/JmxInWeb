@@ -8,7 +8,8 @@ import java.net.URLEncoder;
 import java.util.List;
 import java.util.zip.GZIPOutputStream;
 
-import com.senatry.jmxInWeb.AppConstants;
+import com.senatry.jmxInWeb.config.AppConstants;
+import com.senatry.jmxInWeb.utils.BinderUtil;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
@@ -127,4 +128,15 @@ public class MyHttpRequest implements Closeable {
 	public void close() throws IOException {
 		this.httpExchange.close();
 	}
+
+	/**
+	 * 将httpRequest中的参数注入到form中
+	 * 
+	 * @param formClass
+	 * @return
+	 */
+	public <T> T bindForm(Class<T> formClass) {
+		return BinderUtil.bindForm(httpExchange, formClass);
+	}
+
 }

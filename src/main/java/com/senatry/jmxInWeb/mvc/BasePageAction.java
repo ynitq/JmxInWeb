@@ -5,8 +5,10 @@ import java.util.Map;
 
 import javax.management.JMException;
 
+import com.senatry.jmxInWeb.exception.BaseLogicException;
+import com.senatry.jmxInWeb.exception.FreeMarkerException;
+import com.senatry.jmxInWeb.exception.JmxException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
-import com.senatry.jmxInWeb.utils.LogUtil;
 
 import freemarker.template.TemplateException;
 
@@ -19,24 +21,20 @@ import freemarker.template.TemplateException;
  */
 public abstract class BasePageAction extends BaseAction {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(BasePageAction.class);
-
 	@Override
-	public void process(MyHttpRequest request) throws IOException {
+	public void process(MyHttpRequest request) throws IOException, BaseLogicException {
 		Map<String, Object> dataModel = this.newModel();
 		try {
 			// 传入空的model，获得viewName，如果viewName不为空，就用freemark合成页面
-			String viewName = this.getModelAndView(dataModel);
+			String viewName = this.getModelAndView(request, dataModel);
 			if (viewName != null) {
 				String body = TemplateService.getInstance().process(viewName, dataModel);
 				request.sendResponse(body);
 			}
 		} catch (TemplateException e) {
-			// TODO freemarker出错的时候要输出提示，
-			LogUtil.traceError(log, e);
+			throw new FreeMarkerException(e);
 		} catch (JMException e) {
-			// TODO JMException出错的时候要输出提示，
-			LogUtil.traceError(log, e);
+			throw new JmxException(e);
 		}
 
 	}
@@ -52,6 +50,7 @@ public abstract class BasePageAction extends BaseAction {
 	 * @throws TemplateException
 	 * @throws IOException
 	 */
-	protected abstract String getModelAndView(Map<String, Object> dataModel) throws TemplateException, IOException, JMException;
+	protected abstract String getModelAndView(MyHttpRequest request, Map<String, Object> dataModel)
+			throws IOException, JMException, BaseLogicException;
 
 }

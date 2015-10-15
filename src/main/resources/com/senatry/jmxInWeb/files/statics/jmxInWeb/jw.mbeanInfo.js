@@ -9,6 +9,7 @@ $(document).ready(function() {
 			}
 		},
 		display: function (value) {
+			console.log($(this).attr("data-readable"));
 			console.log("--:" + value);
 		}
 	});

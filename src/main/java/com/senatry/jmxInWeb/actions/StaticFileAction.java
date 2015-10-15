@@ -2,7 +2,7 @@ package com.senatry.jmxInWeb.actions;
 
 import java.io.IOException;
 
-import com.senatry.jmxInWeb.AppConstants;
+import com.senatry.jmxInWeb.config.AppConstants;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
 import com.senatry.jmxInWeb.mvc.BaseAction;
 import com.senatry.jmxInWeb.utils.StringUtils;

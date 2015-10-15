@@ -20,7 +20,7 @@ import com.senatry.jmxInWeb.utils.StringUtils;
 
 /**
  * <pre>
- * 
+ * 同MBeanServer 获取MBean的各类信息，以及相关操作
  * </pre>
  * 
  * @author 梁韦江 2015年9月11日
@@ -66,7 +66,9 @@ public class MBeanService {
 		ObjectName objectName = new ObjectName(name);
 		if (!objectName.isPattern() && server.isRegistered(objectName)) {
 			MBeanInfo info = server.getMBeanInfo(objectName);
-			return new MBeanVo(objectName, info);
+			MBeanVo vo = new MBeanVo(objectName, info);
+			vo.setValueFromMBeanServer(server);
+			return vo;
 		}
 
 		return null;

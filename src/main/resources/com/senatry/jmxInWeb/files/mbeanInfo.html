@@ -1,0 +1,198 @@
+<!doctype html>
+<html><!-- InstanceBegin template="/Templates/common.dwt" codeOutsideHTMLIsLocked="false" -->
+<head>
+<meta charset="utf-8">
+<title>JConsole In Web</title>
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-3.3.5/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="statics/css/components-rounded.css">
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-toastr/toastr.min.css">
+<link rel="stylesheet" type="text/css" href="statics/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="statics/css/default.css">
+<link rel="stylesheet" type="text/css" href="statics/css/layout.css">
+<link rel="stylesheet" type="text/css" href="statics/jmxInWeb/jw.common.css">
+<#setting url_escaping_charset="UTF-8">
+<!-- InstanceBeginEditable name="ex-sytle" -->
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-editable/css/bootstrap-editable.css">
+<!-- InstanceEndEditable -->
+</head>
+<body>
+<!-- NAV BAR BEGIN-->
+<div class="page-header"> 
+  <!-- BEGIN HEADER MENU -->
+  <div class="page-header-menu " style="display: block;">
+    <div class="container-fluid">
+      <div class="hor-menu">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">MBean</a></li>
+          <li><a href="#">内存</a></li>
+          <li><a href="#">线程</a></li>
+          <li><a href="#">VM概要</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- END HEADER MENU --> 
+</div>
+<!-- NAV BAR END-->
+<div class="page-container">
+  <div class="page-head">
+    <div class="container-fluid"> 
+      <!-- BEGIN PAGE TITLE -->
+      <div class="page-title">
+		<!-- InstanceBeginEditable name="pageTitle" -->
+        <h1> <b>MBean:</b>JMImplementation:type=MBeanServerDelegat <small>说明</small> </h1>
+        <!-- InstanceEndEditable -->
+      </div>
+      <!-- END PAGE TITLE --> 
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <!-- InstanceBeginEditable name="body" -->
+          <div class="portlet light">
+            <div class="portlet-title">
+              <div class="caption"> <span class="caption-subject font-green-sharp bold">属性</span> </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table">
+                <table class="table table-striped table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>说明</th>
+                      <th>Type</th>
+                      <th>Value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Name</td>
+                      <td>说明</td>
+                      <td>long</td>
+                      <td >value <a class="btn default btn-xs purple" data-target="#newValueModal" data-toggle="modal"> <i class="fa fa-edit"></i> Edit </a></td>
+                    </tr>
+                    <tr>
+                      <td>Name</td>
+                      <td>说明</td>
+                      <td>long</td>
+                      <td>value <span class="label label-danger">只读</span></td>
+                    </tr>
+                    <tr>
+                      <td>Name</td>
+                      <td>说明</td>
+                      <td>long</td>
+                      <td><a class="js_editable text-danger" href="javascript:;" data-name="firstname" data-type="textarea" data-pk="1s" data-placement="top" data-placeholder="请输入新值" data-original-title="请输入新值">
+只写</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="portlet light">
+            <div class="portlet-title">
+              <div class="caption"> <span class="caption-subject font-green-sharp bold">操作</span> </div>
+            </div>
+            <div class="portlet-body">
+              <div class="table">
+                <table class="table table-hover table-bordered">
+                  <thead>
+                    <tr>
+                      <th>名字</th>
+                      <th>返回类型</th>
+                      <th>说明</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="bold theme-font">getCurTime111</span></td>
+                      <td>java.lang.Long</td>
+                      <td>对参数进行说明的例子</td>
+                      <td><a class="btn default btn-xs green-stripe">Invoke</a></td>
+                    </tr>
+                    <tr>
+                      <td rowspan="2" ><span class="bold theme-font">getCurTime111</span></td>
+                      <td>com.kunmingCoder.jcweb.MyTestMBean</td>
+                      <td>测试</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><table class="table table-bordered">
+                          <thead>
+                            <tr role="row" class="heading">
+                              <th>id</th>
+                              <th>名字</th>
+                              <th>说明</th>
+                              <th>类型</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr role="row" class="filter">
+                              <td>0</td>
+                              <td>p1</td>
+                              <td>p1的说明</td>
+                              <td><span class="label label-sm label-success label-mini"> Long </span></td>
+                              <td><input type="text" class="form-control form-filter input-sm" name="order_id"></td>
+                            </tr>
+                          </tbody>
+                        </table></td>
+                      <td><a class="btn default btn-xs green-stripe">Invoke</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- InstanceEndEditable -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<!-- InstanceBeginEditable name="body-end" -->
+<div id="newValueModal" class="modal fade" tabindex="-1" data-width="400">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+        <h4 class="modal-title">Stack One</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <h4>新值</h4>
+            <p>
+              <input type="text" class="col-md-12 form-control">
+            </p>
+          </div>
+        </div>
+        <a class="btn green" data-toggle="modal" href="#stack2"> Launch modal </a> </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn">Close</button>
+        <button type="button" class="btn red">Ok</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- InstanceEndEditable -->
+
+<!-- COMMON JAVASCRIPT BEGIN -->
+<script src="statics/jquery.min.js"></script>
+<script src="statics/bootstrap-3.3.5/js/bootstrap.js"></script>
+<script src="statics/jquery.flot/jquery.flot.js"></script>
+<script src="statics/bootstrap-toastr/toastr.min.js"></script>
+<script src="statics/jmxInWeb/jw.common.js"></script>
+<!-- COMMON JAVASCRIPT END -->
+
+<!-- InstanceBeginEditable name="ex-script" -->
+<script src="statics/bootstrap-editable/js/bootstrap-editable.js"></script>
+<script src="statics/jmxInWeb/jw.mbeanInfo.js"></script>
+<!-- InstanceEndEditable -->
+
+</body>
+<!-- InstanceEnd --></html>

@@ -1,11 +1,13 @@
-package com.senatry.jmxInWeb.http;
+package com.senatry.jmxInWeb.mvc;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.senatry.jmxInWeb.actions.StaticFileAction;
-import com.senatry.jmxInWeb.actions.WelcomeAction;
+import com.senatry.jmxInWeb.actions.mbean.WelcomeAction;
+import com.senatry.jmxInWeb.http.MyHttpRequest;
+import com.senatry.jmxInWeb.utils.LogUtil;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -25,21 +27,21 @@ public class ActionManager implements HttpHandler {
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(ActionManager.class);
 
 
-	private final Map<String, BaseAction> handlerMap = new HashMap<String, BaseAction>();
+	private final Map<String, BaseAction> actionsMap = new HashMap<String, BaseAction>();
 
 	private final BaseAction staticFileAction = new StaticFileAction();
 
 	public ActionManager() {
-		if (log.isDebugEnabled()) {
-			log.debug("HttpHandlerImpl init");
-		}
-
 		// add all action to map
-		this.addHandler(new WelcomeAction());
+		this.addAction(new WelcomeAction());
+
+		if (log.isDebugEnabled()) {
+			log.debug(LogUtil.format("ActionManager inited, Total action:%d", this.actionsMap.size()));
+		}
 	}
 
-	private void addHandler(BaseAction handler) {
-		this.handlerMap.put(handler.getRequestUrl(), handler);
+	private void addAction(BaseAction handler) {
+		this.actionsMap.put(handler.getRequestUrl(), handler);
 
 	}
 
@@ -51,7 +53,7 @@ public class ActionManager implements HttpHandler {
 		if (request.isStaticFileRequest()) {
 			this.staticFileAction.process(request);
 		} else {
-			BaseAction action = this.handlerMap.get(request.getPath());
+			BaseAction action = this.actionsMap.get(request.getPath());
 			if (action != null) {
 				action.process(request);
 			} else {

@@ -3,17 +3,16 @@ package com.senatry.jmxInWeb.actions;
 import java.io.IOException;
 
 import com.senatry.jmxInWeb.AppConstants;
-import com.senatry.jmxInWeb.http.BaseAction;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
+import com.senatry.jmxInWeb.mvc.BaseAction;
 import com.senatry.jmxInWeb.utils.StringUtils;
 
 /**
  * <pre>
- * 
+ * 用于处理今天文件
  * </pre>
  * 
- * @author 梁韦江
- * 2015年10月13日
+ * @author 梁韦江 2015年10月13日
  */
 public class StaticFileAction extends BaseAction {
 

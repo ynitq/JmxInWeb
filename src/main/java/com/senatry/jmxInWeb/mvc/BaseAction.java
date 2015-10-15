@@ -1,7 +1,10 @@
-package com.senatry.jmxInWeb.http;
+package com.senatry.jmxInWeb.mvc;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import com.senatry.jmxInWeb.http.MyHttpRequest;
 
 /**
  * <pre>
@@ -11,7 +14,7 @@ import java.util.Map;
  * @author 梁韦江
  * 2015年9月11日
  */
-public abstract class BaseAction implements IRequestHandler {
+public abstract class BaseAction {
 
 	public abstract String getRequestUrl();
 
@@ -19,5 +22,7 @@ public abstract class BaseAction implements IRequestHandler {
 		Map<String, Object> map = new HashMap<String, Object>();
 		return map;
 	}
+
+	public abstract void process(MyHttpRequest request) throws IOException;
 
 }

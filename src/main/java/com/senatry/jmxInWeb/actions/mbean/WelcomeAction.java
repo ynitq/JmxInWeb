@@ -1,11 +1,11 @@
-package com.senatry.jmxInWeb.actions;
+package com.senatry.jmxInWeb.actions.mbean;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import com.senatry.jmxInWeb.http.BasePageAction;
 import com.senatry.jmxInWeb.models.DomainVo;
+import com.senatry.jmxInWeb.mvc.BasePageAction;
 import com.senatry.jmxInWeb.service.MBeanService;
 
 import freemarker.template.TemplateException;
@@ -25,14 +25,10 @@ public class WelcomeAction extends BasePageAction {
 	}
 
 	@Override
-	protected String getViewName() {
-		return "index.html";
-	}
-
-	@Override
-	protected void fillDataModel(Map<String, Object> dataModel) throws TemplateException, IOException {
+	protected String getModelAndView(Map<String, Object> dataModel) throws TemplateException, IOException {
 		List<DomainVo> list = MBeanService.getInstance().getAllMBaen();
 		dataModel.put("list", list);
+		return "index.html";
 	}
 
 }

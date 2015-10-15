@@ -10,7 +10,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="com.kunmingCoder.jcweb">
+	<logger name="com.senatry.jmxInWeb">
 		<level value="debug" />
 	</logger>
 

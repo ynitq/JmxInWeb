@@ -7,13 +7,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.management.JMException;
 import javax.management.MBeanInfo;
 import javax.management.MBeanServer;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
 import com.senatry.jmxInWeb.models.DomainVo;
+import com.senatry.jmxInWeb.models.MBeanVo;
 import com.senatry.jmxInWeb.utils.LogUtil;
+import com.senatry.jmxInWeb.utils.StringUtils;
 
 /**
  * <pre>
@@ -46,6 +49,27 @@ public class MBeanService {
 
 	public void setServer(MBeanServer server) {
 		this.server = server;
+	}
+
+	/**
+	 * 根据全名，获得mbean
+	 * 
+	 * @param name
+	 * @return
+	 * @throws JMException
+	 */
+	public MBeanVo getMBeanByName(String name) throws JMException {
+		if (StringUtils.isBlank(name)) {
+			return null;
+		}
+
+		ObjectName objectName = new ObjectName(name);
+		if (!objectName.isPattern() && server.isRegistered(objectName)) {
+			MBeanInfo info = server.getMBeanInfo(objectName);
+			return new MBeanVo(objectName, info);
+		}
+
+		return null;
 	}
 
 	public List<DomainVo> getAllMBaen() {

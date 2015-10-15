@@ -1,13 +1,5 @@
 package com.senatry.jmxInWeb.http;
 
-/*
- *  Copyright (C) The MX4J Contributors.
- *  All rights reserved.
- *
- *  This software is distributed under the terms of the MX4J License version 1.0.
- *  See the terms of the MX4J License in the documentation provided with this software.
- */
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.Date;
@@ -17,6 +9,7 @@ import java.util.concurrent.Executors;
 
 import javax.management.MBeanServer;
 
+import com.senatry.jmxInWeb.mvc.ActionManager;
 import com.senatry.jmxInWeb.service.MBeanService;
 import com.senatry.jmxInWeb.utils.StringUtils;
 import com.sun.net.httpserver.BasicAuthenticator;
@@ -24,9 +17,7 @@ import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
 /**
- * HttpAdaptor sets the basic adaptor listening for HTTP requests
- * 
- * @version $Revision: 1.14 $
+ * HttpAdaptor sets the basic adaptor listening for HTTP requests *
  */
 public class HttpAdaptor implements HttpAdaptorMBean {
 
@@ -42,7 +33,6 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 	 * Host where to set the server socket
 	 */
 	private String host = "localhost";
-
 
 	/**
 	 * Indicates whether the server is running
@@ -116,11 +106,6 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 		this.port = port;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getPort()
-	 */
 	@Override
 	public int getPort() {
 		return port;
@@ -139,51 +124,26 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 		this.host = host;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getHost()
-	 */
 	@Override
 	public String getHost() {
 		return host;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#isActive()
-	 */
 	@Override
 	public boolean isActive() {
 		return alive;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getStartDate()
-	 */
 	@Override
 	public Date getStartDate() {
 		return startDate;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getRequestsCount()
-	 */
 	@Override
 	public long getRequestsCount() {
 		return requestsCount;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.kunmingCoder.jcweb.HttpAdaptorMBean1#getVersion()
-	 */
 	@Override
 	public String getVersion() {
 		return VERSION;

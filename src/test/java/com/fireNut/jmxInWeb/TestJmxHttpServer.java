@@ -12,8 +12,8 @@ import org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource;
 import org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler;
 import org.springframework.jmx.support.MBeanServerFactoryBean;
 
-import com.fireNut.jmxInWeb.http.HttpAdaptor;
-import com.fireNut.jmxInWeb.utils.LogUtil;
+import com.senatry.jmxInWeb.http.HttpAdaptor;
+import com.senatry.jmxInWeb.utils.LogUtil;
 
 /**
  * 

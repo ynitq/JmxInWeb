@@ -1,5 +1,6 @@
 package com.senatry.jmxInWeb.models;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import javax.management.ObjectName;
 
 /**
  * <pre>
- * 
+ * 对Mbean进行分类显示用
  * </pre>
  * 
  * @author 梁韦江 2015年9月11日
@@ -16,6 +17,8 @@ import javax.management.ObjectName;
 public class DomainVo implements Comparable<DomainVo> {
 	private final String name;
 	private final List<MBeanVo> beans = new LinkedList<MBeanVo>();
+
+	private boolean sorted = false;
 
 	public DomainVo(String name) {
 		super();
@@ -27,6 +30,10 @@ public class DomainVo implements Comparable<DomainVo> {
 	}
 
 	public List<MBeanVo> getBeans() {
+		if (!this.sorted) {
+			this.sorted = true;
+			Collections.sort(this.beans);
+		}
 		return beans;
 	}
 

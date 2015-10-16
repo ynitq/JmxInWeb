@@ -1,5 +1,6 @@
 <!doctype html>
-<html><!-- InstanceBegin template="/Templates/common.dwt" codeOutsideHTMLIsLocked="false" -->
+<html>
+<!-- InstanceBegin template="/Templates/common.dwt" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta charset="utf-8">
 <title>JConsole In Web</title>
@@ -38,22 +39,18 @@
   <div class="page-head">
     <div class="container-fluid"> 
       <!-- BEGIN PAGE TITLE -->
-      <div class="page-title">
-		<!-- InstanceBeginEditable name="pageTitle" -->
-        <h1><b>ClassName:</b>${mbean.className}  <small>${mbean.desc}</small> </h1>
-	  <p>
-		<b>MBean:</b>${mbean.objectName}
-	  </p>
-        <!-- InstanceEndEditable -->
-      </div>
+      <div class="page-title"> <!-- InstanceBeginEditable name="pageTitle" -->
+        <h1><b>ClassName:</b>${mbean.className} <small>${mbean.desc}</small> </h1>
+        <!-- InstanceEndEditable --> </div>
       <!-- END PAGE TITLE --> 
     </div>
   </div>
   <div class="page-content">
-    <div class="container-fluid">
+    <div class="container-fluid"> <!-- InstanceBeginEditable name="pre-body" -->
+      <div class="note note-info note-bordered"> <b>MBean:</b>${mbean.objectName} </div>
+      <!-- InstanceEndEditable -->
       <div class="row">
-        <div class="col-md-12">
-          <!-- InstanceBeginEditable name="body" -->
+        <div class="col-md-12"> <!-- InstanceBeginEditable name="body" -->
           <div class="portlet light">
             <div class="portlet-title">
               <div class="caption"> <span class="caption-subject font-green-sharp bold">属性</span> </div>
@@ -70,15 +67,13 @@
                     </tr>
                   </thead>
                   <tbody>
-<#list mbean.attrs as attrVo>
-                    <tr>
-                      <td>${attrVo.info.name}</td>
-                      <td>${attrVo.info.type}</td>
-                      <td>${attrVo.desc}</td>
-                      <td>
-                        <#if attrVo.info.writable>
-                    	<#if !attrVo.info.readable><span class="label label-warning">只写</span></#if>
-                      	<a class="js_edit_attr" 
+                  <#list mbean.attrs as attrVo>
+                  <tr>
+                    <td>${attrVo.info.name}</td>
+                    <td>${attrVo.info.type}</td>
+                    <td>${attrVo.desc}</td>
+                    <td><#if attrVo.info.writable>
+                      <#if !attrVo.info.readable><span class="label label-warning">只写</span></#if> <a class="js_edit_attr" 
                       		data-name="${attrVo.info.name}" 
                       		data-type="textarea" 
                       		data-placement="top"
@@ -87,14 +82,12 @@
                       		data-placeholder="请输入${attrVo.info.name}新值" 
                       		data-original-title="请输入${attrVo.info.name}新值"
                       		data-param-objectName="${mbean.objectName?j_string}"
-                      		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a>
-                      	<#else>
-							<span class="label label-success">只读</span> ${attrVo.value} 
-						</#if>
-                      </td>
-                    </tr>
-</#list>
-                  </tbody>
+                      		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a> <#else> <span class="label label-success">只读</span> ${attrVo.value} 
+                      </#if> </td>
+                  </tr>
+                  </#list>
+                    </tbody>
+                  
                 </table>
               </div>
             </div>
@@ -105,7 +98,7 @@
             </div>
             <div class="portlet-body">
               <div class="table">
-                <table class="table table-hover table-bordered">
+                <table class="table  table-bordered">
                   <thead>
                     <tr>
                       <th width="200">名字</th>
@@ -115,95 +108,106 @@
                     </tr>
                   </thead>
                   <tbody>
+<#assign i=1>                  
 <#list mbean.opts as optVo>
-<#if optVo.noParam>
-                    <tr>
-                      <td><span class="bold theme-font">${optVo.info.name}</span></td>
-                      <td>${optVo.info.returnType}</td>
-                      <td>${optVo.info.description}</td>
-                      <td><a class="btn default btn-xs green-stripe">Invoke</a></td>
-                    </tr>
-<#else>
-                    <tr>
-                      <td rowspan="2" ><span class="bold theme-font">${optVo.info.name}</span></td>
-                      <td>${optVo.info.returnType}</td>
-                      <td>${optVo.info.description}</td>
-                      <td></td>
-                    </tr>
-                    <tr>
-                      <td colspan="2"><table class="table table-bordered">
-                          <thead>
-                            <tr role="row" class="heading">
-                              <th>名字</th>
-                              <th>说明</th>
-                              <th>类型</th>
-                              <th></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-<#list optVo.params as paramVo>
-                            <tr role="row" class="filter">
-                              <td>${paramVo.info.name}</td>
-                              <td>${paramVo.info.description}</td>
-                              <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type}</span></td>
-                              <td><input type="text" class="form-control form-filter input-sm" name="param"></td>
-                            </tr>
-</#list>
+                  <form id="form_invoke_${i}">
+					<input type="hidden" name="objectName" value="${optVo.info.name}"/>
+					<input type="hidden" name="optName" value="${mbean.objectName}"/>
+	<#if optVo.noParam>
+                  <tr>
+                    <td><span class="bold theme-font">${optVo.info.name}</span></td>
+                    <td>${optVo.info.returnType}</td>
+                    <td>${optVo.info.description}</td>
+                    <td>
+                      <form name="form_invoke_${i}">
+                      <btn class="btn default btn-xs green-stripe js_invoke_opt"
+                        data-form-name="form_invoke_${i}"
+                      	>Invoke</btn>
+                    </td>
+                  </tr>
+	<#else>
+                  <tr>
+                    <td rowspan="2" ><span class="bold theme-font">${optVo.info.name}</span></td>
+                    <td>${optVo.info.returnType}</td>
+                    <td>${optVo.info.description}</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td colspan="3"><table class="table table-bordered table-hover">
+                        <thead>
+                          <tr role="row" class="heading">
+                            <th>名字</th>
+                            <th>说明</th>
+                            <th>类型</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+		<#list optVo.params as paramVo>
+						<input type="hidden" name="paramType" value="${paramVo.info.type}"/>
+                          <tr role="row" class="filter">
+                            <td>${paramVo.info.name}</td>
+                            <td>${paramVo.info.description}</td>
+                            <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type}</span></td>
+                            <td><input type="text" class="form-control form-filter input-sm" name="paramValue"></td>
+                          </tr>
+		</#list>
+                          <tr>
+                          	<td colspan="4">
+		                      <btn class="btn default btn-xs green-stripe js_invoke_opt"
+		                        data-form-name="form_invoke_${i}"
+		                      	>Invoke</btn>
+                            </td>
+                          </tr>
                           </tbody>
-                        </table></td>
-                      <td><a class="btn default btn-xs green-stripe">Invoke</a></td>
-                    </tr></#if>                    
+                        
+                      </table></td>
+                  </tr>
+	</#if>                    
+<#assign i=i+1>                  
+                    </form>
 </#list>
-
-                  </tbody>
+                    </tbody>
+                  
                 </table>
               </div>
             </div>
           </div>
-          <!-- InstanceEndEditable -->
-        </div>
+          <!-- InstanceEndEditable --> </div>
       </div>
     </div>
   </div>
 </div>
 
 <!-- PRE-FOOTER BEGIN -->
- <div class="page-prefooter">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-				<h2>About</h2>
-				<p>
-					 在web界面上操作jmx.
-				</p>
-			</div>
-			<div class="col-md-3 col-sm-6 col-xs12 footer-block">
-				<h2>Documents</h2>
-                <a href="#" >......</a>
-			</div>
-			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-				<h2>Contacts</h2>
-				<address class="margin-bottom-40">
-				 Email: <a href="mailto:liangwj@tom.com">liangwj@tom.com</a>
-				</address>
-			</div>
-		</div>
-	</div>
+<div class="page-prefooter">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+        <h2>About</h2>
+        <p> 在web界面上操作jmx. </p>
+      </div>
+      <div class="col-md-3 col-sm-6 col-xs12 footer-block">
+        <h2>Documents</h2>
+        <a href="#" >......</a> </div>
+      <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+        <h2>Contacts</h2>
+        <address class="margin-bottom-40">
+        Email: <a href="mailto:liangwj@tom.com">liangwj@tom.com</a>
+        </address>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- PRE-FOOTER END -->
+<!-- PRE-FOOTER END --> 
 
 <!-- FOOTER BEGIN -->
 <div class="page-footer">
-	<div class="container-fluid">
-		 2015 
-	</div>
+  <div class="container-fluid"> 2015 </div>
 </div>
 <!-- FOOTER END -->
 
-<div class="scroll-to-top" style="display: block;">
-	<i class="fa fa-arrow-circle-up"></i>
-</div>
-
+<div class="scroll-to-top" style="display: block;"> <i class="fa fa-arrow-circle-up"></i> </div>
 <!-- InstanceBeginEditable name="body-end" -->
 <div id="newValueModal" class="modal fade" tabindex="-1" data-width="400">
   <div class="modal-dialog">
@@ -229,20 +233,20 @@
     </div>
   </div>
 </div>
+<!-- InstanceEndEditable --> 
+
+<!-- COMMON JAVASCRIPT BEGIN --> 
+<script src="statics/jquery.min.js"></script> 
+<script src="statics/bootstrap-3.3.5/js/bootstrap.js"></script> 
+<script src="statics/jquery.flot/jquery.flot.js"></script> 
+<script src="statics/bootstrap-toastr/toastr.min.js"></script> 
+<script src="statics/jmxInWeb/jw.common.js"></script> 
+<!-- COMMON JAVASCRIPT END --> 
+
+<!-- InstanceBeginEditable name="ex-script" --> 
+<script src="statics/bootstrap-editable/js/bootstrap-editable.js"></script> 
+<script src="statics/jmxInWeb/jw.mbeanInfo.js"></script> 
 <!-- InstanceEndEditable -->
-
-<!-- COMMON JAVASCRIPT BEGIN -->
-<script src="statics/jquery.min.js"></script>
-<script src="statics/bootstrap-3.3.5/js/bootstrap.js"></script>
-<script src="statics/jquery.flot/jquery.flot.js"></script>
-<script src="statics/bootstrap-toastr/toastr.min.js"></script>
-<script src="statics/jmxInWeb/jw.common.js"></script>
-<!-- COMMON JAVASCRIPT END -->
-
-<!-- InstanceBeginEditable name="ex-script" -->
-<script src="statics/bootstrap-editable/js/bootstrap-editable.js"></script>
-<script src="statics/jmxInWeb/jw.mbeanInfo.js"></script>
-<!-- InstanceEndEditable -->
-
 </body>
-<!-- InstanceEnd --></html>
+<!-- InstanceEnd -->
+</html>

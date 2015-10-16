@@ -16,7 +16,7 @@ import com.senatry.jmxInWeb.utils.OpenTypeUtil;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class MBeanAttrVo {
+public class MBeanAttrVo implements Comparable<MBeanAttrVo> {
 
 	private final MBeanAttributeInfo info;
 
@@ -119,6 +119,11 @@ public class MBeanAttrVo {
 				}
 			}
 		}
+	}
+
+	@Override
+	public int compareTo(MBeanAttrVo o) {
+		return this.info.getName().compareToIgnoreCase(o.info.getName());
 	}
 
 }

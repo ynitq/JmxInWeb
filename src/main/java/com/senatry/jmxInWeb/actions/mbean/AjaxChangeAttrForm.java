@@ -1,10 +1,7 @@
 package com.senatry.jmxInWeb.actions.mbean;
 
-import javax.management.MalformedObjectNameException;
-import javax.management.ObjectName;
-
-import com.senatry.jmxInWeb.exception.MyMissingParamException;
 import com.senatry.jmxInWeb.exception.MyMalformedObjectNameException;
+import com.senatry.jmxInWeb.exception.MyMissingParamException;
 import com.senatry.jmxInWeb.utils.StringUtils;
 
 /**
@@ -14,8 +11,7 @@ import com.senatry.jmxInWeb.utils.StringUtils;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class MBeanForm {
-	private String objectName;
+public class AjaxChangeAttrForm extends ObjectNameForm {
 
 	// name and value is use in change attribute value
 	private String name;// attr name
@@ -23,10 +19,6 @@ public class MBeanForm {
 
 	public String getName() {
 		return name;
-	}
-
-	public String getObjectName() {
-		return objectName;
 	}
 
 	public String getValue() {
@@ -37,30 +29,14 @@ public class MBeanForm {
 		this.name = name;
 	}
 
-	public void setObjectName(String objectName) {
-		this.objectName = objectName;
-	}
 
 	public void setValue(String value) {
 		this.value = value;
 	}
 
-	public void verifyOBjectName() throws MyMissingParamException {
-		if (StringUtils.isBlank(this.objectName)) {
-			MyMissingParamException ex = new MyMissingParamException();
-			ex.addMissingParam("objectName", "missing.objectName.desc");
-			throw ex;
-		}
-	}
 
 	public void verifyForChangeAttrValue() throws MyMissingParamException, MyMalformedObjectNameException {
-		this.verifyOBjectName();
-
-		try {
-			new ObjectName(this.objectName);
-		} catch (MalformedObjectNameException e) {
-			throw new MyMalformedObjectNameException(objectName);
-		}
+		this.verifyObjectName();
 
 		if (StringUtils.isBlank(this.name)) {
 			MyMissingParamException ex = new MyMissingParamException();

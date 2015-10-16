@@ -16,7 +16,7 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
-import com.senatry.jmxInWeb.actions.mbean.MBeanForm;
+import com.senatry.jmxInWeb.actions.mbean.AjaxChangeAttrForm;
 import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.exception.MyAttrNotFoundException;
 import com.senatry.jmxInWeb.exception.MyMBeanNotFoundException;
@@ -146,7 +146,7 @@ public class MBeanService {
 	 * @throws BaseLogicException
 	 * @throws JMException
 	 */
-	public String changeAttrValue(MBeanForm form) throws BaseLogicException, JMException {
+	public String changeAttrValue(AjaxChangeAttrForm form) throws BaseLogicException, JMException {
 
 		MBeanAttributeInfo targetAttribute = null;
 

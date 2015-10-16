@@ -10,6 +10,7 @@ import java.util.zip.GZIPOutputStream;
 
 import com.senatry.jmxInWeb.config.AppConstants;
 import com.senatry.jmxInWeb.utils.BinderUtil;
+import com.senatry.jmxInWeb.utils.StringUtils;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
@@ -99,11 +100,23 @@ public class MyHttpRequest implements Closeable {
 
 			List<String> list = ParameterFilter.getParameterNames(httpExchange);
 			for (String name : list) {
-				String value = ParameterFilter.getParameter(httpExchange, name);
-				buff.append("\n\t");
-				buff.append(name);
-				buff.append("=");
-				buff.append(value);
+
+				List<String> values = ParameterFilter.getParameters(httpExchange, name);
+				int i = 0;
+				for (String str : values) {
+					buff.append("\n\t");
+					buff.append(name);
+
+					if (values.size() > 1) {
+						buff.append("[");
+						buff.append(i);
+						buff.append("]");
+					}
+					buff.append("=");
+
+					buff.append(StringUtils.getStrSummary(str, 80));
+					i++;
+				}
 			}
 
 			log.debug(buff.toString());

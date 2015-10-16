@@ -13,7 +13,7 @@ import javax.management.MBeanParameterInfo;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class MBeanOptVo {
+public class MBeanOptVo implements Comparable<MBeanOptVo> {
 	private final MBeanOperationInfo info;
 
 	private final List<MBeanOptParamVo> params = new LinkedList<MBeanOptParamVo>();
@@ -66,6 +66,11 @@ public class MBeanOptVo {
 	public Object toDebugString() {
 
 		return info.toString();
+	}
+
+	@Override
+	public int compareTo(MBeanOptVo o) {
+		return this.info.getName().compareToIgnoreCase(o.info.getName());
 	}
 
 }

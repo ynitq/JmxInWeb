@@ -29,9 +29,9 @@ public class MBeanInfoAction extends BasePageAction {
 	protected String getModelAndView(MyHttpRequest request, Map<String, Object> dataModel)
 			throws IOException, JMException, MyMissingParamException {
 
-		MBeanForm form = request.bindForm(MBeanForm.class);
+		ObjectNameForm form = request.bindForm(ObjectNameForm.class);
 
-		form.verifyOBjectName();
+		form.verifyObjectName();
 
 		MBeanVo mbean = MBeanService.getInstance().getMBeanByName(form.getObjectName());
 		if (mbean != null) {

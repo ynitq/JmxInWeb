@@ -1,5 +1,6 @@
 package com.senatry.jmxInWeb.models;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import javax.management.ObjectName;
  * 
  * @author 梁韦江 2015年9月11日
  */
-public class MBeanVo {
+public class MBeanVo implements Comparable<MBeanVo> {
 	private final MBeanInfo info;
 	private final ObjectName targetName;
 	private final List<MBeanAttrVo> attrs = new LinkedList<MBeanAttrVo>();
@@ -42,6 +43,7 @@ public class MBeanVo {
 			for (MBeanAttributeInfo mBeanAttributeInfo : attrArray) {
 				this.attrs.add(new MBeanAttrVo(mBeanAttributeInfo));
 			}
+			Collections.sort(this.attrs);
 		}
 
 		MBeanOperationInfo[] operations = mBeanInfo.getOperations();
@@ -52,6 +54,7 @@ public class MBeanVo {
 					this.opts.add(new MBeanOptVo(mBeanOperationInfo));
 				}
 			}
+			Collections.sort(this.opts);
 		}
 	}
 
@@ -94,5 +97,10 @@ public class MBeanVo {
 	private boolean isOperationRole(MBeanOperationInfo info) {
 		Object value = info.getDescriptor().getFieldValue("role");
 		return value != null && "operation".equals(value.toString());
+	}
+
+	@Override
+	public int compareTo(MBeanVo o) {
+		return this.getSimpleName().compareToIgnoreCase(o.getSimpleName());
 	}
 }

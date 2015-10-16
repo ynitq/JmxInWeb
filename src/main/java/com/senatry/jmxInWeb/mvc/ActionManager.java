@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.senatry.jmxInWeb.actions.StaticFileAction;
 import com.senatry.jmxInWeb.actions.mbean.AjaxChangeAttrAction;
+import com.senatry.jmxInWeb.actions.mbean.AjaxInvokeOptAction;
 import com.senatry.jmxInWeb.actions.mbean.MBeanInfoAction;
 import com.senatry.jmxInWeb.actions.mbean.WelcomeAction;
 import com.senatry.jmxInWeb.exception.BaseLogicException;
@@ -46,13 +47,21 @@ public class ActionManager implements HttpHandler {
 	 */
 	private void initActions() {
 		// add all action to map
+
+		// mbean相关
 		this.addAction(new WelcomeAction());
 		this.addAction(new MBeanInfoAction());
 		this.addAction(new AjaxChangeAttrAction());
+		this.addAction(new AjaxInvokeOptAction());
 	}
 
 	private void addAction(BaseAction handler) {
 		this.actionsMap.put(handler.getRequestUrl(), handler);
+
+		if (log.isDebugEnabled()) {
+			log.debug(LogUtil.format("path=%s\taction=%s", handler.getRequestUrl(), handler.getClass().getName()));
+		}
+
 	}
 
 	@Override

@@ -1,12 +1,5 @@
 package com.senatry.jmxInWeb.service.testMBeans;
 
-import java.lang.management.ManagementFactory;
-import java.util.Set;
-
-import javax.management.MBeanServer;
-import javax.management.ObjectInstance;
-import javax.management.ObjectName;
-
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
@@ -49,40 +42,31 @@ public class MBean1 {
 		log.debug(String.format("setAttrWriteOnly(%s)", arg));
 	}
 
-	@ManagedOperation(description = "对参数进行说明的例子")
+	@ManagedOperation(description = "对参数进行说明的操作")
 	@ManagedOperationParameters(
 	{
 			@ManagedOperationParameter(description = "T1说明", name = "t1名字"),
 			@ManagedOperationParameter(description = "T2说明", name = "t2名字")
 	})
-	public Long getCurTime(long t1,
-			long t2) {
+	public Long twoParamOpi(long t1, String t2) {
+
+		log.debug(String.format("twoParamOpi(%d, %s)", t1, t2));
 
 		return System.currentTimeMillis();
 	}
 
-	@ManagedOperation(description = "测试的获得MBeanServer")
-	public String myMBeanServer() {
-		MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
-		// Set<ObjectName> set = mbs.queryNames(null, null);
-		Set<ObjectInstance> set = mbs.queryMBeans(null, null);
+	@ManagedOperation(description = "无参数的操作")
+	public String noParamOpt() {
+		// MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
-		StringBuffer sb = new StringBuffer();
+		log.debug("noParamOpt()");
 
-		for (ObjectInstance instance : set) {
+		return "call noParamOpt";
+	}
 
-			ObjectName name = instance.getObjectName();
-			String domain = name.getDomain();
-
-			String msg = String.format("domain=[%s] clazz=[%s] ",
-					domain,
-					instance.getClassName()
-					);
-
-			log.debug(msg);
-			sb.append(msg);
-		}
-		return sb.toString();
+	@ManagedOperation(description = "无返回的操作")
+	public void voidReturnOpt() {
+		log.debug("voidReturnOpt()");
 	}
 
 	@ManagedAttribute(description = "读写属性long")

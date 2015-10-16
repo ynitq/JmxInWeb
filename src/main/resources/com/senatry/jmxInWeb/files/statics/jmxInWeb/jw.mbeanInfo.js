@@ -38,6 +38,8 @@ $(document).ready(function() {
 			    if (!response.success) {
 			    	//@see Java JsonErrorResponse
 			    	return response.errorMsg;
+			    } else {
+			    	return response;
 			    }
 			},
 		});

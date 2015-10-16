@@ -228,12 +228,7 @@ public class OpenTypeUtil {
 	}
 
 	public static Object parserFromString(String text, String classStr) {
-		try {
-			Class<?> paramClass = Class.forName(classStr);
-			return instance.getValueFormString(text, paramClass);
-		} catch (ClassNotFoundException ex) {
-			return null;
-		}
+		return instance.getValueFormString(text, classStr);
 	}
 
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -287,6 +282,14 @@ public class OpenTypeUtil {
 		IValue<?> toValue = this.converterMap.get(paramClass.getName());
 		if (toValue != null) {
 			return (T) toValue.toValue(text);
+		}
+		return null;
+	}
+
+	private Object getValueFormString(String text, String classNameStr) {
+		IValue<?> toValue = this.converterMap.get(classNameStr);
+		if (toValue != null) {
+			return toValue.toValue(text);
 		}
 		return null;
 	}

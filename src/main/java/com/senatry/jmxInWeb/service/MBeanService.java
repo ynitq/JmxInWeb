@@ -146,7 +146,7 @@ public class MBeanService {
 	 * @throws BaseLogicException
 	 * @throws JMException
 	 */
-	public void changeAttrValue(MBeanForm form) throws BaseLogicException, JMException {
+	public String changeAttrValue(MBeanForm form) throws BaseLogicException, JMException {
 
 		MBeanAttributeInfo targetAttribute = null;
 
@@ -176,6 +176,7 @@ public class MBeanService {
 					form.getName(),
 					form.getValue(), value));
 		}
+		return value != null ? value.toString() : null;
 
 	}
 

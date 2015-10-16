@@ -20,18 +20,20 @@ public class MBean1 {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(MBean1.class);
 
-	private String prop1 = "prop1 value";
+	private String attyRW = "prop1 value";
+
+	private long attrRwLong;
 
 	@ManagedAttribute
 	public String getAttrRW() {
-		log.debug(String.format("getAttrRW() = %s", prop1));
-		return prop1;
+		log.debug(String.format("getAttrRW() = %s", attyRW));
+		return attyRW;
 	}
 
 	@ManagedAttribute(description = "读写属性")
 	public void setAttrRW(String arg) {
 		log.debug(String.format("setAttrRW(%s)", arg));
-		this.prop1 = arg;
+		this.attyRW = arg;
 	}
 
 	@ManagedAttribute(description = "只读属性")
@@ -81,5 +83,15 @@ public class MBean1 {
 			sb.append(msg);
 		}
 		return sb.toString();
+	}
+
+	@ManagedAttribute(description = "读写属性long")
+	public long getAttrRwLong() {
+		return attrRwLong;
+	}
+
+	@ManagedAttribute
+	public void setAttrRwLong(long attrRwLong) {
+		this.attrRwLong = attrRwLong;
 	}
 }

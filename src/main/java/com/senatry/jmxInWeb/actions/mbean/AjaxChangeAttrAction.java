@@ -7,7 +7,7 @@ import javax.management.JMException;
 
 import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
-import com.senatry.jmxInWeb.json.JsonCommonResponse;
+import com.senatry.jmxInWeb.json.JsonBootstrapEdableResponse;
 import com.senatry.jmxInWeb.mvc.BaseAjaxAction;
 import com.senatry.jmxInWeb.mvc.BaseJsonResponse;
 import com.senatry.jmxInWeb.service.MBeanService;
@@ -28,9 +28,9 @@ public class AjaxChangeAttrAction extends BaseAjaxAction {
 		MBeanForm form = request.bindForm(MBeanForm.class);
 		form.verifyForChangeAttrValue();
 
-		MBeanService.getInstance().changeAttrValue(form);
+		String newValue = MBeanService.getInstance().changeAttrValue(form);
 		
-		JsonCommonResponse res = new JsonCommonResponse();
+		JsonBootstrapEdableResponse res = new JsonBootstrapEdableResponse(newValue);
 
 		return res;
 	}

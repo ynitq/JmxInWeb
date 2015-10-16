@@ -12,7 +12,7 @@ import com.senatry.jmxInWeb.json.JsonFieldErrorBean;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class MissingParamException extends BaseLogicException {
+public class MyMissingParamException extends BaseLogicException {
 
 	/**
 	 * 
@@ -21,7 +21,7 @@ public class MissingParamException extends BaseLogicException {
 
 	private final List<JsonFieldErrorBean> errorList = new LinkedList<JsonFieldErrorBean>();
 
-	public MissingParamException() {
+	public MyMissingParamException() {
 		super();
 	}
 
@@ -31,6 +31,22 @@ public class MissingParamException extends BaseLogicException {
 
 	public List<JsonFieldErrorBean> getErrorList() {
 		return errorList;
+	}
+
+	@Override
+	public String getErrorMsg() {
+		StringBuffer sb = new StringBuffer();
+		boolean first = true;
+		for (JsonFieldErrorBean jsonFieldErrorBean : errorList) {
+			if (first) {
+				first = false;
+			} else {
+				sb.append(",");
+			}
+
+			sb.append(jsonFieldErrorBean.getFieldName());
+		}
+		return String.format("缺少参数: %s", sb.toString());
 	}
 
 }

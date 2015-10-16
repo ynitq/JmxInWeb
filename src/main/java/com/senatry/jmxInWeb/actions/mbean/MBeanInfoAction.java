@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.management.JMException;
 
-import com.senatry.jmxInWeb.exception.MissingParamException;
+import com.senatry.jmxInWeb.exception.MyMissingParamException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
 import com.senatry.jmxInWeb.models.MBeanVo;
 import com.senatry.jmxInWeb.mvc.BasePageAction;
@@ -27,7 +27,7 @@ public class MBeanInfoAction extends BasePageAction {
 
 	@Override
 	protected String getModelAndView(MyHttpRequest request, Map<String, Object> dataModel)
-			throws IOException, JMException, MissingParamException {
+			throws IOException, JMException, MyMissingParamException {
 
 		MBeanForm form = request.bindForm(MBeanForm.class);
 

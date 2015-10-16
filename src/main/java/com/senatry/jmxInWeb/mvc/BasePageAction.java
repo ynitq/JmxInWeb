@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.management.JMException;
 
 import com.senatry.jmxInWeb.exception.BaseLogicException;
-import com.senatry.jmxInWeb.exception.FreeMarkerException;
-import com.senatry.jmxInWeb.exception.JmxException;
+import com.senatry.jmxInWeb.exception.MyFreeMarkerException;
+import com.senatry.jmxInWeb.exception.MyJmException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
 
 import freemarker.template.TemplateException;
@@ -32,9 +32,9 @@ public abstract class BasePageAction extends BaseAction {
 				request.sendResponse(body);
 			}
 		} catch (TemplateException e) {
-			throw new FreeMarkerException(e);
+			throw new MyFreeMarkerException(e);
 		} catch (JMException e) {
-			throw new JmxException(e);
+			throw new MyJmException(e);
 		}
 
 	}

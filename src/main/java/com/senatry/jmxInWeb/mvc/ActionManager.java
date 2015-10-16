@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.senatry.jmxInWeb.actions.StaticFileAction;
+import com.senatry.jmxInWeb.actions.mbean.AjaxChangeAttrAction;
 import com.senatry.jmxInWeb.actions.mbean.MBeanInfoAction;
 import com.senatry.jmxInWeb.actions.mbean.WelcomeAction;
 import com.senatry.jmxInWeb.exception.BaseLogicException;
@@ -33,18 +34,25 @@ public class ActionManager implements HttpHandler {
 	private final BaseAction staticFileAction = new StaticFileAction();
 
 	public ActionManager() {
-		// add all action to map
-		this.addAction(new WelcomeAction());
-		this.addAction(new MBeanInfoAction());
+		this.initActions();
 
 		if (log.isDebugEnabled()) {
 			log.debug(LogUtil.format("ActionManager inited, Total action:%d", this.actionsMap.size()));
 		}
 	}
 
+	/**
+	 * 将所有的action加到一个map中
+	 */
+	private void initActions() {
+		// add all action to map
+		this.addAction(new WelcomeAction());
+		this.addAction(new MBeanInfoAction());
+		this.addAction(new AjaxChangeAttrAction());
+	}
+
 	private void addAction(BaseAction handler) {
 		this.actionsMap.put(handler.getRequestUrl(), handler);
-
 	}
 
 	@Override

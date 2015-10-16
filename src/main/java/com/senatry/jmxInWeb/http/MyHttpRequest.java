@@ -100,7 +100,7 @@ public class MyHttpRequest implements Closeable {
 			List<String> list = ParameterFilter.getParameterNames(httpExchange);
 			for (String name : list) {
 				String value = ParameterFilter.getParameter(httpExchange, name);
-				buff.append("\n");
+				buff.append("\n\t");
 				buff.append(name);
 				buff.append("=");
 				buff.append(value);

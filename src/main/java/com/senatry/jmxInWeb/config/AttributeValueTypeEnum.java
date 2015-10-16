@@ -1,4 +1,4 @@
-package com.senatry.jmxInWeb;
+package com.senatry.jmxInWeb.config;
 
 /**
  * <pre>

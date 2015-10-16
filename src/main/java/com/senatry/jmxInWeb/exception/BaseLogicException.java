@@ -7,12 +7,14 @@ package com.senatry.jmxInWeb.exception;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class BaseLogicException extends Exception {
+public abstract class BaseLogicException extends Exception {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
+
+	public abstract String getErrorMsg();
 
 }

@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="statics/css/default.css">
 <link rel="stylesheet" type="text/css" href="statics/css/layout.css">
 <link rel="stylesheet" type="text/css" href="statics/jmxInWeb/jw.common.css">
-<#setting url_escaping_charset="UTF-8">
+<!-- <#setting url_escaping_charset="UTF-8"> -->
 <!-- TemplateBeginEditable name="ex-sytle" -->
 额外的样式表
 <!-- TemplateEndEditable -->
@@ -23,7 +23,7 @@
     <div class="container-fluid">
       <div class="hor-menu">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">MBean</a></li>
+          <li class="active"><a href="/">MBean</a></li>
           <li><a href="#">内存</a></li>
           <li><a href="#">线程</a></li>
           <li><a href="#">VM概要</a></li>
@@ -60,7 +60,44 @@
     </div>
   </div>
 </div>
- 
+
+<!-- PRE-FOOTER BEGIN -->
+ <div class="page-prefooter">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+				<h2>About</h2>
+				<p>
+					 在web界面上操作jmx.
+				</p>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs12 footer-block">
+				<h2>Documents</h2>
+                <a href="#" >......</a>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+				<h2>Contacts</h2>
+				<address class="margin-bottom-40">
+				 Email: <a href="mailto:liangwj@tom.com">liangwj@tom.com</a>
+				</address>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- PRE-FOOTER END -->
+
+<!-- FOOTER BEGIN -->
+<div class="page-footer">
+	<div class="container-fluid">
+		 2015 
+	</div>
+</div>
+<!-- FOOTER END -->
+
+<div class="scroll-to-top" style="display: block;">
+	<i class="fa fa-arrow-circle-up"></i>
+</div>
+
 <!-- TemplateBeginEditable name="body-end" -->
 额外的代码，例如模式窗
 <!-- TemplateEndEditable -->

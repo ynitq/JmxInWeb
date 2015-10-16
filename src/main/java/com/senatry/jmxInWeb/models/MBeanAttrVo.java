@@ -6,7 +6,7 @@ import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
 import com.alibaba.fastjson.JSON;
-import com.senatry.jmxInWeb.AttributeValueTypeEnum;
+import com.senatry.jmxInWeb.config.AttributeValueTypeEnum;
 import com.senatry.jmxInWeb.utils.OpenTypeUtil;
 
 /**

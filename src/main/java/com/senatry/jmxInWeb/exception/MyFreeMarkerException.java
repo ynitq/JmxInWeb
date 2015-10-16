@@ -9,7 +9,7 @@ import freemarker.template.TemplateException;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class FreeMarkerException extends BaseLogicException {
+public class MyFreeMarkerException extends BaseLogicException {
 
 	/**
 	 * 
@@ -18,13 +18,18 @@ public class FreeMarkerException extends BaseLogicException {
 
 	private final TemplateException ex;
 
-	public FreeMarkerException(TemplateException ex) {
+	public MyFreeMarkerException(TemplateException ex) {
 		super();
 		this.ex = ex;
 	}
 
 	public TemplateException getEx() {
 		return ex;
+	}
+
+	@Override
+	public String getErrorMsg() {
+		return this.ex.getMessage();
 	}
 
 }

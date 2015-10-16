@@ -7,15 +7,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.management.Attribute;
 import javax.management.JMException;
+import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanInfo;
 import javax.management.MBeanServer;
+import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
+import com.senatry.jmxInWeb.actions.mbean.MBeanForm;
+import com.senatry.jmxInWeb.exception.BaseLogicException;
+import com.senatry.jmxInWeb.exception.MyAttrNotFoundException;
+import com.senatry.jmxInWeb.exception.MyMBeanNotFoundException;
+import com.senatry.jmxInWeb.exception.MyMalformedObjectNameException;
 import com.senatry.jmxInWeb.models.DomainVo;
 import com.senatry.jmxInWeb.models.MBeanVo;
 import com.senatry.jmxInWeb.utils.LogUtil;
+import com.senatry.jmxInWeb.utils.OpenTypeUtil;
 import com.senatry.jmxInWeb.utils.StringUtils;
 
 /**
@@ -102,6 +111,72 @@ public class MBeanService {
 		domainList.addAll(domainMap.values());
 		Collections.sort(domainList);
 		return domainList;
+	}
+
+	/**
+	 * 根据输入的字符串查找mbean
+	 * 
+	 * @param name
+	 * @return
+	 * @throws JMException
+	 * @throws MyMBeanNotFoundException
+	 */
+	private MBeanInfo getMBeanInfoByName(ObjectName objectName) throws JMException, MyMBeanNotFoundException {
+		if (server.isRegistered(objectName)) {
+			return server.getMBeanInfo(objectName);
+		} else {
+			throw new MyMBeanNotFoundException(objectName.getCanonicalName());
+		}
+	}
+
+	private ObjectName getObjectName(String nameStr) throws MyMalformedObjectNameException {
+		try {
+			ObjectName objectName = new ObjectName(nameStr);
+			return objectName;
+		} catch (MalformedObjectNameException e) {
+			throw new MyMalformedObjectNameException(nameStr);
+		}
+	}
+
+	/**
+	 * 修改属性值
+	 * 
+	 * @param form
+	 * @return
+	 * @throws BaseLogicException
+	 * @throws JMException
+	 */
+	public void changeAttrValue(MBeanForm form) throws BaseLogicException, JMException {
+
+		MBeanAttributeInfo targetAttribute = null;
+
+		ObjectName name = this.getObjectName(form.getObjectName());
+
+		// Find target attribute
+		MBeanInfo info = this.getMBeanInfoByName(name);
+		MBeanAttributeInfo[] attributes = info.getAttributes();
+		if (attributes != null) {
+			for (int i = 0; i < attributes.length; i++) {
+				if (attributes[i].getName().equals(form.getName())) {
+					targetAttribute = attributes[i];
+					break;
+				}
+			}
+		}
+		if (targetAttribute == null) {
+			throw new MyAttrNotFoundException(form.getName());
+		}
+
+		String type = targetAttribute.getType();
+		Object value = OpenTypeUtil.parserFromString(form.getValue(), type);
+		server.setAttribute(name, new Attribute(form.getName(), value));
+
+		if (log.isDebugEnabled()) {
+			log.debug(LogUtil.format("Change Attr Value:ObjectName=%s AttrName=%s inputValue=%s value=%s", form.getObjectName(),
+					form.getName(),
+					form.getValue(), value));
+		}
+
 	}
 
 }

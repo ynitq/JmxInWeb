@@ -9,7 +9,7 @@ import javax.management.JMException;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class JmxException extends BaseLogicException {
+public class MyJmException extends BaseLogicException {
 
 	/**
 	 * 
@@ -18,13 +18,18 @@ public class JmxException extends BaseLogicException {
 
 	private final JMException ex;
 
-	public JmxException(JMException ex) {
+	public MyJmException(JMException ex) {
 		super();
 		this.ex = ex;
 	}
 
 	public JMException getEx() {
 		return ex;
+	}
+
+	@Override
+	public String getErrorMsg() {
+		return this.ex.getMessage();
 	}
 
 }

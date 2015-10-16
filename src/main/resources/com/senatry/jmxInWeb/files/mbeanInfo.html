@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="statics/css/default.css">
 <link rel="stylesheet" type="text/css" href="statics/css/layout.css">
 <link rel="stylesheet" type="text/css" href="statics/jmxInWeb/jw.common.css">
-<#setting url_escaping_charset="UTF-8">
+<!-- <#setting url_escaping_charset="UTF-8"> -->
 <!-- InstanceBeginEditable name="ex-sytle" -->
 <link rel="stylesheet" type="text/css" href="statics/bootstrap-editable/css/bootstrap-editable.css">
 <!-- InstanceEndEditable -->
@@ -23,7 +23,7 @@
     <div class="container-fluid">
       <div class="hor-menu">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">MBean</a></li>
+          <li class="active"><a href="/">MBean</a></li>
           <li><a href="#">内存</a></li>
           <li><a href="#">线程</a></li>
           <li><a href="#">VM概要</a></li>
@@ -75,14 +75,15 @@
                       <td>
                         <#if attrVo.info.writable>
                     	<#if !attrVo.info.readable><span class="label label-warning">只写</span></#if>
-                      	<a class="js_editable" 
-                      		data-name="firstname" 
+                      	<a class="js_edit_attr" 
+                      		data-name="${attrVo.info.name}" 
                       		data-type="textarea" 
                       		data-placement="top"
                       		data-rows="4"
                       		data-readable="<#if attrVo.info.readable>true<#else>false</#if>"
                       		data-placeholder="请输入${attrVo.info.name}新值" 
                       		data-original-title="请输入${attrVo.info.name}新值"
+                      		data-param-objectName="${mbean.objectName?j_string}"
                       		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a>
                       	<#else>
 							<span class="label label-success">只读</span> ${attrVo.value} 
@@ -162,7 +163,44 @@
     </div>
   </div>
 </div>
- 
+
+<!-- PRE-FOOTER BEGIN -->
+ <div class="page-prefooter">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+				<h2>About</h2>
+				<p>
+					 在web界面上操作jmx.
+				</p>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs12 footer-block">
+				<h2>Documents</h2>
+                <a href="#" >......</a>
+			</div>
+			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
+				<h2>Contacts</h2>
+				<address class="margin-bottom-40">
+				 Email: <a href="mailto:liangwj@tom.com">liangwj@tom.com</a>
+				</address>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- PRE-FOOTER END -->
+
+<!-- FOOTER BEGIN -->
+<div class="page-footer">
+	<div class="container-fluid">
+		 2015 
+	</div>
+</div>
+<!-- FOOTER END -->
+
+<div class="scroll-to-top" style="display: block;">
+	<i class="fa fa-arrow-circle-up"></i>
+</div>
+
 <!-- InstanceBeginEditable name="body-end" -->
 <div id="newValueModal" class="modal fade" tabindex="-1" data-width="400">
   <div class="modal-dialog">

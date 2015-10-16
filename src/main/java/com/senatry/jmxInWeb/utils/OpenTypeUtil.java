@@ -227,6 +227,15 @@ public class OpenTypeUtil {
 		return instance.getValueFormString(text, paramClass);
 	}
 
+	public static Object parserFromString(String text, String classStr) {
+		try {
+			Class<?> paramClass = Class.forName(classStr);
+			return instance.getValueFormString(text, paramClass);
+		} catch (ClassNotFoundException ex) {
+			return null;
+		}
+	}
+
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	private final Map<String, IValue<?>> converterMap = new HashMap<String, IValue<?>>();

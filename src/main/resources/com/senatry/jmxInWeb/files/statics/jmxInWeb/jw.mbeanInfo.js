@@ -2,6 +2,18 @@
 
 $(document).ready(function() {
 
+	
+	$('.js_boolean_checkbox').click(function(e) {
+		var name = "#" + $(this).attr('data-name');
+		var checked = $(this).is(':checked');
+		console.log(name+":" + checked);
+		
+		var value = ""+checked;
+		
+		$(name+"_txt").text(value);
+		$(name+"_input").val(value);
+	});
+	
 	/**
 	 * 执行opt
 	 */
@@ -14,12 +26,13 @@ $(document).ready(function() {
 		$.post("/invokeOpt", param, function(res) {
 			console.log(res);
 			if (res.success) {
-				toastr["success"](res.opName,"Invode Success");
+				toastr["success"](res.opName,"Invoke Success");
 				if (res.hasReturn) {
 					$("#invodeResult_body").text(res.returnData);
 					$("#invokeResult_modal").modal();
 				}
 			} else {
+				toastr["error"](res.errorMsg, "Invoke fail!");
 			}
 		}, "json");
 

@@ -13,11 +13,14 @@ import com.senatry.jmxInWeb.utils.OpenTypeUtil;
  * 2015年10月15日
  */
 public class MBeanOpParamVo {
+
+	private final int id;
 	private final MBeanParameterInfo info;
 	private final boolean inputable;
 
-	public MBeanOpParamVo(MBeanParameterInfo info) {
+	public MBeanOpParamVo(int id, MBeanParameterInfo info) {
 		super();
+		this.id = id;
 		this.info = info;
 
 		this.inputable = OpenTypeUtil.isOpenType(info.getType());
@@ -33,5 +36,9 @@ public class MBeanOpParamVo {
 
 	public String getDefaultValue() {
 		return OpenTypeUtil.getDefaultValue(this.info.getType());
+	}
+
+	public int getId() {
+		return id;
 	}
 }

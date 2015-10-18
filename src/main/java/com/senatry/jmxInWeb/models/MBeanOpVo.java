@@ -27,12 +27,14 @@ public class MBeanOpVo implements Comparable<MBeanOpVo> {
 		boolean canInput = true;
 
 		MBeanParameterInfo[] paramArray = info.getSignature();
+		int i = 0;
 		for (MBeanParameterInfo paramInfo : paramArray) {
-			MBeanOpParamVo paramVo = new MBeanOpParamVo(paramInfo);
+			MBeanOpParamVo paramVo = new MBeanOpParamVo(i, paramInfo);
 			this.params.add(paramVo);
 
 			// 如果所有的属性都可以输入，这个方法才可以在界面上被调用
 			canInput = canInput && paramVo.isInputable();
+			i++;
 		}
 		this.invokable = canInput;
 	}

@@ -155,7 +155,16 @@
                             <td>${paramVo.info.name}</td>
                             <td>${paramVo.info.description}</td>
                             <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type}</span></td>
-                            <td><input type="text" class="form-control form-filter input-sm" name="paramValue" value=${paramVo.defaultValue}></td>
+                            <td>
+                            <#if paramVo.info.type=='boolean'>
+								<label>
+						          <input type="checkbox" data-name="p_${i}_${paramVo.id}" class="js_boolean_checkbox" > <span id="p_${i}_${paramVo.id}_txt">false</span>
+						        </label>                            
+								<input type="hidden" name="paramValue" value="false" id="p_${i}_${paramVo.id}_input">
+						    <#else>
+								<input type="text" class="form-control form-filter input-sm" name="paramValue" value="${paramVo.defaultValue}">
+							</#if>		
+                            </td>
                           </tr>
 		</#list>
                           <tr>

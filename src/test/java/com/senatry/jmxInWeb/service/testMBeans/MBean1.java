@@ -51,13 +51,14 @@ public class MBean1 {
 	@ManagedOperation(description = "对参数进行说明的操作")
 	@ManagedOperationParameters(
 	{
-			@ManagedOperationParameter(description = "T1说明", name = "t1名字"),
-			@ManagedOperationParameter(description = "T2说明", name = "t2名字"),
-			@ManagedOperationParameter(description = "T3说明", name = "t3名字")
+			@ManagedOperationParameter(description = "T1说明", name = "long1名字"),
+			@ManagedOperationParameter(description = "T2说明", name = "string1名字"),
+			@ManagedOperationParameter(description = "bool1说明", name = "bool1名字"),
+			@ManagedOperationParameter(description = "bool2说明", name = "bool2名字")
 	})
-	public Long opMultiParam(long t1, String t2, boolean t3) {
+	public Long opMultiParam(long t1, String t2, boolean t3, boolean t4) {
 
-		log.debug(String.format("opMultiParam(%d, %s, %s)", t1, t2, t3));
+		log.debug(String.format("opMultiParam(%d, %s, %s, %s)", t1, t2, t3, t4));
 
 		return System.currentTimeMillis();
 	}

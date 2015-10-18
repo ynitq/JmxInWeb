@@ -53,6 +53,13 @@ $(document).ready(function() {
 					// @see Java JsonErrorResponse
 					return response.errorMsg;
 				} else {
+					var valueType = $(this).attr('data-value-type');
+					if (valueType == 'java.util.Date') {
+						var old = response.newValue;
+						var date = $(this).data('editable').input.str2value(old);					
+						response.newValue = date; 
+					}
+					
 					return response;
 				}
 			},
@@ -70,6 +77,11 @@ $(document).ready(function() {
 	            }
 	        ];
             option.showbuttons = false;
+		} else if (valueType == 'java.util.Date') {
+			option.type = 'datetime';
+			option.format = 'yyyy-mm-dd hh:ii';
+			option.viewformat = 'yyyy-mm-dd hh:ii';
+			option.escape = true;
 		}
 		
 		if ($(this).attr("data-readable") == "true") {

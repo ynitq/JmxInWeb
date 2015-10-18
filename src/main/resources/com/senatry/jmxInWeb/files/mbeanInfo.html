@@ -13,6 +13,9 @@
 <link rel="stylesheet" type="text/css" href="statics/jmxInWeb/jw.common.css">
 <!-- <#setting url_escaping_charset="UTF-8"> -->
 <!-- InstanceBeginEditable name="ex-sytle" -->
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-datepicker/css/datepicker.css"/>
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-timepicker/css/bootstrap-timepicker.min.css"/>
+<link rel="stylesheet" type="text/css" href="statics/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css"/>
 <link rel="stylesheet" type="text/css" href="statics/bootstrap-editable/css/bootstrap-editable.css">
 <!-- InstanceEndEditable -->
 </head>
@@ -83,7 +86,8 @@
                       		data-value-type="${attrVo.info.type}"
                       		data-readable="<#if attrVo.info.readable>true<#else>false</#if>"
                       		data-param-objectName="${mbean.objectName?j_string}"
-                      		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a> <#else> <span class="label label-success">只读</span> ${attrVo.value} 
+                      		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a>
+						<#else> <span class="label label-success">只读</span> ${attrVo.value} 
                       	</#if>
 					</td>
                   </tr>
@@ -244,7 +248,10 @@
 <!-- COMMON JAVASCRIPT END --> 
 
 <!-- InstanceBeginEditable name="ex-script" --> 
+<script src="statics/moment.min.js"></script> 
 <script src="statics/bootstrap-editable/js/bootstrap-editable.js"></script> 
+<script src="statics/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script src="statics/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script src="statics/jmxInWeb/jw.mbeanInfo.js"></script> 
 <!-- InstanceEndEditable -->
 </body>

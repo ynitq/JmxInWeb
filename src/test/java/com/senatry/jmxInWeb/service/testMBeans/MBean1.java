@@ -1,5 +1,7 @@
 package com.senatry.jmxInWeb.service.testMBeans;
 
+import java.util.Date;
+
 import org.springframework.jmx.export.annotation.ManagedAttribute;
 import org.springframework.jmx.export.annotation.ManagedOperation;
 import org.springframework.jmx.export.annotation.ManagedOperationParameter;
@@ -13,22 +15,24 @@ public class MBean1 {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(MBean1.class);
 
-	private String attyRW = "prop1 value";
+	private String attrRwString = "attrWr value";
 
 	private long attrRwLong;
 
 	private boolean attrRwBoolean;
 
+	private Date attrRwDate;
+
 	@ManagedAttribute
-	public String getAttrRW() {
-		log.debug(String.format("getAttrRW() = %s", attyRW));
-		return attyRW;
+	public String getAttrRwString() {
+		log.debug(String.format("getAttrRW() = %s", attrRwString));
+		return attrRwString;
 	}
 
-	@ManagedAttribute(description = "读写属性")
-	public void setAttrRW(String arg) {
+	@ManagedAttribute(description = "读写属性String")
+	public void setAttrRwString(String arg) {
 		log.debug(String.format("setAttrRW(%s)", arg));
-		this.attyRW = arg;
+		this.attrRwString = arg;
 	}
 
 	@ManagedAttribute(description = "只读属性")
@@ -95,5 +99,15 @@ public class MBean1 {
 	@ManagedAttribute
 	public void setAttrRwBoolean(boolean attrRwBoolean) {
 		this.attrRwBoolean = attrRwBoolean;
+	}
+
+	@ManagedAttribute(description = "读写属性Date")
+	public Date getAttrRwDate() {
+		return attrRwDate;
+	}
+
+	@ManagedAttribute
+	public void setAttrRwDate(Date attrRwDate) {
+		this.attrRwDate = attrRwDate;
 	}
 }

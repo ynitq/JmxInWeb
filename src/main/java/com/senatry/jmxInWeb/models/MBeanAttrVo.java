@@ -72,10 +72,10 @@ public class MBeanAttrVo implements Comparable<MBeanAttrVo> {
 
 	public String getValue() {
 		if (this.attributeValue == null) {
-			return null;
+			return "";
 		} else {
 			if (this.valueType == AttributeValueTypeEnum.Normal) {
-				return attributeValue.toString();
+				return OpenTypeUtil.toString(this.attributeValue, this.info.getType());
 			} else {
 				return JSON.toJSONString(attributeValue);
 			}

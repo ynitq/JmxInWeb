@@ -22,6 +22,10 @@ public class OpenTypeUtil {
 		String getdefaultValue() {
 			return "";
 		}
+
+		String toStringValue(Object t) {
+			return t.toString();
+		}
 	}
 
 	private class ToBigDecimal extends BaseConverter<BigDecimal> {
@@ -142,6 +146,15 @@ public class OpenTypeUtil {
 		@Override
 		String getdefaultValue() {
 			return dateFormat.format(new Date());
+		}
+
+		@Override
+		String toStringValue(Object t) {
+			if (t == null) {
+				return "";
+			} else {
+				return dateFormat.format(t);
+			}
 		}
 	}
 
@@ -283,6 +296,14 @@ public class OpenTypeUtil {
 		return instance.getValueFormString(text, classStr);
 	}
 
+	public static String toString(Object value, String classStr) {
+		BaseConverter<?> toValue = instance.converterMap.get(classStr);
+		if (toValue != null) {
+			return toValue.toStringValue(value);
+		}
+		return "";
+	}
+
 	public static String getDefaultValue(String classNameStr) {
 		BaseConverter<?> toValue = instance.converterMap.get(classNameStr);
 		if (toValue != null) {
@@ -291,7 +312,7 @@ public class OpenTypeUtil {
 		return "";
 	}
 
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:ss");
 
 	private final Map<String, BaseConverter<?>> converterMap = new HashMap<String, BaseConverter<?>>();
 

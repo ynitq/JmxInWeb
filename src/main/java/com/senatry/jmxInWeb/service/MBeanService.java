@@ -176,12 +176,13 @@ public class MBeanService {
 		Object value = OpenTypeUtil.parserFromString(form.getValue(), type);
 		server.setAttribute(name, new Attribute(form.getName(), value));
 
+		String valueStr = OpenTypeUtil.toString(value, type);
 		if (log.isDebugEnabled()) {
 			log.debug(LogUtil.format("Change Attr Value:ObjectName=%s AttrName=%s inputValue=%s value=%s", form.getObjectName(),
 					form.getName(),
-					form.getValue(), value));
+					form.getValue(), valueStr));
 		}
-		return value != null ? value.toString() : null;
+		return valueStr;
 
 	}
 

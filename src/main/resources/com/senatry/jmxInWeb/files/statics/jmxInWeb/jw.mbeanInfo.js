@@ -2,6 +2,14 @@
 
 $(document).ready(function() {
 
+	var dateFormat = 'yyyy-mm-dd hh:ii';
+	
+	$(".js_form_datetime").datetimepicker({
+        autoclose: true,
+        format: dateFormat,
+        pickerPosition: "bottom-left"
+    });
+
 	
 	$('.js_boolean_checkbox').click(function(e) {
 		var name = "#" + $(this).attr('data-name');

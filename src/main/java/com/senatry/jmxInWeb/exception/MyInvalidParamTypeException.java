@@ -17,7 +17,7 @@ public class MyInvalidParamTypeException extends BaseLogicException {
 	private final String type;
 
 	public MyInvalidParamTypeException(String type) {
-		super();
+		super(type);
 		this.type = type;
 	}
 

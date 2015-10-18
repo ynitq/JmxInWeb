@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSON;
 import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.exception.MyJmException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
-import com.senatry.jmxInWeb.json.JsonErrorResponse;
 
 import freemarker.template.TemplateException;
 
@@ -23,7 +22,7 @@ import freemarker.template.TemplateException;
 public abstract class BaseAjaxAction extends BaseAction {
 
 	@Override
-	public void process(MyHttpRequest request) throws IOException {
+	public void process(MyHttpRequest request) throws IOException, BaseLogicException {
 		// new empty dataModel
 		Map<String, Object> dataModel = this.newModel();
 
@@ -34,10 +33,8 @@ public abstract class BaseAjaxAction extends BaseAction {
 			if (res == null) {
 				res = new BaseJsonResponse();
 			}
-		} catch (BaseLogicException e) {
-			res = new JsonErrorResponse(e);
 		} catch (JMException ex) {
-			res = new JsonErrorResponse(new MyJmException(ex));
+			throw new MyJmException(ex);
 		}
 
 		String body = JSON.toJSONString(res);

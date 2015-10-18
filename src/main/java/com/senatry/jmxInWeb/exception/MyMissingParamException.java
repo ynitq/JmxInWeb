@@ -22,7 +22,7 @@ public class MyMissingParamException extends BaseLogicException {
 	private final List<JsonFieldErrorBean> errorList = new LinkedList<JsonFieldErrorBean>();
 
 	public MyMissingParamException() {
-		super();
+		super("");
 	}
 
 	public void addMissingParam(String fieldName, String errorMsg) {

@@ -19,7 +19,7 @@ public class MyFreeMarkerException extends BaseLogicException {
 	private final TemplateException ex;
 
 	public MyFreeMarkerException(TemplateException ex) {
-		super();
+		super(ex);
 		this.ex = ex;
 	}
 

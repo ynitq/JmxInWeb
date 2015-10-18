@@ -17,7 +17,7 @@ public class MyAttrNotFoundException extends BaseLogicException {
 	private final String attrName;
 
 	public MyAttrNotFoundException(String attrName) {
-		super();
+		super(attrName);
 		this.attrName = attrName;
 	}
 

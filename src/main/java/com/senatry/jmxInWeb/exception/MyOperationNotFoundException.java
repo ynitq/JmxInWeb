@@ -17,7 +17,7 @@ public class MyOperationNotFoundException extends BaseLogicException {
 	private final String operationsInfo;
 
 	public MyOperationNotFoundException(String operationsInfo) {
-		super();
+		super(operationsInfo);
 		this.operationsInfo = operationsInfo;
 	}
 

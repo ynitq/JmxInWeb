@@ -17,7 +17,7 @@ public class MyMBeanNotFoundException extends BaseLogicException {
 	private final String name;
 
 	public MyMBeanNotFoundException(String name) {
-		super();
+		super(name);
 		this.name = name;
 	}
 

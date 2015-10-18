@@ -56,9 +56,9 @@ public class MBean1 {
 			@ManagedOperationParameter(description = "bool1说明", name = "bool1名字"),
 			@ManagedOperationParameter(description = "bool2说明", name = "bool2名字")
 	})
-	public Long opMultiParam(long t1, String t2, boolean t3, boolean t4) {
+	public Long opMultiParam(Date t1, String t2, boolean t3, boolean t4) {
 
-		log.debug(String.format("opMultiParam(%d, %s, %s, %s)", t1, t2, t3, t4));
+		log.debug(String.format("opMultiParam(%s, %s, %s, %s)", t1, t2, t3, t4));
 
 		return System.currentTimeMillis();
 	}

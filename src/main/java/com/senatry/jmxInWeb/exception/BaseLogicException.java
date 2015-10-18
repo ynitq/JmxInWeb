@@ -14,5 +14,12 @@ public abstract class BaseLogicException extends Exception {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public BaseLogicException(String message) {
+		super(message);
+	}
+
+	public BaseLogicException(Throwable cause) {
+		super(cause);
+	}
 
 }

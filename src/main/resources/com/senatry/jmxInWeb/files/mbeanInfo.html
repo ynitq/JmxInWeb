@@ -161,7 +161,15 @@
 						          <input type="checkbox" data-name="p_${i}_${paramVo.id}" class="js_boolean_checkbox" > <span id="p_${i}_${paramVo.id}_txt">false</span>
 						        </label>                            
 								<input type="hidden" name="paramValue" value="false" id="p_${i}_${paramVo.id}_input">
-						    <#else>
+						    <#elseif paramVo.info.type=='java.util.Date'>
+								<div class="input-group date js_form_datetime">
+									<input type="text" size="16" readonly class="form-control" name="paramValue">
+									<span class="input-group-btn">
+									<button class="btn default date-set" type="button"><i class="fa fa-calendar"></i></button>
+									<button class="btn default date-reset" type="button"><i class="fa fa-times"></i></button>
+									</span>
+								</div>
+							<#else>
 								<input type="text" class="form-control form-filter input-sm" name="paramValue" value="${paramVo.defaultValue}">
 							</#if>		
                             </td>

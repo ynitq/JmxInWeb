@@ -17,7 +17,7 @@ public class MyMalformedObjectNameException extends BaseLogicException {
 	private final String nameStr;
 
 	public MyMalformedObjectNameException(String nameStr) {
-		super();
+		super(nameStr);
 		this.nameStr = nameStr;
 	}
 

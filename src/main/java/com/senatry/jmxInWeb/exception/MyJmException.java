@@ -19,7 +19,7 @@ public class MyJmException extends BaseLogicException {
 	private final JMException ex;
 
 	public MyJmException(JMException ex) {
-		super();
+		super(ex);
 		this.ex = ex;
 	}
 

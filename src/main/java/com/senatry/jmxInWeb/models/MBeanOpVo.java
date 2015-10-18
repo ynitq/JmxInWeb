@@ -13,14 +13,14 @@ import javax.management.MBeanParameterInfo;
  * 
  * @author 梁韦江 2015年10月15日
  */
-public class MBeanOptVo implements Comparable<MBeanOptVo> {
+public class MBeanOpVo implements Comparable<MBeanOpVo> {
 	private final MBeanOperationInfo info;
 
-	private final List<MBeanOptParamVo> params = new LinkedList<MBeanOptParamVo>();
+	private final List<MBeanOpParamVo> params = new LinkedList<MBeanOpParamVo>();
 
 	private final boolean invokable;
 
-	public MBeanOptVo(MBeanOperationInfo info) {
+	public MBeanOpVo(MBeanOperationInfo info) {
 		super();
 		this.info = info;
 
@@ -28,7 +28,7 @@ public class MBeanOptVo implements Comparable<MBeanOptVo> {
 
 		MBeanParameterInfo[] paramArray = info.getSignature();
 		for (MBeanParameterInfo paramInfo : paramArray) {
-			MBeanOptParamVo paramVo = new MBeanOptParamVo(paramInfo);
+			MBeanOpParamVo paramVo = new MBeanOpParamVo(paramInfo);
 			this.params.add(paramVo);
 
 			// 如果所有的属性都可以输入，这个方法才可以在界面上被调用
@@ -41,7 +41,7 @@ public class MBeanOptVo implements Comparable<MBeanOptVo> {
 		return info;
 	}
 
-	public List<MBeanOptParamVo> getParams() {
+	public List<MBeanOpParamVo> getParams() {
 		return params;
 	}
 
@@ -69,7 +69,7 @@ public class MBeanOptVo implements Comparable<MBeanOptVo> {
 	}
 
 	@Override
-	public int compareTo(MBeanOptVo o) {
+	public int compareTo(MBeanOpVo o) {
 		return this.info.getName().compareToIgnoreCase(o.info.getName());
 	}
 

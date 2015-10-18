@@ -15,6 +15,4 @@ public abstract class BaseLogicException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 
-	public abstract String getErrorMsg();
-
 }

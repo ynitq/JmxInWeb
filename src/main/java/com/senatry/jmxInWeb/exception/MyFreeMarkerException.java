@@ -28,7 +28,7 @@ public class MyFreeMarkerException extends BaseLogicException {
 	}
 
 	@Override
-	public String getErrorMsg() {
+	public String getMessage() {
 		return this.ex.getMessage();
 	}
 

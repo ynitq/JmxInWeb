@@ -11,7 +11,7 @@ import org.junit.Test;
 import com.senatry.jmxInWeb.SpingAnnotationHelper;
 import com.senatry.jmxInWeb.models.DomainVo;
 import com.senatry.jmxInWeb.models.MBeanAttrVo;
-import com.senatry.jmxInWeb.models.MBeanOptVo;
+import com.senatry.jmxInWeb.models.MBeanOpVo;
 import com.senatry.jmxInWeb.models.MBeanVo;
 import com.senatry.jmxInWeb.service.testMBeans.MBean1;
 
@@ -92,7 +92,7 @@ public class MBeanServiceTest {
 
 		sb.append("\t --------- Operations ------\n");
 		mbeanVo.getAttrs();
-		for (MBeanOptVo opt : mbeanVo.getOpts()) {
+		for (MBeanOpVo opt : mbeanVo.getOpts()) {
 			sb.append(String.format("\t%s\n", opt.toDebugString()));
 		}
 

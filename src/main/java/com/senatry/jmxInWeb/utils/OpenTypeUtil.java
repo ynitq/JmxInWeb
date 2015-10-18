@@ -16,11 +16,15 @@ import java.util.Map;
  */
 public class OpenTypeUtil {
 
-	private static interface IValue<T> {
-		T toValue(String text);
+	private abstract class BaseConverter<T> {
+		abstract T toValue(String text);
+
+		String getdefaultValue() {
+			return "";
+		}
 	}
 
-	private class ToBigDecimal implements IValue<BigDecimal> {
+	private class ToBigDecimal extends BaseConverter<BigDecimal> {
 
 		@Override
 		public BigDecimal toValue(String text) {
@@ -30,9 +34,14 @@ public class OpenTypeUtil {
 				return null;
 			}
 		}
+
+		@Override
+		String getdefaultValue() {
+			return "0";
+		}
 	}
 
-	private class ToBigInteger implements IValue<BigInteger> {
+	private class ToBigInteger extends BaseConverter<BigInteger> {
 
 		@Override
 		public BigInteger toValue(String text) {
@@ -42,17 +51,30 @@ public class OpenTypeUtil {
 				return null;
 			}
 		}
-	}
-
-	private class ToBoolean implements IValue<Boolean> {
 
 		@Override
-		public Boolean toValue(String text) {
-			return true;
+		String getdefaultValue() {
+			return "0";
 		}
 	}
 
-	private class ToByte implements IValue<Byte> {
+	private class ToBoolean extends BaseConverter<Boolean> {
+
+		@Override
+		public Boolean toValue(String text) {
+			if ("false".equalsIgnoreCase(text)) {
+				return false;
+			}
+			return true;
+		}
+
+		@Override
+		String getdefaultValue() {
+			return "false";
+		}
+	}
+
+	private class ToByte extends BaseConverter<Byte> {
 
 		private final boolean nullable;
 
@@ -73,9 +95,14 @@ public class OpenTypeUtil {
 				}
 			}
 		}
+
+		@Override
+		String getdefaultValue() {
+			return "0";
+		}
 	}
 
-	private class ToChar implements IValue<Character> {
+	private class ToChar extends BaseConverter<Character> {
 
 		private final boolean nullable;
 
@@ -98,7 +125,7 @@ public class OpenTypeUtil {
 		}
 	}
 
-	private class ToDate implements IValue<Date> {
+	private class ToDate extends BaseConverter<Date> {
 
 		@Override
 		public Date toValue(String text) {
@@ -111,9 +138,14 @@ public class OpenTypeUtil {
 			}
 			return date;
 		}
+
+		@Override
+		String getdefaultValue() {
+			return dateFormat.format(new Date());
+		}
 	}
 
-	private class ToDouble implements IValue<Double> {
+	private class ToDouble extends BaseConverter<Double> {
 
 		private final boolean nullable;
 
@@ -134,9 +166,14 @@ public class OpenTypeUtil {
 				}
 			}
 		}
+
+		@Override
+		String getdefaultValue() {
+			return "0";
+		}
 	}
 
-	private class ToFloat implements IValue<Float> {
+	private class ToFloat extends BaseConverter<Float> {
 
 		private final boolean nullable;
 
@@ -157,9 +194,14 @@ public class OpenTypeUtil {
 				}
 			}
 		}
+
+		@Override
+		String getdefaultValue() {
+			return "0";
+		}
 	}
 
-	private class ToInt implements IValue<Integer> {
+	private class ToInt extends BaseConverter<Integer> {
 
 		private final boolean nullable;
 
@@ -180,9 +222,14 @@ public class OpenTypeUtil {
 				}
 			}
 		}
+
+		@Override
+		String getdefaultValue() {
+			return "0";
+		}
 	}
 
-	private class ToLong implements IValue<Long> {
+	private class ToLong extends BaseConverter<Long> {
 
 		private final boolean nullable;
 
@@ -203,9 +250,14 @@ public class OpenTypeUtil {
 				}
 			}
 		}
+
+		@Override
+		String getdefaultValue() {
+			return "0";
+		}
 	}
 
-	private class ToString implements IValue<String> {
+	private class ToString extends BaseConverter<String> {
 
 		@Override
 		public String toValue(String text) {
@@ -231,9 +283,17 @@ public class OpenTypeUtil {
 		return instance.getValueFormString(text, classStr);
 	}
 
+	public static String getDefaultValue(String classNameStr) {
+		BaseConverter<?> toValue = instance.converterMap.get(classNameStr);
+		if (toValue != null) {
+			return toValue.getdefaultValue();
+		}
+		return "";
+	}
+
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-	private final Map<String, IValue<?>> converterMap = new HashMap<String, IValue<?>>();
+	private final Map<String, BaseConverter<?>> converterMap = new HashMap<String, BaseConverter<?>>();
 
 	private OpenTypeUtil() {
 		this.addConverter(Date.class, new ToDate());
@@ -273,13 +333,13 @@ public class OpenTypeUtil {
 		this.dateFormat = dateFormat;
 	}
 
-	private void addConverter(Class<?> clazz, IValue<?> converter) {
+	private void addConverter(Class<?> clazz, BaseConverter<?> converter) {
 		this.converterMap.put(clazz.getName(), converter);
 	}
 
 	@SuppressWarnings("unchecked")
 	private <T> T getValueFormString(String text, Class<T> paramClass) {
-		IValue<?> toValue = this.converterMap.get(paramClass.getName());
+		BaseConverter<?> toValue = this.converterMap.get(paramClass.getName());
 		if (toValue != null) {
 			return (T) toValue.toValue(text);
 		}
@@ -287,7 +347,7 @@ public class OpenTypeUtil {
 	}
 
 	private Object getValueFormString(String text, String classNameStr) {
-		IValue<?> toValue = this.converterMap.get(classNameStr);
+		BaseConverter<?> toValue = this.converterMap.get(classNameStr);
 		if (toValue != null) {
 			return toValue.toValue(text);
 		}

@@ -1,10 +1,28 @@
 // JavaScript Document
 $(document).ready(function() {
 	jmxweb.handleGoTop();//go top
+	jmxweb.initToastr();
 });
 
 var jmxweb = {
 
+	initToastr: function() {
+		toastr.options = {
+				  "closeButton": true,
+				  "debug": false,
+				  "positionClass": "toast-top-right",
+				  "onclick": null,
+				  "showDuration": "1000",
+				  "hideDuration": "1000",
+				  "timeOut": "3000",
+				  "extendedTimeOut": "1000",
+				  "showEasing": "swing",
+				  "hideEasing": "linear",
+				  "showMethod": "fadeIn",
+				  "hideMethod": "fadeOut"
+				}		
+	},
+		
     handleGoTop : function () {
 		console.log("jmxweb.handleGoTop()");
         var offset = 100;

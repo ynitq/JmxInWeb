@@ -22,7 +22,7 @@ public class MyMalformedObjectNameException extends BaseLogicException {
 	}
 
 	@Override
-	public String getErrorMsg() {
+	public String getMessage() {
 		return String.format("ObjectName格式错误: %s", this.nameStr);
 	}
 

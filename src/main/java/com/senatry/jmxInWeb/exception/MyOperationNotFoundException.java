@@ -7,23 +7,24 @@ package com.senatry.jmxInWeb.exception;
  * 
  * @author 梁韦江 2015年10月16日
  */
-public class MyMBeanNotFoundException extends BaseLogicException {
+public class MyOperationNotFoundException extends BaseLogicException {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private final String name;
+	private final String operationsInfo;
 
-	public MyMBeanNotFoundException(String name) {
+	public MyOperationNotFoundException(String operationsInfo) {
 		super();
-		this.name = name;
+		this.operationsInfo = operationsInfo;
 	}
 
 	@Override
 	public String getMessage() {
-		return String.format("找不到MBean:%s", this.name);
+
+		return String.format("Operation %s not found", this.operationsInfo);
 	}
 
 }

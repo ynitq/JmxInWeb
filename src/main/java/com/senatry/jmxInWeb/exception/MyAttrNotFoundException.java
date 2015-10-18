@@ -22,7 +22,7 @@ public class MyAttrNotFoundException extends BaseLogicException {
 	}
 
 	@Override
-	public String getErrorMsg() {
+	public String getMessage() {
 		return String.format("找不到属性%s", this.attrName);
 	}
 

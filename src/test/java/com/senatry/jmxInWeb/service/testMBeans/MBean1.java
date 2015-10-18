@@ -17,6 +17,8 @@ public class MBean1 {
 
 	private long attrRwLong;
 
+	private boolean attrRwBoolean;
+
 	@ManagedAttribute
 	public String getAttrRW() {
 		log.debug(String.format("getAttrRW() = %s", attyRW));
@@ -46,27 +48,33 @@ public class MBean1 {
 	@ManagedOperationParameters(
 	{
 			@ManagedOperationParameter(description = "T1说明", name = "t1名字"),
-			@ManagedOperationParameter(description = "T2说明", name = "t2名字")
+			@ManagedOperationParameter(description = "T2说明", name = "t2名字"),
+			@ManagedOperationParameter(description = "T3说明", name = "t3名字")
 	})
-	public Long twoParamOpi(long t1, String t2) {
+	public Long opMultiParam(long t1, String t2, boolean t3) {
 
-		log.debug(String.format("twoParamOpi(%d, %s)", t1, t2));
+		log.debug(String.format("opMultiParam(%d, %s, %s)", t1, t2, t3));
 
 		return System.currentTimeMillis();
 	}
 
 	@ManagedOperation(description = "无参数的操作")
-	public String noParamOpt() {
+	public String opNoParam() {
 		// MBeanServer mbs = ManagementFactory.getPlatformMBeanServer();
 
-		log.debug("noParamOpt()");
+		log.debug("opNoParam()");
 
-		return "call noParamOpt";
+		StringBuffer buff = new StringBuffer();
+		for (int i = 0; i < 500; i++) {
+			buff.append("opNoParam ");
+		}
+
+		return buff.toString();
 	}
 
 	@ManagedOperation(description = "无返回的操作")
-	public void voidReturnOpt() {
-		log.debug("voidReturnOpt()");
+	public void opNoReturn() {
+		log.debug("opNoReturn()");
 	}
 
 	@ManagedAttribute(description = "读写属性long")
@@ -77,5 +85,15 @@ public class MBean1 {
 	@ManagedAttribute
 	public void setAttrRwLong(long attrRwLong) {
 		this.attrRwLong = attrRwLong;
+	}
+
+	@ManagedAttribute(description = "读写属性Boolean")
+	public boolean isAttrRwBoolean() {
+		return attrRwBoolean;
+	}
+
+	@ManagedAttribute
+	public void setAttrRwBoolean(boolean attrRwBoolean) {
+		this.attrRwBoolean = attrRwBoolean;
 	}
 }

@@ -1,7 +1,6 @@
 package com.senatry.jmxInWeb.json;
 
 import com.senatry.jmxInWeb.config.AjaxReturnCodes;
-import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.mvc.BaseJsonResponse;
 
 /**
@@ -14,9 +13,9 @@ import com.senatry.jmxInWeb.mvc.BaseJsonResponse;
 public class JsonErrorResponse extends BaseJsonResponse {
 	private final String errorMsg;
 
-	public JsonErrorResponse(BaseLogicException e) {
+	public JsonErrorResponse(Throwable e) {
 		this.setCode(AjaxReturnCodes.ERROR_UNKNOW);
-		this.errorMsg = e.getErrorMsg();
+		this.errorMsg = e.getMessage();
 	}
 
 	public String getErrorMsg() {

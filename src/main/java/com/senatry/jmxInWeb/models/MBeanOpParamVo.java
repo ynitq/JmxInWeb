@@ -12,11 +12,11 @@ import com.senatry.jmxInWeb.utils.OpenTypeUtil;
  * @author 梁韦江
  * 2015年10月15日
  */
-public class MBeanOptParamVo {
+public class MBeanOpParamVo {
 	private final MBeanParameterInfo info;
 	private final boolean inputable;
 
-	public MBeanOptParamVo(MBeanParameterInfo info) {
+	public MBeanOpParamVo(MBeanParameterInfo info) {
 		super();
 		this.info = info;
 
@@ -29,5 +29,9 @@ public class MBeanOptParamVo {
 
 	public boolean isInputable() {
 		return inputable;
+	}
+
+	public String getDefaultValue() {
+		return OpenTypeUtil.getDefaultValue(this.info.getType());
 	}
 }

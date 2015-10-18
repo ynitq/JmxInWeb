@@ -34,7 +34,7 @@ public class MyMissingParamException extends BaseLogicException {
 	}
 
 	@Override
-	public String getErrorMsg() {
+	public String getMessage() {
 		StringBuffer sb = new StringBuffer();
 		boolean first = true;
 		for (JsonFieldErrorBean jsonFieldErrorBean : errorList) {

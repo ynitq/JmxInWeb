@@ -73,17 +73,19 @@
                     <td>${attrVo.info.type}</td>
                     <td>${attrVo.desc}</td>
                     <td><#if attrVo.info.writable>
-                      <#if !attrVo.info.readable><span class="label label-warning">只写</span></#if> <a class="js_edit_attr" 
+                      	<#if !attrVo.info.readable><span class="label label-warning">只写</span></#if>
+						<a class="js_edit_attr" 
                       		data-name="${attrVo.info.name}" 
-                      		data-type="textarea" 
                       		data-placement="top"
                       		data-rows="4"
-                      		data-readable="<#if attrVo.info.readable>true<#else>false</#if>"
                       		data-placeholder="请输入${attrVo.info.name}新值" 
-                      		data-original-title="请输入${attrVo.info.name}新值"
+
+                      		data-value-type="${attrVo.info.type}"
+                      		data-readable="<#if attrVo.info.readable>true<#else>false</#if>"
                       		data-param-objectName="${mbean.objectName?j_string}"
                       		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a> <#else> <span class="label label-success">只读</span> ${attrVo.value} 
-                      </#if> </td>
+                      	</#if>
+					</td>
                   </tr>
                   </#list>
                     </tbody>
@@ -111,8 +113,8 @@
 <#assign i=1>                  
 <#list mbean.opts as optVo>
                   <form id="form_invoke_${i}">
-					<input type="hidden" name="objectName" value="${optVo.info.name}"/>
-					<input type="hidden" name="optName" value="${mbean.objectName}"/>
+					<input type="hidden" name="optName" value="${optVo.info.name}"/>
+					<input type="hidden" name="objectName" value="${mbean.objectName}"/>
 	<#if optVo.noParam>
                   <tr>
                     <td><span class="bold theme-font">${optVo.info.name}</span></td>
@@ -149,7 +151,7 @@
                             <td>${paramVo.info.name}</td>
                             <td>${paramVo.info.description}</td>
                             <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type}</span></td>
-                            <td><input type="text" class="form-control form-filter input-sm" name="paramValue"></td>
+                            <td><input type="text" class="form-control form-filter input-sm" name="paramValue" value=${paramVo.defaultValue}></td>
                           </tr>
 		</#list>
                           <tr>
@@ -209,30 +211,28 @@
 
 <div class="scroll-to-top" style="display: block;"> <i class="fa fa-arrow-circle-up"></i> </div>
 <!-- InstanceBeginEditable name="body-end" -->
-<div id="newValueModal" class="modal fade" tabindex="-1" data-width="400">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
-        <h4 class="modal-title">Stack One</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12">
-            <h4>新值</h4>
-            <p>
-              <input type="text" class="col-md-12 form-control">
-            </p>
-          </div>
-        </div>
-        <a class="btn green" data-toggle="modal" href="#stack2"> Launch modal </a> </div>
-      <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn">Close</button>
-        <button type="button" class="btn red">Ok</button>
-      </div>
-    </div>
-  </div>
+
+<!-- INVOKE RESULT MODAL BEGIN -->
+<div class="modal fade bs-modal-lg" id="invokeResult_modal" tabindex="-1" role="basic" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Invoke Result</h4>
+			</div>
+			<div class="modal-body" id="invodeResult_body">
+				 Modal body goes here
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
 </div>
+<!-- INVOKE RESULT MODAL END -->
+
 <!-- InstanceEndEditable --> 
 
 <!-- COMMON JAVASCRIPT BEGIN --> 

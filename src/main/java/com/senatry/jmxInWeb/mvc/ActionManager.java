@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.alibaba.fastjson.JSON;
 import com.senatry.jmxInWeb.actions.StaticFileAction;
 import com.senatry.jmxInWeb.actions.mbean.AjaxChangeAttrAction;
-import com.senatry.jmxInWeb.actions.mbean.AjaxInvokeOptAction;
+import com.senatry.jmxInWeb.actions.mbean.AjaxInvokeOpAction;
 import com.senatry.jmxInWeb.actions.mbean.MBeanInfoAction;
 import com.senatry.jmxInWeb.actions.mbean.WelcomeAction;
-import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.http.MyHttpRequest;
+import com.senatry.jmxInWeb.json.JsonErrorResponse;
 import com.senatry.jmxInWeb.utils.LogUtil;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -52,7 +53,7 @@ public class ActionManager implements HttpHandler {
 		this.addAction(new WelcomeAction());
 		this.addAction(new MBeanInfoAction());
 		this.addAction(new AjaxChangeAttrAction());
-		this.addAction(new AjaxInvokeOptAction());
+		this.addAction(new AjaxInvokeOpAction());
 	}
 
 	private void addAction(BaseAction handler) {
@@ -69,21 +70,38 @@ public class ActionManager implements HttpHandler {
 
 		MyHttpRequest request = new MyHttpRequest(httpExchange);
 
-		try {
-			if (request.isStaticFileRequest()) {
+		if (request.isStaticFileRequest()) {
+			// static files
+			try {
 				this.staticFileAction.process(request);
-			} else {
-				BaseAction action = this.actionsMap.get(request.getPath());
-				if (action != null) {
-					action.process(request);
-				} else {
-					// 404
-					request.error404();
-				}
+			} catch (Throwable ex) {
+				LogUtil.traceError(log, ex);
 			}
-		} catch (BaseLogicException ex) {
-			// TODO ACTION发生的异常要处理
-			LogUtil.traceError(log, ex);
+		} else {
+			BaseAction action = this.actionsMap.get(request.getPath());
+			if (action != null) {
+				try {
+					// process request
+					action.process(request);
+				} catch (Throwable ex) {
+					// trace error to log
+					LogUtil.traceError(log, ex);
+
+					if (action instanceof BaseAjaxAction) {
+						// ajax action
+						BaseJsonResponse res = new JsonErrorResponse(ex);
+						String body = JSON.toJSONString(res);
+						request.sendResponse(body);
+					} else {
+						// TODO 处理页面的502错误
+						String body = ex.getMessage();
+						request.sendResponse(body);
+					}
+				}
+			} else {
+				// action not found
+				request.error404();
+			}
 		}
 		request.close();
 	}

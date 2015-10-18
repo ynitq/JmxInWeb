@@ -22,7 +22,7 @@ public class MBeanVo implements Comparable<MBeanVo> {
 	private final MBeanInfo info;
 	private final ObjectName targetName;
 	private final List<MBeanAttrVo> attrs = new LinkedList<MBeanAttrVo>();
-	private final List<MBeanOptVo> opts = new LinkedList<MBeanOptVo>();
+	private final List<MBeanOpVo> opts = new LinkedList<MBeanOpVo>();
 
 	private final Class<?> clazz;
 
@@ -51,7 +51,7 @@ public class MBeanVo implements Comparable<MBeanVo> {
 			for (MBeanOperationInfo mBeanOperationInfo : operations) {
 				if (isOperationRole(mBeanOperationInfo)) {
 					// 只有role = "operation"才需要加进来，role是setter或者getter的，都是属性的
-					this.opts.add(new MBeanOptVo(mBeanOperationInfo));
+					this.opts.add(new MBeanOpVo(mBeanOperationInfo));
 				}
 			}
 			Collections.sort(this.opts);
@@ -78,7 +78,7 @@ public class MBeanVo implements Comparable<MBeanVo> {
 		return this.clazz.getSimpleName();
 	}
 
-	public List<MBeanOptVo> getOpts() {
+	public List<MBeanOpVo> getOpts() {
 		return opts;
 	}
 

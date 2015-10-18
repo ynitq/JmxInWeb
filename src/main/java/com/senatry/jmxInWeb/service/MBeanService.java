@@ -11,16 +11,21 @@ import javax.management.Attribute;
 import javax.management.JMException;
 import javax.management.MBeanAttributeInfo;
 import javax.management.MBeanInfo;
+import javax.management.MBeanOperationInfo;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 
 import com.senatry.jmxInWeb.actions.mbean.AjaxChangeAttrForm;
+import com.senatry.jmxInWeb.actions.mbean.AjaxInvokeOpForm;
 import com.senatry.jmxInWeb.exception.BaseLogicException;
 import com.senatry.jmxInWeb.exception.MyAttrNotFoundException;
+import com.senatry.jmxInWeb.exception.MyInvalidParamTypeException;
 import com.senatry.jmxInWeb.exception.MyMBeanNotFoundException;
 import com.senatry.jmxInWeb.exception.MyMalformedObjectNameException;
+import com.senatry.jmxInWeb.exception.MyOperationNotFoundException;
+import com.senatry.jmxInWeb.json.JsonInvokeOptResponse;
 import com.senatry.jmxInWeb.models.DomainVo;
 import com.senatry.jmxInWeb.models.MBeanVo;
 import com.senatry.jmxInWeb.utils.LogUtil;
@@ -178,6 +183,61 @@ public class MBeanService {
 		}
 		return value != null ? value.toString() : null;
 
+	}
+
+	/**
+	 * invoke op
+	 * 
+	 * @param form
+	 * @return
+	 * @throws JMException
+	 * @throws MyMBeanNotFoundException
+	 * @throws MyMalformedObjectNameException
+	 * @throws MyOperationNotFoundException
+	 * @throws MyInvalidParamTypeException
+	 */
+	public JsonInvokeOptResponse invokeOp(AjaxInvokeOpForm form)
+			throws MyMBeanNotFoundException, JMException, MyMalformedObjectNameException, MyOperationNotFoundException,
+			MyInvalidParamTypeException {
+		ObjectName name = this.getObjectName(form.getObjectName());
+
+		// Find target attribute
+		MBeanInfo info = this.getMBeanInfoByName(name);
+
+		// get param info
+		AjaxInvokeOpForm.ParamInfo paramInfo = form.getParamInfo();
+
+		// check param match
+		MBeanOperationInfo[] operations = info.getOperations();
+		MBeanOperationInfo targetOperation = null;
+		if (operations != null) {
+			for (int j = 0; j < operations.length; j++) {
+				if (operations[j].getName().equals(form.getOptName())) {
+					if (paramInfo.isMath(operations[j].getSignature())) {
+						targetOperation = operations[j];
+						break;
+					}
+				}
+			}
+		}
+
+		if (targetOperation == null) {
+			throw new MyOperationNotFoundException(paramInfo.getOperationsInfo());
+		}
+
+		Object returnValue = server.invoke(name, form.getOptName(), paramInfo.getValues(), paramInfo.getTypes());
+
+		if (log.isDebugEnabled()) {
+			log.debug(LogUtil.format("invode %s %s value=%s", targetOperation.getReturnType(), paramInfo.getOperationsInfo(),
+					returnValue));
+		}
+
+		JsonInvokeOptResponse res = new JsonInvokeOptResponse();
+		res.setReturnData(returnValue);
+		res.setHasReturn(!targetOperation.getReturnType().equals("void"));
+		res.setOpName(form.getOptName());
+
+		return res;
 	}
 
 }

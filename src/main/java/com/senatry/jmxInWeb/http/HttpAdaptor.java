@@ -3,16 +3,13 @@ package com.senatry.jmxInWeb.http;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.Executors;
 
 import javax.management.MBeanServer;
 
 import com.senatry.jmxInWeb.mvc.ActionManager;
 import com.senatry.jmxInWeb.service.MBeanService;
-import com.senatry.jmxInWeb.utils.StringUtils;
-import com.sun.net.httpserver.BasicAuthenticator;
+import com.sun.net.httpserver.Authenticator;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
@@ -39,8 +36,6 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 	 */
 	private boolean alive;
 
-	private final Map<String, String> authorizations = new HashMap<String, String>();
-
 	private Date startDate;
 
 	private long requestsCount;
@@ -53,9 +48,9 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 
 	private HttpServer httpserver;
 
-	private final String authRealm = "MBeanConsole";
-
 	private final ActionManager actionManager = new ActionManager();
+
+	private Authenticator authenticator;
 
 	public void start() throws IOException {
 		if (this.isActive()) {
@@ -66,16 +61,8 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 		HttpContext hc = httpserver.createContext(this.httpContextName, actionManager);
 		hc.getFilters().add(new ParameterFilter());
 
-		if (!this.authorizations.isEmpty()) {
-			hc.setAuthenticator(new BasicAuthenticator(authRealm) {
-				@Override
-				public boolean checkCredentials(String user, String pwd) {
-					if (StringUtils.isNotBlank(user) && StringUtils.isNotBlank(pwd)) {
-						return pwd.equals(authorizations.get(user));
-					}
-					return false;
-				}
-			});
+		if (this.authenticator != null) {
+			hc.setAuthenticator(authenticator);
 		}
 
 		httpserver.start();
@@ -156,19 +143,11 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 		this.httpserver.stop(10);
 	}
 
-	/**
-	 * Adds an authorization pair as username/password
-	 */
-	public void addAuthorization(String username, String password) {
-		if (username == null || password == null) {
-			throw new IllegalArgumentException("username and passwords cannot be null");
-		}
-		authorizations.put(username, password);
+	public Authenticator getAuthenticator() {
+		return authenticator;
 	}
 
-	public void setAuthMap(Map<String, String> map) {
-		if (map != null) {
-			this.authorizations.putAll(map);
-		}
+	public void setAuthenticator(Authenticator authenticator) {
+		this.authenticator = authenticator;
 	}
 }

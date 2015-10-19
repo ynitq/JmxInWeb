@@ -1,12 +1,12 @@
 package com.senatry.jmxInWeb;
 
 import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
 import javax.management.ObjectName;
 
 import org.springframework.jmx.export.MBeanExporter;
 import org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource;
 import org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler;
-import org.springframework.jmx.support.MBeanServerFactoryBean;
 
 import com.senatry.jmxInWeb.utils.LogUtil;
 
@@ -19,17 +19,15 @@ import com.senatry.jmxInWeb.utils.LogUtil;
  * @author liangwj72
  * 
  */
-public class SpingAnnotationHelper {
+public class SimpleSpingSupport {
 
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
-			.getLog(SpingAnnotationHelper.class);
+			.getLog(SimpleSpingSupport.class);
 
 	private final MBeanExporter mBeanExporter;
 
-	public SpingAnnotationHelper() {
-		MBeanServerFactoryBean mBeanServerFactory = new MBeanServerFactoryBean();
-		mBeanServerFactory.afterPropertiesSet();
-		MBeanServer server = mBeanServerFactory.getObject();
+	public SimpleSpingSupport() {
+		MBeanServer server = MBeanServerFactory.createMBeanServer("JmxInWeb");
 
 		// 用注解方式定义mbean以及里面的属性
 		MetadataMBeanInfoAssembler assembler = new MetadataMBeanInfoAssembler();

@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.senatry.jmxInWeb.SpingAnnotationHelper;
+import com.senatry.jmxInWeb.SimpleSpingSupport;
 import com.senatry.jmxInWeb.models.DomainVo;
 import com.senatry.jmxInWeb.models.MBeanAttrVo;
 import com.senatry.jmxInWeb.models.MBeanOpVo;
@@ -27,7 +27,7 @@ public class MBeanServiceTest {
 	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
 			.getLog(MBeanServiceTest.class);
 
-	private static final SpingAnnotationHelper helper = new SpingAnnotationHelper();
+	private static final SimpleSpingSupport helper = new SimpleSpingSupport();
 	private static final MBeanService service = MBeanService.getInstance();
 
 	@BeforeClass

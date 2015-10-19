@@ -2,7 +2,6 @@ package com.senatry.jmxInWeb;
 
 import java.io.IOException;
 
-import com.senatry.jmxInWeb.SpingAnnotationHelper;
 import com.senatry.jmxInWeb.http.HttpAdaptor;
 import com.senatry.jmxInWeb.service.testMBeans.MBean1;
 
@@ -17,13 +16,15 @@ import com.senatry.jmxInWeb.service.testMBeans.MBean1;
  */
 public class TestJmxHttpServer {
 
-	private final SpingAnnotationHelper helper = new SpingAnnotationHelper();
+	private final SimpleSpingSupport helper = new SimpleSpingSupport();
 
-	public SpingAnnotationHelper getHelper() {
+	public SimpleSpingSupport getHelper() {
 		return helper;
 	}
 
 	private HttpAdaptor httpAdaptor;
+
+	private final SimpleHttpAuthenticator authenticator = new SimpleHttpAuthenticator("jmxInWeb");
 
 	/**
 	 * 开始监听
@@ -32,7 +33,12 @@ public class TestJmxHttpServer {
 	 */
 	public void start() throws IOException {
 
+		this.authenticator.addAuthorization("root", "1");
+
 		this.httpAdaptor = new HttpAdaptor(this.helper.getMBeanServer());
+		this.httpAdaptor.setPort(8080);
+		this.httpAdaptor.setAuthenticator(this.authenticator);
+
 		this.httpAdaptor.start();
 
 		this.helper.register(this.httpAdaptor);

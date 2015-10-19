@@ -312,7 +312,7 @@ public class OpenTypeUtil {
 		return "";
 	}
 
-	private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:ss");
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:ss");
 
 	private final Map<String, BaseConverter<?>> converterMap = new HashMap<String, BaseConverter<?>>();
 

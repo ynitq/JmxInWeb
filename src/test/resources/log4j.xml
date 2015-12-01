@@ -10,7 +10,7 @@
 		</layout>
 	</appender>
 	
-	<logger name="com.senatry.jmxInWeb">
+	<logger name="com.ynitq.utils.jmxInWeb">
 		<level value="debug" />
 	</logger>
 

@@ -1,0 +1,22 @@
+---
+layout:     post
+title:      "Hello"
+subtitle:   "Hello World"
+date:       2015-12-07
+author:     "梁韦江"
+header-img: "img/post-bg-js-version.jpg"
+tags:
+    - test
+
+---
+---
+
+## 这个是测试
+
+- 哈哈，我还活着
+- 哈哈，我还活着2
+
+1. test
+1. test
+1. test
+1. test

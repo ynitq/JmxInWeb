@@ -13,7 +13,6 @@ baseurl: "/JmxInWeb"                        # for example, '/blog' if your blog 
 
 
 # SNS settings
-RSS: false
 #weibo_username:     huxpro
 #zhihu_username:     huxpro
 github_username:    ynitq
@@ -43,21 +42,16 @@ kramdown:
 #disqus_username: _your_disqus_short_name_
 
 # Duoshuo settings
-duoshuo_username: yunitq
+duoshuo_username: ynitq
 # Share component is depend on Comment so we can NOT use share only.
 duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
-# Analytics settings
 # Baidu Analytics
 # ba_track_id: 4cc1f2d8f3067386cc5cdb626a202900
-# Google Analytics
-#ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-#ga_domain: huangxuan.me
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "写写代码，做做设计，看看产品。世界那么大，我想去看看。"
-sidebar-avatar: /img/avatar-hux.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 # Featured Tags
 featured-tags: true                     # whether or not using Feature-Tags
@@ -68,5 +62,8 @@ friends: [
     {
         title: "云南IT圈",
         href: "http://www.ynitq.com/"
+    },{
+        title: "Hux Theme",
+        href: "https://github.com/Huxpro/huxpro.github.io"
     }
 ]

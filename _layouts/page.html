@@ -20,48 +20,6 @@ layout: default
 <!-- Main Content -->
 <div class="container">
 	<div class="row">
-        {% if site.sidebar == false %}
-<!-- NO SIDEBAR -->
-    <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 post-container">
-                {{ content }}
-            </div>
-    <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                {% if site.featured-tags %}
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-        				{% for tag in site.tags %}
-                            {% if tag[1].size > {{site.featured-condition-size}} %}
-                				<a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}">
-                                    {{ tag[0] }}
-                                </a>
-                            {% endif %}
-        				{% endfor %}
-        			</div>
-                </section>
-                {% endif %}
-
-                <!-- Friends Blog -->
-                {% if site.friends %}
-                <hr>
-                <h5>FRIENDS</h5>
-                <ul class="list-inline">
-                    {% for friend in site.friends %}
-                        <li><a href="{{friend.href}}">{{friend.title}}</a></li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-            </div>
-        {% else %}
-
 <!-- USE SIDEBAR -->
     <!-- Post Container -->
     		<div class="
@@ -73,6 +31,7 @@ layout: default
             ">
     			{{ content }}
     		</div>
+
     <!-- Sidebar Container -->
             <div class="
                 col-lg-3 col-lg-offset-0
@@ -85,7 +44,7 @@ layout: default
                 {% if site.featured-tags %}
                 <section>
                     <hr class="hidden-sm hidden-xs">
-                    <h5><a href="{{/tags/ | prepend: site.baseurl }}">FEATURED TAGS</a></h5>
+                    <h5><a href="{{/tags/ | prepend: site.baseurl }}/tags/">标签云</a></h5>
                     <div class="tags">
                         {% for tag in site.tags %}
                             {% if tag[1].size > {{site.featured-condition-size}} %}
@@ -100,14 +59,8 @@ layout: default
 
                 <!-- Short About -->
                 <section class="visible-md visible-lg">
-                    <hr><h5><a href="{{/about/ | prepend: site.baseurl }}">ABOUT ME</a></h5>
+                    <hr/><h5><a href="{{/about/ | prepend: site.baseurl }}/about/">关于项目</a></h5>
                     <div class="short-about">
-                        {% if site.sidebar-avatar %}
-                            <img src="{{site.sidebar-avatar}}" />
-                        {% endif %}
-                        {% if site.sidebar-about-description %}
-                            <p>{{site.sidebar-about-description}}</p>
-                        {% endif %}
                         <!-- SNS Link -->
                         <ul class="list-inline">
                             {% if site.RSS %}
@@ -171,12 +124,19 @@ layout: default
                             </li>
                             {% endif %}
                         </ul>
+                        <!-- github -->
+                        <div>
+                            <iframe src="https://ghbtns.com/github-btn.html?user=ynitq&repo=JmxInWeb&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+                        </div>
+                        <div>
+                            <iframe src="https://ghbtns.com/github-btn.html?user=ynitq&repo=JmxInWeb&type=fork&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>
+                        </div>
                     </div>
                 </section>
-                <!-- Friends Blog -->
+                <!-- Friends -->
                 {% if site.friends %}
                 <hr>
-                <h5>FRIENDS</h5>
+                <h5>友情链接</h5>
                 <ul class="list-inline">
                     {% for friend in site.friends %}
                         <li><a href="{{friend.href}}">{{friend.title}}</a></li>
@@ -184,6 +144,5 @@ layout: default
                 </ul>
                 {% endif %}
     		</div>
-        {% endif %}
 	</div>
 </div>

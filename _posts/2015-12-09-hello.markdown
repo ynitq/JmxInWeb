@@ -6,7 +6,8 @@ date:       2015-12-07
 author:     "梁韦江"
 header-img: "img/post-bg-js-version.jpg"
 tags:
-    - test
+    - tag1
+    - tag2
 
 ---
 ---

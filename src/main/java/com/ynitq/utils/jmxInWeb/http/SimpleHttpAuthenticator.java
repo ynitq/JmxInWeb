@@ -1,4 +1,4 @@
-package com.ynitq.utils.jmxInWeb;
+package com.ynitq.utils.jmxInWeb.http;
 
 import java.util.HashMap;
 import java.util.Map;

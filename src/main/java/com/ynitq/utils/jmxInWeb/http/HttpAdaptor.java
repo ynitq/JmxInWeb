@@ -10,11 +10,23 @@ import javax.management.MBeanServer;
 import com.sun.net.httpserver.Authenticator;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
-import com.ynitq.utils.jmxInWeb.mvc.ActionManager;
 import com.ynitq.utils.jmxInWeb.service.MBeanService;
 
 /**
- * HttpAdaptor sets the basic adaptor listening for HTTP requests *
+ * <pre>
+ * HttpAdaptor sets the basic adaptor listening for HTTP requests
+ * 
+ * 用于管理 Http请求监听器的参数，例如端口、认证方式什么什么的
+ * 
+ * 本包中提供了最简单的认证方式 SimpleHttpAuthenticator。
+ * 如果有心情，可以用其他的认证方式
+ * 
+ * </pre>
+ * 
+ * @see SimpleHttpAuthenticator 最简单的认证实现类
+ * 
+ * @author <a href="https://github.com/liangwj72">Alex (梁韦江)</a>
+ * 2015年12月9日
  */
 public class HttpAdaptor implements HttpAdaptorMBean {
 
@@ -48,7 +60,7 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 
 	private HttpServer httpserver;
 
-	private final ActionManager actionManager = new ActionManager();
+	private final ActionDispatcher actionDispatcher = new ActionDispatcher();
 
 	private Authenticator authenticator;
 
@@ -58,7 +70,7 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 		}
 		httpserver = HttpServer.create(new InetSocketAddress(this.port), this.acceptLimit);
 		httpserver.setExecutor(Executors.newFixedThreadPool(executerLimit));
-		HttpContext hc = httpserver.createContext(this.httpContextName, actionManager);
+		HttpContext hc = httpserver.createContext(this.httpContextName, actionDispatcher);
 		hc.getFilters().add(new ParameterFilter());
 
 		if (this.authenticator != null) {

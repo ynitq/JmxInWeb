@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.management.Attribute;
 import javax.management.JMException;
@@ -48,9 +50,34 @@ public class MBeanService {
 	 */
 	private MBeanServer server;
 
-	private static final MBeanService instance = new MBeanService();
+	private static MBeanService instance;
+	private static final Lock instanceLock = new ReentrantLock();
 
+	/**
+	 * <pre>
+	 * 经典的两次判断单子实例的写法，而且是用高性能的可重入锁作为同步锁
+	 * -------------------
+	 * 这个工具项目根本不会产生高并发的说法，这个实例产生时也完全不可能需要锁， 我这么写完全的是无聊。
+	 * 
+	 * 为什么我要用复杂的写法：
+	 * 无他，就是给初学者们一个例子而已。这是一个非常经典的写法，在高并发的情况下追求极致的速度。
+	 * 
+	 * </pre>
+	 * @return
+	 */
 	public static MBeanService getInstance() {
+		if (instance == null) {
+			instanceLock.lock();
+			try {
+				if (instance == null) {
+					instance = new MBeanService();
+					// 通常这里还可以有些其他的初始化代码的
+				}
+			} finally {
+				instanceLock.unlock();
+			}
+		}
+
 		return instance;
 	}
 

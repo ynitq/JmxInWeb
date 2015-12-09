@@ -16,15 +16,16 @@ import java.util.Map;
 import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
-
-
 /**
  * <pre>
+ * 负责分析http请求参数的过滤器，
+ * 将get或者post传过来的参数放到Map中，
+ * Map的key是参数名，value是一个List<String>
  * 
+ * 最后将这个map，存在HttpExchange中
  * </pre>
  * 
- * @author<a href="https://github.com/liangwj72">Alex (梁韦江)</a>
- * 2015年9月10日
+ * @author<a href="https://github.com/liangwj72">Alex (梁韦江)</a> 2015年9月10日
  */
 public class ParameterFilter extends Filter {
 

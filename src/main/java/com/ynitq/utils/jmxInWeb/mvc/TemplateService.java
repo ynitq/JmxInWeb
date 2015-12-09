@@ -19,7 +19,7 @@ import freemarker.template.TemplateException;
 
 /**
  * <pre>
- * FreeMarker模板处理
+ * FreeMarker模板处理，用于根据Model和View模板合成页面
  * </pre>
  * 
  * @author<a href="https://github.com/liangwj72">Alex (梁韦江)</a> 2015年9月13日

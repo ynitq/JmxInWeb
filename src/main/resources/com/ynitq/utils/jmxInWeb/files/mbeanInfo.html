@@ -125,11 +125,9 @@
                     <td>${optVo.info.returnType}</td>
                     <td>${optVo.info.description}</td>
                     <td>
-                      <form name="form_invoke_${i}">
                       <btn class="btn default btn-xs green-stripe js_invoke_opt"
                         data-form-name="form_invoke_${i}"
                       	>Invoke</btn>
-                      </form>
                     </td>
                   </tr>
 	<#else>
@@ -151,8 +149,8 @@
                         </thead>
                         <tbody>
 		<#list optVo.params as paramVo>
-						<input type="hidden" name="paramType" value="${paramVo.info.type}"/>
                           <tr role="row" class="filter">
+							<input type="hidden" name="paramType" value="${paramVo.info.type}"/>
                             <td>${paramVo.info.name}</td>
                             <td>${paramVo.info.description}</td>
                             <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type}</span></td>

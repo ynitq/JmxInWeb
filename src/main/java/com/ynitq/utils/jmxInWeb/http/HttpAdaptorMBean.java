@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * <pre>
- * 
+ * 按照MBean的规范写的东西
  * </pre>
  * 
  * @author<a href="https://github.com/liangwj72">Alex (梁韦江)</a>

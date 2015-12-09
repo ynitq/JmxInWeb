@@ -2,9 +2,9 @@ package com.ynitq.utils.jmxInWeb;
 
 import java.io.IOException;
 
-import com.ynitq.utils.jmxInWeb.SimpleHttpAuthenticator;
 import com.ynitq.utils.jmxInWeb.SimpleSpingSupport;
 import com.ynitq.utils.jmxInWeb.http.HttpAdaptor;
+import com.ynitq.utils.jmxInWeb.http.SimpleHttpAuthenticator;
 import com.ynitq.utils.jmxInWeb.service.testMBeans.MBean1;
 
 /**

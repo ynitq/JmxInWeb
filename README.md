@@ -9,6 +9,12 @@
 - [软件设计思路](https://github.com/ynitq/JmxInWeb/wiki/Software_Architecture_Description)
 
 ---
+## 如何看效果？
+
+- 运行```com.ynitq.utils.jmxInWeb.TestJmxHttpServer```
+- 然后在浏览器中打开 ```http://localhost:8080/```
+
+---
 
 ## Learn It & Contact Us
 - Homepage: https://github.com/ynitq/JmxInWeb

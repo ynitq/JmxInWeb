@@ -18,7 +18,7 @@
 
 ## Learn It & Contact Us
 - Homepage: https://github.com/ynitq/JmxInWeb
-- Documentation: https://github.com/ynitq/JmxInWeb/wiki
+- Blog: http://ynitq.github.io/JmxInWeb
 - Wiki: https://github.com/ynitq/JmxInWeb/wiki
 - Issues: https://github.com/ynitq/JmxInWeb/issues
 - release: https://github.com/ynitq/JmxInWeb/releases

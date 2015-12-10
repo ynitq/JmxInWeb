@@ -1,23 +1,38 @@
 ---
 layout:     post
-title:      "Hello"
-subtitle:   "Hello World"
-date:       2015-12-07
-author:     "梁韦江"
-header-img: "img/post-bg-js-version.jpg"
+title:      "JmxInWeb Blog 开通了"
+subtitle:   "喜大普奔啊"
+date:       2015-12-10
+author:     "风语"
+header-img: "img/post-bg-alitrip.jpg"
 tags:
-    - tag1
-    - tag2
-
----
+    - blog
+    - jeklly
 ---
 
-## 这个是测试
+# 开源项目 JmxInWeb 的Blog开通了
 
-- 哈哈，我还活着
-- 哈哈，我还活着2
+---
 
-1. test
-1. test
-1. test
-1. test
+### 你们猜这个blog开通的目的是什么？
+
+就是弄个地方可以让大家发表评论，发表各种吐槽，哈哈。:laughing: :laughing::laughing:
+
+别以为这个blog是在github上的，没人监管，但我们用得评论系统是**多说**的，所以嘛，大家胡说八道时还是要悠着点。
+
+在github上做自己的blog是非常简单的事情，下面就是如何维护本blog的办法，如果你有兴趣做自己的blog，clone本blog，修改一下，放到自己的github上就行了。
+当然，你需要最好先看一下<a href="https://pages.github.com/" target="_blank">官方详细教程</a>。
+
+
+### 如何维护？
+
+这个Blog系统是github内置的功能，文章和页面是在项目的```gh-pages```分支，开发团队的成员可以clone这个分支并修改和提交内容，push后，页面就会自动更新。
+非本项目团队的成员只能clone，但没有权利push。
+
+### 如何搭建调试环境？
+不是说一定要有调试环境，但如果能上传之前，在本地预览一下，总是好的。在官方的教程中，已经有说了如何用**jekyll**搭建本地测试环境，但那个是英文的，如果你不乐意看英文，可以看一下以下的中文资源：
+
+- <a href="http://jekyll.bootcss.com/" target="_blank">将纯文本转化为静态网站和博客</a>
+- <a href="http://blog.fens.me/jekyll-bootstarp-github/" target="_blank">Jekyll在github上构建免费的Web应用</a>
+
+    ![](http://blog.fens.me/wp-content/uploads/2013/11/jekyll-github.png)

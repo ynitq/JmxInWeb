@@ -3,7 +3,7 @@ gems: [jekyll-paginate]
 # Site settings
 title: JmxInWeb
 SEOTitle: JmxInWeb
-header-img: img/home-bg.jpg
+header-img: img/home-bg-o.jpg
 email: liangwj72@qq.com
 description: "Jmx Web UI Management"
 keyword: "Java, 开源, JMX, WEB, bootstrap"

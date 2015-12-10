@@ -1,0 +1,117 @@
+    <!-- Sidebar Container -->
+    <div class="
+        col-lg-3 col-lg-offset-0
+        col-md-3 col-md-offset-0
+        col-sm-12
+        col-xs-12
+        sidebar-container
+    ">
+
+        <section>
+            <hr class="hidden-sm hidden-xs">
+            <h5>置顶文章</h5>
+            <div><a href="{{/ | prepend: site.baseurl }}/2015/12/10/hello/">Blog开通了</a></div>
+        </section>
+
+        <section>
+            <hr class="hidden-sm hidden-xs">
+            <h5>关于项目</h5>
+            <div><a href="https://github.com/ynitq/JmxInWeb" target="_blank">项目主页</a></div>
+            <div><a href="https://github.com/ynitq/JmxInWeb/wiki" target="_blank">项目文档</a></div>
+            <div><a href="https://github.com/ynitq/JmxInWeb/issues" target="_blank">项目Issues</a></div>
+            <div><a href="https://github.com/ynitq/JmxInWeb/releases" target="_blank">版本发布</a></div>
+        </section>
+
+        <!-- Short About -->
+        <section class="visible-md visible-lg">
+            <hr/><h5><a href="{{/about/ | prepend: site.baseurl }}/about/">社区网络</a></h5>
+            <div class="short-about">
+                <!-- SNS Link -->
+                <ul class="list-inline">
+                    {% if site.twitter_username %}
+                    <li>
+                        <a href="https://twitter.com/{{ site.twitter_username }}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site.zhihu_username %}
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/{{ site.zhihu_username }}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site.weibo_username %}
+                    <li>
+                        <a target="_blank" href="http://weibo.com/{{ site.weibo_username }}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site.facebook_username %}
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/{{ site.facebook_username }}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if site.github_username %}
+                    <li>
+                        <a target="_blank" href="https://github.com/{{ site.github_username }}">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </section>
+
+        <!-- Friends -->
+        {% if site.friends %}
+        <section>
+            <hr class="hidden-sm hidden-xs">
+            <h5>友情链接</h5>
+            <ul class="list-inline">
+                {% for friend in site.friends %}
+                    <li><a href="{{friend.href}}">{{friend.title}}</a></li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        <!-- Featured Tags -->
+        {% if site.featured-tags %}
+        <section>
+            <hr class="hidden-sm hidden-xs">
+            <h5><a href="{{/tags/ | prepend: site.baseurl }}/tags/">标签云</a></h5>
+            <div class="tags">
+                {% for tag in site.tags %}
+                    {% if tag[1].size > {{site.featured-condition-size}} %}
+                        <a href="{{ site.baseurl }}/tags/#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}">
+                            {{ tag[0] }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+
+	</div>
+<!-- /Sidebar Container -->

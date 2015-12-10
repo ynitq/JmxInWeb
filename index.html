@@ -19,7 +19,7 @@ description: "这是一个通过Web界面管理java虚拟机运行时的各类MB
         </div>
     </a>
     <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
+        {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} 发表于 {{ post.date | date: "%Y年%m月%d日" }}
     </p>
 </div>
 <hr>

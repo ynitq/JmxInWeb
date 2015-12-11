@@ -16,12 +16,12 @@ tags:
 
 ### 你们猜这个blog开通的目的是什么？
 
-就是弄个地方可以让大家发表评论，发表各种吐槽，哈哈。:laughing: :laughing::laughing:
+就是弄个地方可以让大家发表评论，发表各种吐槽，哈哈。
 
 别以为这个blog是在github上的，没人监管，但我们用得评论系统是**多说**的，所以嘛，大家胡说八道时还是要悠着点。
 
 在github上做自己的blog是非常简单的事情，下面就是如何维护本blog的办法，如果你有兴趣做自己的blog，clone本blog，修改一下，放到自己的github上就行了。
-当然，你需要最好先看一下<a href="https://pages.github.com/" target="_blank">官方详细教程</a>。
+当然，你需要最好先看一下[官方详细教程](https://pages.github.com/)。
 
 
 ### 如何维护？
@@ -32,7 +32,11 @@ tags:
 ### 如何搭建调试环境？
 不是说一定要有调试环境，但如果能上传之前，在本地预览一下，总是好的。在官方的教程中，已经有说了如何用**jekyll**搭建本地测试环境，但那个是英文的，如果你不乐意看英文，可以看一下以下的中文资源：
 
-- <a href="http://jekyll.bootcss.com/" target="_blank">将纯文本转化为静态网站和博客</a>
-- <a href="http://blog.fens.me/jekyll-bootstarp-github/" target="_blank">Jekyll在github上构建免费的Web应用</a>
+- [将纯文本转化为静态网站和博客](http://jekyll.bootcss.com/)
+- [Jekyll在github上构建免费的Web应用](http://blog.fens.me/jekyll-bootstarp-github/)
 
     ![](http://blog.fens.me/wp-content/uploads/2013/11/jekyll-github.png)
+
+### 其他
+- 必须赞美一下[atom编辑器](https://github.com/atom/atom/releases)，确实是好用，默认就和git，用颜色标记了那些文件修改过。而且对markdown的支持是相当的不错，比sublime好用。
+- 吐槽一下github的markdown，不支持TOC，不支持```target=_blank```。

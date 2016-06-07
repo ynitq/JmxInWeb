@@ -1,16 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<groupId>com.ynitq.utils</groupId>
 	<artifactId>JmxInWeb</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
+	
 	<name>JmxInWeb</name>
 	<description>一个可嵌入各类java项目，用于jmx管理的工具包</description>
 
 	<properties>
-        <argLine>-Dfile.encoding=UTF-8</argLine>
+		<!-- 默认jdk是1.7版本 -->
+		<maven.compiler.source>1.7</maven.compiler.source>
+		<maven.compiler.target>1.7</maven.compiler.target>
+		<maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
+
+		<!-- 默认编码格式是UTF-8 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
+		<argLine>-Dfile.encoding=UTF-8</argLine>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -60,19 +68,18 @@
 		</dependency>
 	</dependencies>
 
-	<build>
-		<defaultGoal>install</defaultGoal>
-		<plugins>
-			<plugin>
-				<!-- 很多老项目还是1.6的，为了可让这些老项目用得上本工具包，所以我们也特别说明用1.6 -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+	<!-- 发布地址，用户名和密码在setting.xml中 -->
+	<distributionManagement>
+		<repository>
+			<id>LinziRepo</id>
+			<name>LinZi Repository Release</name>
+			<url>http://maven.lin-zi.com/nexus/content/repositories/releases</url>
+		</repository>
+		<snapshotRepository>
+			<id>LinziRepo</id>
+			<name>LinZi Repository Snapshots</name>
+			<url>http://maven.lin-zi.com/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>

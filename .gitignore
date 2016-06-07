@@ -1,2 +1,8 @@
 /bin/
 /target/
+/.idea
+/.tgitconfig
+/.settings
+/.classpath
+/.freemarker-ide.xml
+/.project

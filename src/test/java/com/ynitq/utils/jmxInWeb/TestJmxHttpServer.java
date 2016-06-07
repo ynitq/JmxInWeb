@@ -2,7 +2,6 @@ package com.ynitq.utils.jmxInWeb;
 
 import java.io.IOException;
 
-import com.ynitq.utils.jmxInWeb.SimpleSpingSupport;
 import com.ynitq.utils.jmxInWeb.http.HttpAdaptor;
 import com.ynitq.utils.jmxInWeb.http.SimpleHttpAuthenticator;
 import com.ynitq.utils.jmxInWeb.service.testMBeans.MBean1;
@@ -38,7 +37,7 @@ public class TestJmxHttpServer {
 		this.authenticator.addAuthorization("root", "1");
 
 		this.httpAdaptor = new HttpAdaptor(this.helper.getMBeanServer());
-		this.httpAdaptor.setPort(8080);
+		this.httpAdaptor.setPort(8088);
 		this.httpAdaptor.setAuthenticator(this.authenticator);
 
 		this.httpAdaptor.start();

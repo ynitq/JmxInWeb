@@ -2,60 +2,55 @@ package com.ynitq.utils.jmxInWeb;
 
 import java.io.IOException;
 
-import com.ynitq.utils.jmxInWeb.http.HttpAdaptor;
-import com.ynitq.utils.jmxInWeb.http.SimpleHttpAuthenticator;
+import javax.management.MBeanServer;
+import javax.management.MBeanServerFactory;
+
+import org.springframework.jmx.export.MBeanExporter;
+import org.springframework.jmx.export.annotation.AnnotationJmxAttributeSource;
+import org.springframework.jmx.export.assembler.MetadataMBeanInfoAssembler;
+
 import com.ynitq.utils.jmxInWeb.service.testMBeans.MBean1;
+import com.ynitq.utils.jmxInWeb.spring.BaseSpringTemplate;
 
 /**
  * 
  * <pre>
- * 测试启动一个jmx服务
+ * 通过Spring的实现类
  * </pre>
  * 
  * @author liangwj72
  * 
  */
-public class TestJmxHttpServer {
+public class TestJmxHttpServer extends BaseSpringTemplate {
 
-	private final SimpleSpingSupport helper = new SimpleSpingSupport();
+	private final MBeanExporter mBeanExporter;
 
-	public SimpleSpingSupport getHelper() {
-		return helper;
+	public TestJmxHttpServer() {
+		MBeanServer server = MBeanServerFactory.createMBeanServer("JmxInWeb");
+
+		// 用注解方式定义mbean以及里面的属性
+		MetadataMBeanInfoAssembler assembler = new MetadataMBeanInfoAssembler();
+		assembler.setAttributeSource(new AnnotationJmxAttributeSource());
+
+		this.mBeanExporter = new MBeanExporter();
+		this.mBeanExporter.setAssembler(assembler);
+		this.mBeanExporter.setServer(server);
 	}
 
-	private HttpAdaptor httpAdaptor;
-
-	private final SimpleHttpAuthenticator authenticator = new SimpleHttpAuthenticator("jmxInWeb");
-
-	/**
-	 * 开始监听
-	 * 
-	 * @throws IOException
-	 */
-	public void start() throws IOException {
-
-		this.authenticator.addAuthorization("root", "1");
-
-		this.httpAdaptor = new HttpAdaptor(this.helper.getMBeanServer());
-		this.httpAdaptor.setPort(8088);
-		this.httpAdaptor.setAuthenticator(this.authenticator);
-
-		this.httpAdaptor.start();
-
-		this.helper.register(this.httpAdaptor);
+	@Override
+	protected MBeanExporter getMBeanExporter() {
+		return this.mBeanExporter;
 	}
 
-	/**
-	 * 停止HttpAdaptor
-	 */
-	protected void stopHttpAdaptor() {
-		this.httpAdaptor.stop();
+	@Override
+	protected int getPort() {
+		return 8089;
 	}
 
 	public static void main(String[] args) throws IOException {
 		TestJmxHttpServer s = new TestJmxHttpServer();
 		s.start();
-		s.getHelper().register(new MBean1());
+		s.register(new MBean1());
 	}
 
 }

@@ -29,8 +29,7 @@ import com.ynitq.utils.jmxInWeb.utils.LogUtil;
  */
 public class ActionDispatcher implements HttpHandler {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
-			.getLog(ActionDispatcher.class);
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionDispatcher.class);
 
 	private final Map<String, BaseAction> actionsMap = new HashMap<String, BaseAction>();
 

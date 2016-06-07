@@ -13,8 +13,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MBean1 {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(MBean1.class);
-
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MBean1.class);
 	private String attrRwString = "attrWr value";
 
 	private long attrRwLong;

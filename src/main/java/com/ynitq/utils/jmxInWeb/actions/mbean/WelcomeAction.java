@@ -7,7 +7,7 @@ import java.util.Map;
 import com.ynitq.utils.jmxInWeb.http.MyHttpRequest;
 import com.ynitq.utils.jmxInWeb.models.DomainVo;
 import com.ynitq.utils.jmxInWeb.mvc.BasePageAction;
-import com.ynitq.utils.jmxInWeb.service.MBeanService;
+import com.ynitq.utils.jmxInWeb.service.MBeanUtil;
 
 /**
  * <pre>
@@ -25,7 +25,7 @@ public class WelcomeAction extends BasePageAction {
 
 	@Override
 	protected String getModelAndView(MyHttpRequest request, Map<String, Object> dataModel) throws IOException {
-		List<DomainVo> list = MBeanService.getInstance().getAllMBaen();
+		List<DomainVo> list = MBeanUtil.getInstance().getAllMBaen();
 		dataModel.put("list", list);
 		return "index.html";
 	}

@@ -8,12 +8,12 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.ynitq.utils.jmxInWeb.SimpleSpingSupport;
+import com.ynitq.utils.jmxInWeb.TestJmxHttpServer;
 import com.ynitq.utils.jmxInWeb.models.DomainVo;
 import com.ynitq.utils.jmxInWeb.models.MBeanAttrVo;
 import com.ynitq.utils.jmxInWeb.models.MBeanOpVo;
 import com.ynitq.utils.jmxInWeb.models.MBeanVo;
-import com.ynitq.utils.jmxInWeb.service.MBeanService;
+import com.ynitq.utils.jmxInWeb.service.MBeanUtil;
 import com.ynitq.utils.jmxInWeb.service.testMBeans.MBean1;
 
 /**
@@ -25,11 +25,10 @@ import com.ynitq.utils.jmxInWeb.service.testMBeans.MBean1;
  */
 public class MBeanServiceTest {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory
-			.getLog(MBeanServiceTest.class);
-
-	private static final SimpleSpingSupport helper = new SimpleSpingSupport();
-	private static final MBeanService service = MBeanService.getInstance();
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MBeanServiceTest.class);
+	
+	private static final TestJmxHttpServer helper = new TestJmxHttpServer();
+	private static final MBeanUtil service = MBeanUtil.getInstance();
 
 	@BeforeClass
 	public static void beforeClass() {

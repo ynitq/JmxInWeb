@@ -41,17 +41,19 @@ import com.ynitq.utils.jmxInWeb.utils.StringUtils;
  * 
  * @author<a href="https://github.com/liangwj72">Alex (梁韦江)</a> 2015年9月11日
  */
-public class MBeanService {
+public class MBeanUtil {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(MBeanService.class);
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MBeanUtil.class);
 
 	/**
 	 * Target server
 	 */
 	private MBeanServer server;
 
-	private static MBeanService instance;
+	private static MBeanUtil instance;
 	private static final Lock instanceLock = new ReentrantLock();
+
+	private IDomainNameFilter domainNameFilter;
 
 	/**
 	 * <pre>
@@ -63,14 +65,15 @@ public class MBeanService {
 	 * 无他，就是给初学者们一个例子而已。这是一个非常经典的写法，在高并发的情况下追求极致的速度。
 	 * 
 	 * </pre>
+	 * 
 	 * @return
 	 */
-	public static MBeanService getInstance() {
+	public static MBeanUtil getInstance() {
 		if (instance == null) {
 			instanceLock.lock();
 			try {
 				if (instance == null) {
-					instance = new MBeanService();
+					instance = new MBeanUtil();
 					// 通常这里还可以有些其他的初始化代码的
 				}
 			} finally {
@@ -81,7 +84,7 @@ public class MBeanService {
 		return instance;
 	}
 
-	public MBeanService() {
+	public MBeanUtil() {
 	}
 
 	public MBeanServer getServer() {
@@ -127,17 +130,21 @@ public class MBeanService {
 			ObjectName name = instance.getObjectName();
 
 			String domainName = name.getDomain();
-			DomainVo domainVo = domainMap.get(domainName);
-			if (domainVo == null) {
-				domainVo = new DomainVo(domainName);
-				domainMap.put(domainName, domainVo);
-			}
 
-			try {
-				MBeanInfo info = server.getMBeanInfo(name);
-				domainVo.addMBean(name, info);
-			} catch (Exception e) {
-				LogUtil.traceError(log, e);
+			if (this.domainNameFilter == null || this.domainNameFilter.show(domainName)) {
+				// 如果没有domain过滤器，或者过滤器认为这个domain该显示
+				DomainVo domainVo = domainMap.get(domainName);
+				if (domainVo == null) {
+					domainVo = new DomainVo(domainName);
+					domainMap.put(domainName, domainVo);
+				}
+
+				try {
+					MBeanInfo info = server.getMBeanInfo(name);
+					domainVo.addMBean(name, info);
+				} catch (Exception e) {
+					LogUtil.traceError(log, e);
+				}
 			}
 		}
 		domainList.addAll(domainMap.values());
@@ -266,6 +273,14 @@ public class MBeanService {
 		res.setOpName(form.getOptName());
 
 		return res;
+	}
+
+	public IDomainNameFilter getDomainNameFilter() {
+		return domainNameFilter;
+	}
+
+	public void setDomainNameFilter(IDomainNameFilter domainNameFilter) {
+		this.domainNameFilter = domainNameFilter;
 	}
 
 }

@@ -14,8 +14,8 @@ import com.ynitq.utils.jmxInWeb.http.ParameterFilter;
  * @author<a href="https://github.com/liangwj72">Alex (梁韦江)</a> 2012-3-8
  */
 public class BinderUtil {
-
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(BinderUtil.class);
+	
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BinderUtil.class);
 
 	/**
 	 * 从request中获得form对象
@@ -33,7 +33,7 @@ public class BinderUtil {
 
 			return form;
 		} catch (Exception e) {
-			LogUtil.traceError(log, e);
+			log.error(e.getMessage(),e);
 			return null;
 		}
 	}
@@ -80,7 +80,7 @@ public class BinderUtil {
 						try {
 							m.invoke(form, propValue);
 						} catch (Exception e) {
-							LogUtil.traceError(log, e);
+							log.error(e.getMessage(),e);
 						}
 					}
 				}

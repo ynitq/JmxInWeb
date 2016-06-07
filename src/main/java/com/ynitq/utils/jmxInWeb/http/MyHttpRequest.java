@@ -23,7 +23,7 @@ import com.ynitq.utils.jmxInWeb.utils.StringUtils;
  */
 public class MyHttpRequest implements Closeable {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(MyHttpRequest.class);
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MyHttpRequest.class);
 
 	private final HttpExchange httpExchange;
 

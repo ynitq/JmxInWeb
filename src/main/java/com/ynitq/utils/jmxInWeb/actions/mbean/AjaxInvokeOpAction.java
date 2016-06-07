@@ -10,7 +10,7 @@ import com.ynitq.utils.jmxInWeb.http.MyHttpRequest;
 import com.ynitq.utils.jmxInWeb.json.JsonInvokeOptResponse;
 import com.ynitq.utils.jmxInWeb.mvc.BaseAjaxAction;
 import com.ynitq.utils.jmxInWeb.mvc.BaseJsonResponse;
-import com.ynitq.utils.jmxInWeb.service.MBeanService;
+import com.ynitq.utils.jmxInWeb.service.MBeanUtil;
 
 /**
  * <pre>
@@ -29,7 +29,7 @@ public class AjaxInvokeOpAction extends BaseAjaxAction {
 		AjaxInvokeOpForm form = request.bindForm(AjaxInvokeOpForm.class);
 		form.verify();
 
-		JsonInvokeOptResponse res = MBeanService.getInstance().invokeOp(form);
+		JsonInvokeOptResponse res = MBeanUtil.getInstance().invokeOp(form);
 
 		return res;
 	}

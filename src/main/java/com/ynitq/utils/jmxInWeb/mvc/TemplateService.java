@@ -26,7 +26,7 @@ import freemarker.template.TemplateException;
  */
 public class TemplateService {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(TemplateService.class);
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TemplateService.class);
 
 	/**
 	 * <pre>

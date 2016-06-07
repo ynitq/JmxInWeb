@@ -9,7 +9,7 @@ import com.ynitq.utils.jmxInWeb.exception.MyMissingParamException;
 import com.ynitq.utils.jmxInWeb.http.MyHttpRequest;
 import com.ynitq.utils.jmxInWeb.models.MBeanVo;
 import com.ynitq.utils.jmxInWeb.mvc.BasePageAction;
-import com.ynitq.utils.jmxInWeb.service.MBeanService;
+import com.ynitq.utils.jmxInWeb.service.MBeanUtil;
 
 /**
  * <pre>
@@ -33,7 +33,7 @@ public class MBeanInfoAction extends BasePageAction {
 
 		form.verifyObjectName();
 
-		MBeanVo mbean = MBeanService.getInstance().getMBeanByName(form.getObjectName());
+		MBeanVo mbean = MBeanUtil.getInstance().getMBeanByName(form.getObjectName());
 		if (mbean != null) {
 			dataModel.put("mbean", mbean);
 			return "mbeanInfo.html";

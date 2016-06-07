@@ -5,7 +5,7 @@ import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.commons.logging.Log;
+import org.slf4j.Logger;
 
 /**
  * 日志帮助类
@@ -23,7 +23,7 @@ public class LogUtil {
 	 * @param log
 	 * @param e
 	 */
-	public static void traceError(Log log, Throwable e) {
+	public static void traceError(Logger log, Throwable e) {
 		log.error(getTraceString(null, e));
 	}
 
@@ -33,7 +33,7 @@ public class LogUtil {
 	 * @param log
 	 * @param e
 	 */
-	public static void traceError(Log log, Throwable e, String errorMsg) {
+	public static void traceError(Logger log, Throwable e, String errorMsg) {
 		log.error(getTraceString(errorMsg, e));
 	}
 
@@ -64,7 +64,7 @@ public class LogUtil {
 		return DATE_FORMAT.format(new Date(time));
 	}
 
-	public static void traceWarn(Log log, String errorMsg) {
+	public static void traceWarn(Logger log, String errorMsg) {
 		log.warn(getStackTrace(errorMsg));
 	}
 

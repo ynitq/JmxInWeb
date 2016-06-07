@@ -10,7 +10,7 @@ import javax.management.MBeanServer;
 import com.sun.net.httpserver.Authenticator;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
-import com.ynitq.utils.jmxInWeb.service.MBeanService;
+import com.ynitq.utils.jmxInWeb.service.MBeanUtil;
 
 /**
  * <pre>
@@ -30,7 +30,7 @@ import com.ynitq.utils.jmxInWeb.service.MBeanService;
  */
 public class HttpAdaptor implements HttpAdaptorMBean {
 
-	private static final org.apache.commons.logging.Log log = org.apache.commons.logging.LogFactory.getLog(HttpAdaptor.class);
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(HttpAdaptor.class);
 	private static final String VERSION = "3.0.2";
 
 	/**
@@ -81,7 +81,7 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 		this.startDate = new Date();
 		this.alive = true;
 
-		log.fatal(String.format("MBean HttpAdaptor start: http://%s:%d%s", this.host, this.port, this.httpContextName));
+		log.info("MBean HttpAdaptor start: http://{}:{}{}", this.host, this.port, this.httpContextName);
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class HttpAdaptor implements HttpAdaptorMBean {
 	 * constructors as well.
 	 */
 	public HttpAdaptor(MBeanServer mBeanServer) {
-		MBeanService.getInstance().setServer(mBeanServer);
+		MBeanUtil.getInstance().setServer(mBeanServer);
 	}
 
 	/**

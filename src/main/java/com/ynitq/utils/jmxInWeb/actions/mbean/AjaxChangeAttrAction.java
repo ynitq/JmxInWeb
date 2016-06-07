@@ -10,7 +10,7 @@ import com.ynitq.utils.jmxInWeb.http.MyHttpRequest;
 import com.ynitq.utils.jmxInWeb.json.JsonBootstrapEdableResponse;
 import com.ynitq.utils.jmxInWeb.mvc.BaseAjaxAction;
 import com.ynitq.utils.jmxInWeb.mvc.BaseJsonResponse;
-import com.ynitq.utils.jmxInWeb.service.MBeanService;
+import com.ynitq.utils.jmxInWeb.service.MBeanUtil;
 
 /**
  * <pre>
@@ -27,7 +27,7 @@ public class AjaxChangeAttrAction extends BaseAjaxAction {
 		AjaxChangeAttrForm form = request.bindForm(AjaxChangeAttrForm.class);
 		form.verifyForChangeAttrValue();
 
-		String newValue = MBeanService.getInstance().changeAttrValue(form);
+		String newValue = MBeanUtil.getInstance().changeAttrValue(form);
 		
 		JsonBootstrapEdableResponse res = new JsonBootstrapEdableResponse(newValue);
 

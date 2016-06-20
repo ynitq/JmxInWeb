@@ -75,9 +75,15 @@ public class MBeanAttrVo implements Comparable<MBeanAttrVo> {
 			return "";
 		} else {
 			if (this.valueType == AttributeValueTypeEnum.Normal) {
-				return OpenTypeUtil.toString(this.attributeValue, this.info.getType());
+				String value = OpenTypeUtil.toString(this.attributeValue, this.info.getType());
+				return value;
+
 			} else {
-				return JSON.toJSONString(attributeValue);
+				StringBuffer sb = new StringBuffer();
+				sb.append("<pre>");
+				sb.append(JSON.toJSONString(attributeValue, true));
+				sb.append("</pre>");
+				return sb.toString();
 			}
 		}
 	}

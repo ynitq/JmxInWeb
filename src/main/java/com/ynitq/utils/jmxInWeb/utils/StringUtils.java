@@ -117,4 +117,47 @@ public class StringUtils {
 		}
 	}
 
+	public static String html(String in, boolean space) {
+		if (in == null || in.length() == 0) {
+			return "";
+		}
+		char[] charArray = in.toCharArray();
+		StringBuffer strBuff = new StringBuffer();
+
+		for (int i = 0; i < charArray.length; i++) {
+			char c = charArray[i];
+			switch (c) {
+			case '\r':
+				break;
+			case '&':
+				strBuff.append("&amp;");
+				break;
+			case '<':
+				strBuff.append("&lt;");
+				break;
+			case '>':
+				strBuff.append("&gt;");
+				break;
+			case '\"':
+				strBuff.append("&quot;");
+				break;
+			case '\n':
+				strBuff.append("<br/>");
+				break;
+			case ' ':
+			case '\t':
+				if (space) {
+					strBuff.append(" &nbsp;");
+				} else {
+					strBuff.append(c);
+				}
+				break;
+			default:
+				strBuff.append(c);
+			}
+
+		}
+		return strBuff.toString();
+	}
+
 }

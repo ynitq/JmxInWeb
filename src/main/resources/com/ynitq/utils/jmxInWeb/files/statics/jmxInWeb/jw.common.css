@@ -1,8 +1,23 @@
 * {
-    font-family: "Helvetica Neue","Hiragino Sans GB","Microsoft YaHei","\9ED1\4F53",Arial,sans-serif;
+	font-family: "Helvetica Neue", "Hiragino Sans GB", "Microsoft YaHei",
+		"\9ED1\4F53", Arial, sans-serif;
 }
 
 body {
+	font-size: 16px;
+}
 
-    font-size: 16px;
+.attr_value {
+	max-height: 300px;
+	overflow: auto;
+}
+
+.attr_value pre {
+	max-height: 400px;
+	overflow: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
 }

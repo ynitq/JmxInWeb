@@ -72,11 +72,17 @@
                   <tbody>
                   <#list mbean.attrs as attrVo>
                   <tr>
-                    <td>${attrVo.info.name}</td>
+                    <td>${attrVo.info.name}
+                    <#if attrVo.info.writable>
+                    	<#if !attrVo.info.readable><span class="label label-warning">只写</span></#if>
+					<#else>
+						<span class="label label-success">只读</span> 
+                   	</#if>
+                    	
+                    </td>
                     <td>${attrVo.info.type}</td>
                     <td>${attrVo.desc}</td>
-                    <td><#if attrVo.info.writable>
-                      	<#if !attrVo.info.readable><span class="label label-warning">只写</span></#if>
+                    <td class="attr_value"><#if attrVo.info.writable>
 						<a class="js_edit_attr" 
                       		data-name="${attrVo.info.name}" 
                       		data-placement="top"
@@ -87,7 +93,7 @@
                       		data-readable="<#if attrVo.info.readable>true<#else>false</#if>"
                       		data-param-objectName="${mbean.objectName?j_string}"
                       		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a>
-						<#else> <span class="label label-success">只读</span> ${attrVo.value} 
+						<#else> ${attrVo.value} 
                       	</#if>
 					</td>
                   </tr>

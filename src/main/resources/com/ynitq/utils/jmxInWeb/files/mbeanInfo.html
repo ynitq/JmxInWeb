@@ -43,14 +43,14 @@
     <div class="container-fluid"> 
       <!-- BEGIN PAGE TITLE -->
       <div class="page-title"> <!-- InstanceBeginEditable name="pageTitle" -->
-        <h1><b>ClassName:</b>${mbean.className!} <small>${mbean.desc!}</small> </h1>
+        <h1>${mbean.desc} <small><b>ClassName:</b>${mbean.className}</small> </h1>
         <!-- InstanceEndEditable --> </div>
       <!-- END PAGE TITLE --> 
     </div>
   </div>
   <div class="page-content">
     <div class="container-fluid"> <!-- InstanceBeginEditable name="pre-body" -->
-      <div class="note note-info note-bordered"> <b>MBean:</b>${mbean.objectName!} </div>
+      <div class="note note-info note-bordered"> <b>MBean:</b>${mbean.objectName} </div>
       <!-- InstanceEndEditable -->
       <div class="row">
         <div class="col-md-12"> <!-- InstanceBeginEditable name="body" -->
@@ -72,22 +72,22 @@
                   <tbody>
                   <#list mbean.attrs as attrVo>
                   <tr>
-                    <td>${attrVo.info.name!}</td>
-                    <td>${attrVo.info.type!}</td>
-                    <td>${attrVo.desc!}</td>
+                    <td>${attrVo.info.name}</td>
+                    <td>${attrVo.info.type}</td>
+                    <td>${attrVo.desc}</td>
                     <td><#if attrVo.info.writable>
                       	<#if !attrVo.info.readable><span class="label label-warning">只写</span></#if>
 						<a class="js_edit_attr" 
-                      		data-name="${attrVo.info.name!}" 
+                      		data-name="${attrVo.info.name}" 
                       		data-placement="top"
                       		data-rows="4"
-                      		data-placeholder="请输入${attrVo.info.name!}新值" 
+                      		data-placeholder="请输入${attrVo.info.name}新值" 
 
-                      		data-value-type="${attrVo.info.type!}"
+                      		data-value-type="${attrVo.info.type}"
                       		data-readable="<#if attrVo.info.readable>true<#else>false</#if>"
                       		data-param-objectName="${mbean.objectName?j_string}"
-                      		><#if attrVo.info.readable>${attrVo.value!}<#else>修改</#if></a>
-						<#else> <span class="label label-success">只读</span> ${attrVo.value!} 
+                      		><#if attrVo.info.readable>${attrVo.value}<#else>修改</#if></a>
+						<#else> <span class="label label-success">只读</span> ${attrVo.value} 
                       	</#if>
 					</td>
                   </tr>
@@ -117,13 +117,13 @@
 <#assign i=1>                  
 <#list mbean.opts as optVo>
                   <form id="form_invoke_${i}">
-					<input type="hidden" name="optName" value="${optVo.info.name!}"/>
-					<input type="hidden" name="objectName" value="${mbean.objectName!}"/>
+					<input type="hidden" name="optName" value="${optVo.info.name}"/>
+					<input type="hidden" name="objectName" value="${mbean.objectName}"/>
 	<#if optVo.noParam>
                   <tr>
-                    <td><span class="bold theme-font">${optVo.info.name!}</span></td>
-                    <td>${optVo.info.returnType!}</td>
-                    <td>${optVo.info.description!}</td>
+                    <td><span class="bold theme-font">${optVo.info.name}</span></td>
+                    <td>${optVo.info.returnType}</td>
+                    <td>${optVo.info.description}</td>
                     <td>
                       <btn class="btn default btn-xs green-stripe js_invoke_opt"
                         data-form-name="form_invoke_${i}"
@@ -132,9 +132,9 @@
                   </tr>
 	<#else>
                   <tr>
-                    <td rowspan="2" ><span class="bold theme-font">${optVo.info.name!}</span></td>
-                    <td>${optVo.info.returnType!}</td>
-                    <td>${optVo.info.description!}</td>
+                    <td rowspan="2" ><span class="bold theme-font">${optVo.info.name}</span></td>
+                    <td>${optVo.info.returnType}</td>
+                    <td>${optVo.info.description}</td>
                     <td></td>
                   </tr>
                   <tr>
@@ -150,10 +150,10 @@
                         <tbody>
 		<#list optVo.params as paramVo>
                           <tr role="row" class="filter">
-							<input type="hidden" name="paramType" value="${paramVo.info.type!}"/>
-                            <td>${paramVo.info.name!}</td>
-                            <td>${paramVo.info.description!}</td>
-                            <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type!}</span></td>
+							<input type="hidden" name="paramType" value="${paramVo.info.type}"/>
+                            <td>${paramVo.info.name}</td>
+                            <td>${paramVo.info.description}</td>
+                            <td><span class="label label-sm label-success label-mini"> ${paramVo.info.type}</span></td>
                             <td>
                             <#if paramVo.info.type=='boolean'>
 								<label>
@@ -169,7 +169,7 @@
 									</span>
 								</div>
 							<#else>
-								<input type="text" class="form-control form-filter input-sm" name="paramValue" value="${paramVo.defaultValue!}">
+								<input type="text" class="form-control form-filter input-sm" name="paramValue" value="${paramVo.defaultValue}">
 							</#if>		
                             </td>
                           </tr>
@@ -201,35 +201,8 @@
   </div>
 </div>
 
-<!-- PRE-FOOTER BEGIN -->
-<div class="page-prefooter">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-        <h2>About</h2>
-        <p> 在web界面上操作jmx. </p>
-      </div>
-      <div class="col-md-3 col-sm-6 col-xs12 footer-block">
-        <h2>Documents</h2>
-        <a href="#" >......</a> </div>
-      <div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-        <h2>Contacts</h2>
-        <address class="margin-bottom-40">
-        Email: <a href="mailto:liangwj@tom.com">liangwj@tom.com</a>
-        </address>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- PRE-FOOTER END --> 
+<#include "includes/_foot.ftl"/>
 
-<!-- FOOTER BEGIN -->
-<div class="page-footer">
-  <div class="container-fluid"> 2015 </div>
-</div>
-<!-- FOOTER END -->
-
-<div class="scroll-to-top" style="display: block;"> <i class="fa fa-arrow-circle-up"></i> </div>
 <!-- InstanceBeginEditable name="body-end" -->
 
 <!-- INVOKE RESULT MODAL BEGIN -->
@@ -255,13 +228,7 @@
 
 <!-- InstanceEndEditable --> 
 
-<!-- COMMON JAVASCRIPT BEGIN --> 
-<script src="statics/jquery.min.js"></script> 
-<script src="statics/bootstrap-3.3.5/js/bootstrap.js"></script> 
-<script src="statics/jquery.flot/jquery.flot.js"></script> 
-<script src="statics/bootstrap-toastr/toastr.min.js"></script> 
-<script src="statics/jmxInWeb/jw.common.js"></script> 
-<!-- COMMON JAVASCRIPT END --> 
+<#include "includes/_script.ftl"/>
 
 <!-- InstanceBeginEditable name="ex-script" --> 
 <script src="statics/moment.min.js"></script> 

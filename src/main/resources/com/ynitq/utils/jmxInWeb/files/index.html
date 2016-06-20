@@ -69,15 +69,15 @@
                       <td colspan="3">
 			              <div class="caption"> 
 			              	<i class="fa fa-cogs font-green-sharp"></i> 
-			              	<span class="caption-subject font-green-sharp bold ">${domainVo.name!}</span> 
+			              	<span class="caption-subject font-green-sharp bold ">${domainVo.name}</span> 
 			              </div>
                       </td>
                     </tr>
 <#list domainVo.beans as mbeanVo>
                     <tr>
-			          <td><a href="mbeanInfo?objectName=${mbeanVo.objectName?url}">${mbeanVo.simpleName!}</a></td>
-			          <td>${mbeanVo.className!}</td>
-			          <td>${mbeanVo.desc!}</td>
+			          <td><a href="mbeanInfo?objectName=${mbeanVo.objectName?url}">${mbeanVo.displayName}</a></td>
+			          <td>${mbeanVo.className}</td>
+			          <td>${mbeanVo.desc}</td>
                     </tr>
 </#list>
 </#list>
@@ -94,53 +94,12 @@
   </div>
 </div>
 
-<!-- PRE-FOOTER BEGIN -->
- <div class="page-prefooter">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-				<h2>About</h2>
-				<p>
-					 在web界面上操作jmx.
-				</p>
-			</div>
-			<div class="col-md-3 col-sm-6 col-xs12 footer-block">
-				<h2>Documents</h2>
-                <a href="#" >......</a>
-			</div>
-			<div class="col-md-3 col-sm-6 col-xs-12 footer-block">
-				<h2>Contacts</h2>
-				<address class="margin-bottom-40">
-				 Email: <a href="mailto:liangwj@tom.com">liangwj@tom.com</a>
-				</address>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- PRE-FOOTER END -->
-
-<!-- FOOTER BEGIN -->
-<div class="page-footer">
-	<div class="container-fluid">
-		 2015 
-	</div>
-</div>
-<!-- FOOTER END -->
-
-<div class="scroll-to-top" style="display: block;">
-	<i class="fa fa-arrow-circle-up"></i>
-</div>
+<#include "includes/_foot.ftl"/>
 
 <!-- InstanceBeginEditable name="body-end" -->
 <!-- InstanceEndEditable -->
 
-<!-- COMMON JAVASCRIPT BEGIN -->
-<script src="statics/jquery.min.js"></script>
-<script src="statics/bootstrap-3.3.5/js/bootstrap.js"></script>
-<script src="statics/jquery.flot/jquery.flot.js"></script>
-<script src="statics/bootstrap-toastr/toastr.min.js"></script>
-<script src="statics/jmxInWeb/jw.common.js"></script>
-<!-- COMMON JAVASCRIPT END -->
+<#include "includes/_script.ftl"/>
 
 <!-- InstanceBeginEditable name="ex-script" -->
 <!-- InstanceEndEditable -->

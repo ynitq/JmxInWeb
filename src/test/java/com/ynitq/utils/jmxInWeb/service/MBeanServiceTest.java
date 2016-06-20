@@ -58,7 +58,7 @@ public class MBeanServiceTest {
 
 			for (MBeanVo vo : domainVo.getBeans()) {
 				sb.append("\t\t");
-				sb.append(String.format("%s\n", vo.getSimpleName()));
+				sb.append(String.format("%s\n", vo.getDisplayName()));
 			}
 		}
 		log.debug(sb.toString());
@@ -82,7 +82,7 @@ public class MBeanServiceTest {
 		Assert.assertNotNull(mbeanVo);// not null
 
 		StringBuffer sb = new StringBuffer();
-		sb.append(String.format("MBean:%s\n", mbeanVo.getSimpleName()));
+		sb.append(String.format("MBean:%s\n", mbeanVo.getDisplayName()));
 
 		sb.append("\t --------- Attributes ------\n");
 		mbeanVo.getAttrs();

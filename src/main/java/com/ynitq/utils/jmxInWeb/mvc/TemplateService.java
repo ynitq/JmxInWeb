@@ -123,6 +123,8 @@ public class TemplateService {
 
 	private TemplateService() {
 		freemarkerCfg = new Configuration(Configuration.getVersion());
+		// 防止freemarker渲染时对value=null的key 解析出错
+		freemarkerCfg.setClassicCompatible(true);
 		freemarkerCfg.setTemplateLoader(new ResourceTemplateLoader());
 	}
 

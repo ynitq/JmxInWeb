@@ -24,19 +24,12 @@ public class MBeanVo implements Comparable<MBeanVo> {
 	private final List<MBeanAttrVo> attrs = new LinkedList<MBeanAttrVo>();
 	private final List<MBeanOpVo> opts = new LinkedList<MBeanOpVo>();
 
-	private final Class<?> clazz;
+	private String displayName;// 显示用的名字
 
 	public MBeanVo(ObjectName targetName, MBeanInfo mBeanInfo) {
 		super();
 		this.targetName = targetName;
 		this.info = mBeanInfo;
-
-		Class<?> temp = null;
-		try {
-			temp = Class.forName(info.getClassName());
-		} catch (ClassNotFoundException e) {
-		}
-		this.clazz = temp;
 
 		MBeanAttributeInfo[] attrArray = mBeanInfo.getAttributes();
 		if (attrArray != null) {
@@ -74,8 +67,22 @@ public class MBeanVo implements Comparable<MBeanVo> {
 		return this.targetName.getCanonicalName();
 	}
 
-	public String getSimpleName() {
-		return this.clazz.getSimpleName();
+	/**
+	 * 获得显示用名字
+	 * 
+	 * @return
+	 */
+	public String getDisplayName() {
+		if (this.displayName == null) {
+			String oname = this.targetName.getCanonicalName();
+			int index = oname.indexOf("name=");
+			if (index >= 0) {
+				this.displayName = oname.substring(index + 5);
+			} else {
+				this.displayName = oname;
+			}
+		}
+		return this.displayName;
 	}
 
 	public List<MBeanOpVo> getOpts() {
@@ -101,6 +108,6 @@ public class MBeanVo implements Comparable<MBeanVo> {
 
 	@Override
 	public int compareTo(MBeanVo o) {
-		return this.getSimpleName().compareToIgnoreCase(o.getSimpleName());
+		return this.getDisplayName().compareToIgnoreCase(o.getDisplayName());
 	}
 }

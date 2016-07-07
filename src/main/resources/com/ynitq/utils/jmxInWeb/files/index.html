@@ -59,8 +59,8 @@
                   <thead>
                     <tr>
                       <th width="33.3%">ObjectName</th>
-                      <th width="33.3%">Class</th>
                       <th width="33.3%">说明</th>
+                      <th width="33.3%">Class</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -76,8 +76,8 @@
 <#list domainVo.beans as mbeanVo>
                     <tr>
 			          <td><a href="mbeanInfo?objectName=${mbeanVo.objectName?url}">${mbeanVo.displayName}</a></td>
-			          <td>${mbeanVo.className}</td>
 			          <td>${mbeanVo.desc}</td>
+			          <td>${mbeanVo.className}</td>
                     </tr>
 </#list>
 </#list>
